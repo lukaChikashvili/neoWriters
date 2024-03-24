@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-
+const { User } = require('../models/userModel');
 
 // register users
 
@@ -8,11 +8,15 @@ const registerUsers = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    
-    
-   return res.json({
-        name, email, password:hashedPassword, location, proffesion
-    });
+    const registeredUser = new User({name, email, password: hashedPassword, location, proffesion});
+
+     try {
+        await registeredUser.save();
+     } catch (error) {
+        console.log(error);
+     }
+
+
     
  
 
