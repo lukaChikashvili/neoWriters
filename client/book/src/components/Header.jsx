@@ -4,18 +4,18 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 
 const Header = () => {
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
    const isUserLoggedIn = localStorage.getItem('token');
 
   let navigate = useNavigate();
 
 const handleLogin = async () => {
-  const response = await axios.post('http://localhost:4000/api/login', {email, password});
+  const response = await axios.post('http://localhost:4000/api/login', {name, password});
   const token = response.data.token;
-  localStorage.setItem('token', response.data.token);
+  localStorage.setItem('token', token);
+  localStorage.setItem('name', response.data.name);
 
-console.log(response.data)
   navigate('/profile');
     
 
@@ -33,11 +33,13 @@ const logout = () => {
         <h1 className='text-3xl font-bold cursor-pointer'>მწერალი</h1>
       </div>
        {isUserLoggedIn ? (
+        <div className='flex items-center gap-8 '>
+        <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
          <Button variant='contained' color="success" onClick={logout}>გასვლა</Button>
-        
+         </div>
        ) : (
         <form className='flex items-center gap-4'>
-         <TextField label = "ელ-ფოსტა" variant='outlined' size="small" className='w-44' onChange={(e) => setEmail(e.target.value)}/>
+         <TextField label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)}/>
          <TextField label = "პაროლი" variant='outlined' size='small' type = "password" className='w-44' onChange={(e) => setPassword(e.target.value)}/>
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
      </form>

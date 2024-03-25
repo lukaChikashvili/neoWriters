@@ -23,9 +23,9 @@ const registerUsers = async (req, res) => {
 
 // login users
 const loginUsers = async (req, res) => {
-   const { email, password} = req.body;
+   const { name, password} = req.body;
 
-   const user = await User.findOne({email});
+   const user = await User.findOne({name});
 
    if(!user) {
     return res.status(404).json({message: 'invalid credentials'});
@@ -40,7 +40,7 @@ const loginUsers = async (req, res) => {
 
    const token = jwt.sign({id: user._id}, 'secret', {expiresIn: '30d'});
 
-   res.json({message: 'loggin succesfull', token, email});
+   res.json({message: 'loggin succesfull', token, name});
 
 }
 

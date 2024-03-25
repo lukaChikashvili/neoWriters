@@ -12,27 +12,22 @@ const Home = () => {
   const [proffesion, setProffesion] = useState('');
   const [password, setPassword] = useState('');
 
-  // register success text
-  const [showText, setShowText] = useState(false);
+
+
 
   // register users
   const handleRegister = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/api/register', {
+       await axios.post('http://localhost:4000/api/register', {
         name, surname, email, password, location, proffesion
       });
   
-      if (response.status === 200 && response.data.message === 'User registered successfully') {
-        setShowText(true);
-       
-      } else {
-        setShowText(false); 
-      }
+ 
     } catch (error) {
-      console.error('Error registering user:', error);
-      setShowText(false); 
+      console.log(error);
     }
-     
+      
+    
 
   }
 
@@ -53,7 +48,7 @@ const Home = () => {
  <TextField label = "პაროლი" variant='outlined' size='small' type = "password" onChange={(e) => setPassword(e.target.value)} />
  <Button variant='contained' color = "success" onClick={handleRegister}>რეგისტრაცია</Button>
  </form>
- {showText && <p>fdfgdg</p>}
+
    
 </div>
 
