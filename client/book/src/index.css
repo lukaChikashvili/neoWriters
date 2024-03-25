@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("//cdn.web-fonts.ge/fonts/bpg-algeti-compact/css/bpg-algeti-compact.min.css");
+
+body {
+    background-color: #F5F7F8;
+    font-family: "BPG Algeti Compact", sans-serif;
+}
