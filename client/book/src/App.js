@@ -2,10 +2,10 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import Home from './components/Home';
 import Header from './components/Header';
 import Profile from './components/Profile';
+import Create from './components/Create';
 
 
 function App() {
-  const isUserLoggedIn = localStorage.getItem('token');
 
   return (
     <div className="App">
@@ -16,13 +16,12 @@ function App() {
         <Route
           path="/profile"
           element={
-            isUserLoggedIn ? (
+          
               <Profile />
-            ) : (
-              <Navigate to="/" replace={true} />
-            )
+            
           }
         />
+         <Route path = "/create" element = {<Create />} />
        </Routes>
     </div>
   );

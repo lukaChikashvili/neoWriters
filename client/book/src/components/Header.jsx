@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Button, TextField} from '@mui/material';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -34,6 +34,7 @@ const logout = () => {
       </div>
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
+       <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
          <Button variant='contained' color="success" onClick={logout}>გასვლა</Button>
          </div>
