@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import logo from '../assets/logo.png';
 import { Button, TextField } from '@mui/material';
-import axios from 'axios';
+
+import axiosInstance from './axios';
 
 const Home = () => {
   // register input states
@@ -18,7 +19,7 @@ const Home = () => {
   // register users
   const handleRegister = async () => {
     try {
-       await axios.post('http://localhost:4000/api/register', {
+       await axiosInstance.post('http://localhost:4000/api/register', {
         name, surname, email, password, location, proffesion
       });
   

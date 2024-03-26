@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import {Button, TextField} from '@mui/material';
-import axios from 'axios';
+
 import {Link, useNavigate} from 'react-router-dom';
+import axiosInstance from './axios';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -11,7 +12,7 @@ const Header = () => {
   let navigate = useNavigate();
 
 const handleLogin = async () => {
-  const response = await axios.post('http://localhost:4000/api/login', {name, password});
+  const response = await axiosInstance.post('http://localhost:4000/api/login', {name, password});
   const token = response.data.token;
   localStorage.setItem('token', token);
   localStorage.setItem('name', response.data.name);

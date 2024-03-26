@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { User } = require('../models/userModel');
+const { Book } = require('../models/bookModel');
 const jwt = require('jsonwebtoken');
 
 // register users
@@ -45,6 +46,25 @@ const loginUsers = async (req, res) => {
 }
 
 
+// create book
+const createBook = async (req, res) => {
+   const {title, type, desc, text} = req.body;
+
+    if(!req.user) {
+      return res.status(404).json({message: "not authorized"});
+    }
+
+    const userId = req.user.id;
+
+
+
+    const newBook = new Book({title, type, desc, text, author: userId});
+
+    await newBook.save();
+
+    return res.json({message: 'book created', book: newBook});
+
+}
 
 
 
@@ -60,5 +80,6 @@ const loginUsers = async (req, res) => {
 // export functions
 module.exports = {
     registerUsers,
-    loginUsers
+    loginUsers,
+    createBook
 }
