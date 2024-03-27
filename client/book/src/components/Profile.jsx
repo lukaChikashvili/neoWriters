@@ -13,7 +13,7 @@ const Profile = () => {
       const data = await axiosInstance.get('http://localhost:4000/api/books');
 
       setBooks(data.data.books);
-console.log(books);
+
    
   }
 

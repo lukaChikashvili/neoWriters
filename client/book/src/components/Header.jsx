@@ -30,6 +30,7 @@ const handleLogin = async () => {
 
 const logout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('cartItem');
   navigate('/');
 }
 
@@ -43,7 +44,7 @@ const logout = () => {
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
         <p>ბალანსი: 500 ლ</p>
-        <ShoppingCartIcon className='cursor-pointer relative' /><span className='absolute top-4 right-40 text-red-800'>{cart}</span>
+        <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-4 right-40 text-red-800'>{cart}</span>
          <Button variant='contained' color="success" onClick={logout}>გასვლა</Button>
          </div>
        ) : (

@@ -4,6 +4,8 @@ import Header from './components/Header';
 import Profile from './components/Profile';
 import Create from './components/Create';
 import FullPage from './components/FullPage';
+import Cart from './components/Cart';
+
 
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
         />
          <Route path = "/create" element = {<Create />} />
          <Route path = "/books/:id" element = {<FullPage />} />
+         <Route path = "/cart" element = {<Cart />} />
        </Routes>
     </div>
   );

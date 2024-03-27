@@ -11,7 +11,7 @@ const FullPage = () => {
     // take id from route
     const { id } = useParams();
     const [fullPage, setFullPage] = useState(null);
-    const { setCart} = useContext(BookContext);
+    const { books, setCart, setCartItem, cartItem} = useContext(BookContext);
 
     useEffect(() => {
         const getFull = async () => {
@@ -19,7 +19,7 @@ const FullPage = () => {
 
            setFullPage(response.data.oneBook);
 
-           
+        
         
         }
 
@@ -27,8 +27,22 @@ const FullPage = () => {
         getFull();
     }, []);
 
-const addToCart = () => {
+const addToCart = (id) => {
     setCart(prev => prev + 1);
+
+    const filteredBook = books.find(item => item._id === id);
+
+   
+    if (filteredBook) {
+     
+        setCartItem(prev => [...prev, filteredBook]);
+    } else {
+        console.log(`Book with id ${id} not found.`);
+    }
+
+  console.log(cartItem);
+
+    
 }
   return (
     <div className='p-24'>
@@ -49,7 +63,7 @@ const addToCart = () => {
              
             <p className='line pt-4 text-lg'>{fullPage.desc}</p>
             <div className='flex gap-8 '>
-            <Button variant='outlined' color = "success" className = "w-56"onClick={addToCart}>კალათში დამატება</Button>
+            <Button variant='outlined' color = "success" className = "w-56" onClick={() => addToCart(fullPage._id)}>კალათში დამატება</Button>
             <Button variant='contained' color = "success"  className = "w-56">ყიდვა</Button>
             </div>
             </div>
