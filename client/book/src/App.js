@@ -3,6 +3,7 @@ import Home from './components/Home';
 import Header from './components/Header';
 import Profile from './components/Profile';
 import Create from './components/Create';
+import FullPage from './components/FullPage';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           }
         />
          <Route path = "/create" element = {<Create />} />
+         <Route path = "/books/:id" element = {<FullPage />} />
        </Routes>
     </div>
   );
