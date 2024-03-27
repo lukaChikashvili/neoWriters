@@ -31,7 +31,7 @@ const logout = () => {
   return (
     <div className='w-full flex items-center justify-between px-12 py-6 shadow'>
       <div className="logo">
-        <h1 className='text-3xl font-bold cursor-pointer'>მწერალი</h1>
+        <h1 className='text-3xl font-bold cursor-pointer' onClick={() => navigate('/profile')}>მწერალი</h1>
       </div>
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
