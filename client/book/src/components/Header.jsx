@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {Button, TextField} from '@mui/material';
 
 import {Link, useNavigate} from 'react-router-dom';
 import axiosInstance from './axios';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { BookContext } from '../context/bookContext';
 
 const Header = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  
+  // cart span
+  const { cart} = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
   let navigate = useNavigate();
@@ -37,6 +42,8 @@ const logout = () => {
         <div className='flex items-center gap-8 '>
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
+        <p>ბალანსი: 500 ლ</p>
+        <ShoppingCartIcon className='cursor-pointer relative' /><span className='absolute top-4 right-40 text-red-800'>{cart}</span>
          <Button variant='contained' color="success" onClick={logout}>გასვლა</Button>
          </div>
        ) : (

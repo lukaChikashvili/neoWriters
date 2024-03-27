@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import axiosInstance from './axios';
 import lari from '../assets/lari.png';
 import tag from '../assets/tag.png';
 import { Button } from '@mui/material';
+import { BookContext } from '../context/bookContext';
 
 const FullPage = () => {
     
     // take id from route
     const { id } = useParams();
     const [fullPage, setFullPage] = useState(null);
-
+    const { setCart} = useContext(BookContext);
 
     useEffect(() => {
         const getFull = async () => {
@@ -26,16 +27,18 @@ const FullPage = () => {
         getFull();
     }, []);
 
-
+const addToCart = () => {
+    setCart(prev => prev + 1);
+}
   return (
     <div className='p-24'>
         {fullPage ? (
             <div className='flex items-center gap-12'>
-     
+ 
          <img src = {fullPage.url} className='w-96 h-96 object-cover cursor-pointer shadow-lg rounded-md'/>
-       
-    
-         <div className='flex flex-col gap-4'>
+         
+   
+         <div className='flex flex-col gap-4 '>
             <h1 className='text-4xl font-bold'>{fullPage.title}</h1>
             <p className='text-2xl text-green-600'>{fullPage.author.name}</p>
             <p className='text-2xl'>{fullPage.createdAt.substring(0, 10)}</p>
@@ -46,7 +49,7 @@ const FullPage = () => {
              
             <p className='line pt-4 text-lg'>{fullPage.desc}</p>
             <div className='flex gap-8 '>
-            <Button variant='outlined' color = "success" className = "w-56">კალათში დამატება</Button>
+            <Button variant='outlined' color = "success" className = "w-56"onClick={addToCart}>კალათში დამატება</Button>
             <Button variant='contained' color = "success"  className = "w-56">ყიდვა</Button>
             </div>
             </div>
