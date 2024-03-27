@@ -3,7 +3,8 @@ import {createContext, useState} from 'react';
 export const BookContext = createContext();
 
 
-const bookPorivder = ({children}) => {
+const BookProvider = ({children}) => {
+
   const [books, setBooks] = useState([]);
 
 
@@ -15,4 +16,4 @@ const bookPorivder = ({children}) => {
 }
 
 
-export default bookPorivder;
+export default BookProvider;

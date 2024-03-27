@@ -22,6 +22,11 @@ const bookSchema = new mongoose.Schema({
         required: true
     },
 
+    url: {
+        type: String,
+        required: true
+    },
+
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',

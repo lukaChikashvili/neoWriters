@@ -1,6 +1,8 @@
 import { Button, MenuItem, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axiosInstance from './axios';
+import { BookContext } from "../context/bookContext";
+import {useNavigate} from 'react-router-dom';
 
 const Create = () => {
     // select menu options
@@ -26,26 +28,34 @@ const Create = () => {
         }
     ];
 
+    let navigate = useNavigate();
+
+    const { books, setBooks} = useContext(BookContext);
+
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
     const [desc, setDesc] = useState('');
     const [text, setText] = useState('');
-
+    const [url, setUrl] = useState();
 
     const handleCreate = async () => {
       const token = localStorage.getItem('token');
-      const response = await axiosInstance.post('http://localhost:4000/api/create', {title, type, desc, text}, {
+      const response = await axiosInstance.post('http://localhost:4000/api/create', {title, type, desc, text, url}, {
         headers: {
           Authorization: `Bearer ${token}`
       }
       });
 
-      console.log(response.data);
+        setBooks([...books, response.data.book]);
+        navigate('/profile');
+      
     }
 
     const handleSelect = (e) => {
       setType(e.target.value);
     }
+
+
   return (
     <div>
       <div className='flex flex-col items-center justify-center h-screen'>
@@ -70,6 +80,8 @@ const Create = () => {
         </TextField>
             <TextField label = "მოკლე აღწერა" variant='outlined' size="small" onChange={(e) => setDesc(e.target.value)}/>
             <TextField label = "წიგნის ტექსტი" variant='outlined' size="small" onChange={(e) => setText(e.target.value)}/>
+            
+            <TextField label = "ყდის სურათი: " variant='outlined' size="small" onChange={(e) => setUrl(e.target.value)}/>
             <Button variant='contained' color="success" onClick={handleCreate}>გამოქვეყნება</Button>
         </form>
       </div>
