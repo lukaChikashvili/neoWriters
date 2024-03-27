@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BookContext } from "../context/bookContext";
 import axiosInstance from './axios';
 import lari from '../assets/lari.png';
+import { Button } from '@mui/material';
 const Profile = () => {
 
   const { books, setBooks} = useContext(BookContext);
-
+ 
   const getAllBooks = async () =>{
       const data = await axiosInstance.get('http://localhost:4000/api/books');
 
@@ -18,15 +19,19 @@ console.log(books);
       getAllBooks();
   }, []);
 
+
+
   return (
     <div className='flex items-center gap-12 p-12'>
        {books.map((value) => (
         <div key={value._id}>
           <p className='text-center text-xl font-semibold pb-6'>{value.title}</p>
-           <img src = {value.url} className='shadow-lg rounded-md cursor-pointer' />
+         
+           <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
+           <div className='flex items-center gap-12  '>
            <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
-      
-        
+          <Button variant='contained' color = "success" className='absolute top-2 w-24'>ყიდვა</Button>
+        </div>
          </div>
        ))}
     </div>

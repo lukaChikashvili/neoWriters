@@ -10,5 +10,5 @@ router.post('/register', actions.registerUsers);
 router.post('/login', actions.loginUsers);
 router.post('/create', authenticateUser, actions.createBook );
 router.get('/books', actions.getAllBooks);
-
+router.get('/books/:id',actions.getOneBook);
 module.exports = router;
