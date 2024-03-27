@@ -36,11 +36,12 @@ const Create = () => {
     const [type, setType] = useState('');
     const [desc, setDesc] = useState('');
     const [text, setText] = useState('');
-    const [url, setUrl] = useState();
+    const [url, setUrl] = useState('');
+    const [price, setPrice] = useState(0);
 
     const handleCreate = async () => {
       const token = localStorage.getItem('token');
-      const response = await axiosInstance.post('http://localhost:4000/api/create', {title, type, desc, text, url}, {
+      const response = await axiosInstance.post('http://localhost:4000/api/create', {title, type, desc, text, url, price}, {
         headers: {
           Authorization: `Bearer ${token}`
       }
@@ -82,6 +83,7 @@ const Create = () => {
             <TextField label = "წიგნის ტექსტი" variant='outlined' size="small" onChange={(e) => setText(e.target.value)}/>
             
             <TextField label = "ყდის სურათი: " variant='outlined' size="small" onChange={(e) => setUrl(e.target.value)}/>
+            <TextField label = "ფასი " variant='outlined' size="small" onChange={(e) => setPrice(e.target.value)}/>
             <Button variant='contained' color="success" onClick={handleCreate}>გამოქვეყნება</Button>
         </form>
       </div>

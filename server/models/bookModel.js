@@ -27,6 +27,13 @@ const bookSchema = new mongoose.Schema({
         required: true
     },
 
+    
+    price: {
+        type: Number,
+        required: true
+    },
+
+
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',

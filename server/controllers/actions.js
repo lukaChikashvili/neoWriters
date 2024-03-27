@@ -48,7 +48,7 @@ const loginUsers = async (req, res) => {
 
 // create book
 const createBook = async (req, res) => {
-   const {title, type, desc, text, url} = req.body;
+   const {title, type, desc, text, url, price} = req.body;
 
     if(!req.user) {
       return res.status(404).json({message: "not authorized"});
@@ -58,7 +58,7 @@ const createBook = async (req, res) => {
 
 
 
-    const newBook = new Book({title, type, desc, text, url,  author: userId});
+    const newBook = new Book({title, type, desc, text, url, price,  author: userId});
 
     await newBook.save();
 
