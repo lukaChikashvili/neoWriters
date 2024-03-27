@@ -66,7 +66,13 @@ const createBook = async (req, res) => {
 
 }
 
+// get all books
+const getAllBooks = async (req, res) => {
+     
+   const books = await Book.find().populate('author', 'name');
 
+   return res.json({books});
+}
 
 
 
@@ -81,5 +87,6 @@ const createBook = async (req, res) => {
 module.exports = {
     registerUsers,
     loginUsers,
-    createBook
+    createBook,
+    getAllBooks
 }

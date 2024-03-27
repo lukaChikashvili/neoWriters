@@ -9,6 +9,6 @@ const {authenticateUser} = require('../middleware/auth');
 router.post('/register', actions.registerUsers);
 router.post('/login', actions.loginUsers);
 router.post('/create', authenticateUser, actions.createBook );
-
+router.get('/books', actions.getAllBooks);
 
 module.exports = router;
