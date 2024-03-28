@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
-import {Button, TextField} from '@mui/material';
+import {Button,   TextField} from '@mui/material';
 
 import {Link, useNavigate} from 'react-router-dom';
 import axiosInstance from './axios';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import DragHandleIcon from '@mui/icons-material/DragHandle';
 import { BookContext } from '../context/bookContext';
 
 const Header = () => {
@@ -13,6 +14,10 @@ const Header = () => {
   // cart span
   const { cart} = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
+
+   // logout modal
+   const [modal, setModal] = useState(false);
+
 
   let navigate = useNavigate();
 
@@ -30,7 +35,7 @@ const handleLogin = async () => {
 
 const logout = () => {
   localStorage.removeItem('token');
-  localStorage.removeItem('cartItem');
+ 
   navigate('/');
 }
 
@@ -44,8 +49,14 @@ const logout = () => {
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
         <p>ბალანსი: 500 ლ</p>
-        <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-4 right-40 text-red-800'>{cart}</span>
-         <Button variant='contained' color="success" onClick={logout}>გასვლა</Button>
+        <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-6 right-40 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
+         <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />
+
+         {
+          modal && <div className='absolute right-0 top-24  bottom-0 h-full w-56 bg-gray-400 -mt-2'>
+          <Button variant='contained' color="success" onClick={logout} className='w-full'>გასვლა</Button>
+          </div>
+         }
          </div>
        ) : (
         <form className='flex items-center gap-4'>
