@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Button, TextField } from '@mui/material';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
 
 const Design = () => {
   // colors
@@ -87,6 +89,18 @@ const [center, setCenter] = useState(false);
 const [right, setRight] = useState(false);
 const [left, setLeft] = useState(false);
 const [yPosition, setYposition] = useState(0);
+const [textColor, setTextColor] = useState('');
+const [bold, setBold] = useState(false);
+const [textBackground, setTextBackground] = useState('');
+const [author, setAuthor] = useState('');
+const [authorSize, setAuthorSize] = useState(16);
+const [authorSettings, setAuthorSettings] = useState(false);
+const [authorCentered, setAuthorCenter] = useState(false);
+const [authorRighted, setAuthorRight] = useState(false);
+const [authorLefted, setAuthorLeft] = useState(false);
+const [authorYPosition, setAuthorYPosition] = useState(0);
+const [image, setImage] = useState('');
+
   // change background function
   const changeBackground = (name) => {
     setSelectedColor(name);
@@ -110,6 +124,33 @@ const [yPosition, setYposition] = useState(0);
     setCenter(true);
     setRight(false);
   };
+
+  const authorLeft = () => {
+    setAuthorLeft(true);
+    setAuthorCenter(false);
+    setAuthorRight(false);
+  };
+  
+  const authorRight = () => {
+    setAuthorLeft(false);
+    setAuthorCenter(false);
+    setAuthorRight(true);
+  };
+
+  const authorCenter = () => {
+    setAuthorLeft(false);
+    setAuthorCenter(true);
+    setAuthorRight(false);
+  };
+
+  const toggleBold = () => {
+    setBold(prev => !prev);
+  };
+
+  const changeBackgroundImage = (url) => {
+    setImage(`url(${url})`);
+  }
+
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
       
@@ -126,9 +167,29 @@ const [yPosition, setYposition] = useState(0);
           <TextField size='small' type='number' value = {size} onChange={(e) => setSize(e.target.value)} className='w-24'/>
         </div>
 
+        <div className='flex items-center gap-4'>
+          <ColorLensIcon />
+          <p>ტექსტის ფერი: </p>
+          <TextField size='small' type='text' value = {textColor} onChange={(e) => setTextColor(e.target.value)} className='w-24'/>
+          <FormatBoldIcon className='cursor-pointer' onClick = {toggleBold} />
+        </div>
+
         <div className='flex items-center gap-10'>
         <h1 className='text-xl '> ავტორი: </h1>
-        <TextField size='small' label = "ავტორი..." className='w-56' />
+        <TextField size='small' label = "ავტორი..." className='w-56' onChange={(e) => setAuthor(e.target.value)} />
+        </div>
+
+        <div className='flex items-center gap-4'>
+          <TextFormatIcon />
+          <p>ტექსტის ზომა: </p>
+          <TextField size='small' type='number' value = {authorSize} onChange={(e) => setAuthorSize(e.target.value)} className='w-24'/>
+        </div>
+
+        <div className='flex items-center gap-4'>
+          <ColorLensIcon />
+          <p>ტექსტის ფერი: </p>
+          <TextField size='small' type='text' value = {textColor} onChange={(e) => setTextColor(e.target.value)} className='w-24'/>
+          <FormatBoldIcon className='cursor-pointer' onClick = {toggleBold} />
         </div>
 
         <div>
@@ -140,20 +201,36 @@ const [yPosition, setYposition] = useState(0);
            </div>
         ))}
         </div>
+
+        <div>
+          <h2>ფონის სურათი:</h2>
+          <TextField size='small' label = "ჩაწერეთ ლინკი" onChange={(e) => changeBackgroundImage(e.target.value)}/>
+        </div>
       </div>
   
-      <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor}}>
-      <h1 className='cursor-pointer' style={{fontSize: size + 'px', textAlign: center ? "center" : right ? "end" : left ? "start" : null, marginTop: yPosition + "px"}} onClick={() => setSettings(true)} >{titleChange}</h1>
+      <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor, backgroundImage: image, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', objectFit: 'cover'}}>
+      <h1 className='cursor-pointer' style={{fontSize: size + 'px', textAlign: center ? "center" : right ? "end" : left ? "start" : null, marginTop: yPosition + "px", color: textColor, fontWeight: bold ?  "bold" : null, backgroundColor: textBackground}} onClick={() => setSettings(true)} >{titleChange}</h1>
       {settings && (
-        <div className='grid grid-cols-3'>
-          
+        <div className='flex items-center gap-4 bg-gray-200 relative p-4'>
+            <span onClick={() => setSettings(false)} className='absolute right-2 cursor-pointer'>X</span>
           <Button color = "success" onClick={handleLeft}>მარცხნივ</Button>
           <Button  color = "success" onClick={handleCenter} >ცენტრში</Button>
           <Button color = "success" onClick={handleRight}>მარჯვნივ</Button>
           <span>y:</span><TextField size = "small" type = "number" className='w-24' value = {yPosition} onChange={(e) => setYposition(e.target.value)} />
+          <span>ტექსტის ფონი: </span><TextField size = "small" type = "text" className='w-24' onChange={(e) => setTextBackground(e.target.value)}  />
           </div>
       )}
-     
+     <h2 style={{fontSize: authorSize + "px", textAlign: authorCentered ? "center" : authorRighted ? "end" : authorLefted ? "start" : null, marginTop: authorYPosition + "px" }} className='cursor-pointer' onClick={() => setAuthorSettings(true)}>{author}</h2>
+
+     {authorSettings && (
+       <div className='flex items-center gap-4 bg-gray-200 relative p-4'>
+            <span onClick={() => setAuthorSettings(false)} className='absolute right-2 cursor-pointer'>X</span>
+            <Button color = "success" onClick={authorLeft}>მარცხნივ</Button>
+          <Button  color = "success" onClick={authorCenter} >ცენტრში</Button>
+          <Button color = "success" onClick={authorRight}>მარჯვნივ</Button>
+          <span>y:</span><TextField size = "small" type = "number" className='w-24' value = {authorYPosition} onChange={(e) => setAuthorYPosition(e.target.value)} />
+        </div>
+     )}
 </div>
 
 <div>
