@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, TextField } from '@mui/material';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const Design = () => {
   // colors
@@ -100,6 +101,7 @@ const [authorRighted, setAuthorRight] = useState(false);
 const [authorLefted, setAuthorLeft] = useState(false);
 const [authorYPosition, setAuthorYPosition] = useState(0);
 const [image, setImage] = useState('');
+const [authorColor, setAuthorColor] = useState('');
 
   // change background function
   const changeBackground = (name) => {
@@ -151,6 +153,46 @@ const [image, setImage] = useState('');
     setImage(`url(${url})`);
   }
 
+  useEffect(() => {
+    const title = localStorage.getItem('title');
+    setTitleChange(JSON.parse(title));
+    const size = localStorage.getItem('size');
+    setSize(size);
+
+    const textColor = localStorage.getItem('textColor');
+    setTextColor(JSON.parse(textColor));
+
+    const author = localStorage.getItem('author');
+    setAuthor(JSON.parse(author));
+
+    const authorSize = localStorage.getItem('authorSize');
+    setAuthorSize(JSON.parse(authorSize));
+
+    const bold = localStorage.getItem('bold');
+    setBold(JSON.parse(bold));
+
+    const authorColor = localStorage.getItem('authorColor');
+    setAuthorColor(JSON.parse(authorColor));
+
+    const selectedColor = localStorage.getItem('selectedColor');
+    setSelectedColor(JSON.parse(selectedColor));
+
+    const image = localStorage.getItem('image');
+    setImage(JSON.parse(image));
+  }, [])
+
+  useEffect(() => {
+  localStorage.setItem('title', JSON.stringify(titleChange));
+  localStorage.setItem('size', size);
+  localStorage.setItem('textColor', JSON.stringify(textColor));
+  localStorage.setItem('author', JSON.stringify(author));
+  localStorage.setItem('authorSize', JSON.stringify(authorSize));
+  localStorage.setItem('bold', JSON.stringify(bold));
+  localStorage.setItem('authorColor', JSON.stringify(authorColor));
+  localStorage.setItem('selectedColor', JSON.stringify(selectedColor));
+  localStorage.setItem('image', JSON.stringify(image));
+  }, [titleChange, size, textColor, author, authorSize, bold, authorColor, selectedColor, image])
+
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
       
@@ -188,7 +230,7 @@ const [image, setImage] = useState('');
         <div className='flex items-center gap-4'>
           <ColorLensIcon />
           <p>ტექსტის ფერი: </p>
-          <TextField size='small' type='text' value = {textColor} onChange={(e) => setTextColor(e.target.value)} className='w-24'/>
+          <TextField size='small' type='text' value = {authorColor} onChange={(e) => setAuthorColor(e.target.value)} className='w-24'/>
           <FormatBoldIcon className='cursor-pointer' onClick = {toggleBold} />
         </div>
 
@@ -220,7 +262,7 @@ const [image, setImage] = useState('');
           <span>ტექსტის ფონი: </span><TextField size = "small" type = "text" className='w-24' onChange={(e) => setTextBackground(e.target.value)}  />
           </div>
       )}
-     <h2 style={{fontSize: authorSize + "px", textAlign: authorCentered ? "center" : authorRighted ? "end" : authorLefted ? "start" : null, marginTop: authorYPosition + "px" }} className='cursor-pointer' onClick={() => setAuthorSettings(true)}>{author}</h2>
+     <h2 style={{fontSize: authorSize + "px", textAlign: authorCentered ? "center" : authorRighted ? "end" : authorLefted ? "start" : null, marginTop: authorYPosition + "px", color: authorColor }} className='cursor-pointer' onClick={() => setAuthorSettings(true)}>{author}</h2>
 
      {authorSettings && (
        <div className='flex items-center gap-4 bg-gray-200 relative p-4'>
@@ -234,7 +276,7 @@ const [image, setImage] = useState('');
 </div>
 
 <div>
-  sidebar
+  <DeleteForeverIcon sx={{fontSize: 40}} className='cursor-pointer absolute bottom-4 right-4' />
 </div>
   
 
