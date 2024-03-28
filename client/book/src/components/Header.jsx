@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react'
 import {Button,   TextField} from '@mui/material';
-
+import { AnimatePresence, motion } from 'framer-motion';
 import {Link, useNavigate} from 'react-router-dom';
 import axiosInstance from './axios';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
+import CloseIcon from '@mui/icons-material/Close';
 import { BookContext } from '../context/bookContext';
+import BrushIcon from '@mui/icons-material/Brush';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -49,14 +51,19 @@ const logout = () => {
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
         <p>ბალანსი: 500 ლ</p>
-        <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-6 right-40 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
-         <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />
-
+        <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-6 right-24 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
+       {modal ? <CloseIcon className='cursor-pointer' onClick = {() => setModal(false)} /> :   <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />}
+<AnimatePresence>
          {
-          modal && <div className='absolute right-0 top-24  bottom-0 h-full w-56 bg-gray-400 -mt-2'>
+         
+          modal && <motion.div initial = {{opacity: 0, translateX: 50}} animate = {{opacity: 1, translateX: 0}} transition = {{duration: 1, delay: 0.2, type: 'spring'}} exit = {{translateX: 300}} className='absolute right-0 top-24  bottom-0 h-full w-64 bg-gray-300 -mt-2 flex flex-col gap-4'>
+            <Link className='p-4 flex gap-4' to = "/design" onClick={() => setModal(false)}><BrushIcon className='text-green-800' />ყდის დიზაინის შექმნა</Link>
           <Button variant='contained' color="success" onClick={logout} className='w-full'>გასვლა</Button>
-          </div>
+
+          </motion.div>
+  
          }
+         </AnimatePresence>
          </div>
        ) : (
         <form className='flex items-center gap-4'>

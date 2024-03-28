@@ -5,7 +5,7 @@ import Profile from './components/Profile';
 import Create from './components/Create';
 import FullPage from './components/FullPage';
 import Cart from './components/Cart';
-
+import Design from './components/Design';
 
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
          <Route path = "/create" element = {<Create />} />
          <Route path = "/books/:id" element = {<FullPage />} />
          <Route path = "/cart" element = {<Cart />} />
+         <Route path = "/design" element = {<Design />} />
        </Routes>
     </div>
   );
