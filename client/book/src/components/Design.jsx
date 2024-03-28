@@ -1,11 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { createElement, useEffect, useRef, useState } from 'react'
 import { Button, TextField } from '@mui/material';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { createFileName, useScreenshot } from 'use-react-screenshot';
 
 const Design = () => {
+
+// take screenshot
+ const [image1, takeScreenshot] = useScreenshot({
+  type: 'image/png',
+  quality: 1.0
+ });
+
+ const canvasRef = useRef(null);
+
+ // download function
+ const download = (image1, {name = 'img', extension ='png'} = {}) => {
+   const a = document.createElement('a');
+   a.href = image1;
+   a.download = createFileName(extension, name);
+   a.click();
+ }
+
+ // take screenshot
+ const downloadScreenshot = () => {
+    takeScreenshot(canvasRef.current).then(download);
+ }
+
   // colors
   const colors = [
     {
@@ -82,8 +105,8 @@ const Design = () => {
 
   ];
 
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [titleChange, setTitleChange] = useState('');
+const [selectedColor, setSelectedColor] = useState(null);
+const [titleChange, setTitleChange] = useState('');
 const [size, setSize] = useState(16);
 const [settings, setSettings] = useState(false);
 const [center, setCenter] = useState(false);
@@ -102,6 +125,7 @@ const [authorLefted, setAuthorLeft] = useState(false);
 const [authorYPosition, setAuthorYPosition] = useState(0);
 const [image, setImage] = useState('');
 const [authorColor, setAuthorColor] = useState('');
+const [deleteModal, setDeleteModal] = useState(false);
 
   // change background function
   const changeBackground = (name) => {
@@ -179,6 +203,33 @@ const [authorColor, setAuthorColor] = useState('');
 
     const image = localStorage.getItem('image');
     setImage(JSON.parse(image));
+
+    const center = localStorage.getItem('center');
+    setCenter(JSON.parse(center));
+
+    const left = localStorage.getItem('left');
+    setLeft(JSON.parse(left));
+
+    const right = localStorage.getItem('right');
+    setRight(JSON.parse(right));
+
+    const yPosition = localStorage.getItem('yPosition');
+    setYposition(JSON.parse(yPosition));
+
+    const textBackground = localStorage.getItem('textBackground');
+    setTextBackground(JSON.parse(textBackground));
+
+    const authorCentered = localStorage.getItem('authorCentered');
+    setAuthorCenter(JSON.parse(authorCentered));
+
+    const authorLefted = localStorage.getItem('authorLefted');
+    setAuthorLeft(JSON.parse(authorLefted));
+
+    const authorRighted = localStorage.getItem('authorRighted');
+    setAuthorRight(JSON.parse(authorRighted));
+
+    const authorYPosition = localStorage.getItem('authorYPosition');
+    setAuthorYPosition(JSON.parse(authorYPosition));
   }, [])
 
   useEffect(() => {
@@ -190,9 +241,39 @@ const [authorColor, setAuthorColor] = useState('');
   localStorage.setItem('bold', JSON.stringify(bold));
   localStorage.setItem('authorColor', JSON.stringify(authorColor));
   localStorage.setItem('selectedColor', JSON.stringify(selectedColor));
+  localStorage.setItem('center', JSON.stringify(center));
+  localStorage.setItem('right', JSON.stringify(right));
+  localStorage.setItem('left', JSON.stringify(left));
+  localStorage.setItem('yPosition', JSON.stringify(yPosition));
+  localStorage.setItem('textBackground', JSON.stringify(textBackground));
+  localStorage.setItem('authorCentered', JSON.stringify(authorCentered));
+  localStorage.setItem('authorLefted', JSON.stringify(authorLefted));
+  localStorage.setItem('authorRighted', JSON.stringify(authorRighted));
+  localStorage.setItem('authorYPosition', JSON.stringify(authorYPosition));
   localStorage.setItem('image', JSON.stringify(image));
-  }, [titleChange, size, textColor, author, authorSize, bold, authorColor, selectedColor, image])
+  }, [titleChange, size, textColor, author, authorSize, bold, authorColor, selectedColor, image, center, left, right, yPosition, textBackground, authorLefted, authorCentered, authorRighted, authorYPosition]);
 
+  const deleteData = () => {
+    localStorage.removeItem('title', JSON.stringify(titleChange));
+    localStorage.removeItem('size', size);
+    localStorage.removeItem('textColor', JSON.stringify(textColor));
+    localStorage.removeItem('author', JSON.stringify(author));
+    localStorage.removeItem('authorSize', JSON.stringify(authorSize));
+    localStorage.removeItem('bold', JSON.stringify(bold));
+    localStorage.removeItem('authorColor', JSON.stringify(authorColor));
+    localStorage.removeItem('selectedColor', JSON.stringify(selectedColor));
+    localStorage.removeItem('image', JSON.stringify(image));
+    setDeleteModal(false);
+    setSelectedColor(null);
+    setTitleChange('');
+    setSize(16);
+    setTextColor('');
+    setAuthor('');
+    setAuthorSize(16);
+    setBold(false);
+    setAuthorColor('');
+    setImage('');
+  }
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
       
@@ -244,13 +325,14 @@ const [authorColor, setAuthorColor] = useState('');
         ))}
         </div>
 
-        <div>
+        <div className='flex flex-col gap-4'>
           <h2>ფონის სურათი:</h2>
           <TextField size='small' label = "ჩაწერეთ ლინკი" onChange={(e) => changeBackgroundImage(e.target.value)}/>
+          <Button onClick={downloadScreenshot} color = "success" variant='contained'>ჩამოტვირთეთ სურათი</Button>
         </div>
       </div>
   
-      <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor, backgroundImage: image, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', objectFit: 'cover'}}>
+      <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor, backgroundImage: image, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', objectFit: 'cover'}} ref ={canvasRef}>
       <h1 className='cursor-pointer' style={{fontSize: size + 'px', textAlign: center ? "center" : right ? "end" : left ? "start" : null, marginTop: yPosition + "px", color: textColor, fontWeight: bold ?  "bold" : null, backgroundColor: textBackground}} onClick={() => setSettings(true)} >{titleChange}</h1>
       {settings && (
         <div className='flex items-center gap-4 bg-gray-200 relative p-4'>
@@ -276,7 +358,16 @@ const [authorColor, setAuthorColor] = useState('');
 </div>
 
 <div>
-  <DeleteForeverIcon sx={{fontSize: 40}} className='cursor-pointer absolute bottom-4 right-4' />
+  <DeleteForeverIcon sx={{fontSize: 40}} className='cursor-pointer absolute bottom-4 right-4' onClick = {() => setDeleteModal(true)} />
+  {deleteModal && (
+    <div className='bg-gray-200 w-2/5 absolute left-1/2 top-2/4 -translate-x-1/2 ml-44 h-56 rounded-md shadow-lg flex flex-col gap-12 p-12 '>
+      <h1 className='text-center text-2xl'>ნამდვილად გსურთ წაშლა? მერე არ ინანოთ</h1>
+ <div className='flex px-12 gap-4'>
+      <Button variant='contained' color = "success" className='w-full' onClick={deleteData} >წაშლა</Button>
+      <Button variant='outlined' color = "success" className='w-full' onClick={() => setDeleteModal(false)}>გაუქმება</Button>
+      </div>
+      </div>
+  )}
 </div>
   
 
