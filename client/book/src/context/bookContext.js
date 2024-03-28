@@ -14,7 +14,7 @@ const BookProvider = ({children}) => {
     return savedCart ? JSON.parse(savedCart) : 0;
   });
 
-
+  const [myBookCover, setMyBookCover] = useState([]);
 
   const [cartItem, setCartItem] = useState([]);
 
@@ -23,7 +23,7 @@ const BookProvider = ({children}) => {
   }, [cart]);
 
   return (
-    <BookContext.Provider value = {{books, setBooks, cart, setCart, cartItem, setCartItem}}>
+    <BookContext.Provider value = {{books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover}}>
         {children}
     </BookContext.Provider>
   )

@@ -1,12 +1,15 @@
-import React, { createElement, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Button, TextField } from '@mui/material';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { createFileName, useScreenshot } from 'use-react-screenshot';
+import { BookContext } from '../context/bookContext';
 
 const Design = () => {
+  // take states from bookContext
+  const {myBookCover, setMyBookCover} = useContext(BookContext)
 
 // take screenshot
  const [image1, takeScreenshot] = useScreenshot({
@@ -22,6 +25,10 @@ const Design = () => {
    a.href = image1;
    a.download = createFileName(extension, name);
    a.click();
+
+   setMyBookCover([...myBookCover, image1]);
+
+   console.log(myBookCover);
  }
 
  // take screenshot
@@ -263,6 +270,14 @@ const [deleteModal, setDeleteModal] = useState(false);
     localStorage.removeItem('authorColor', JSON.stringify(authorColor));
     localStorage.removeItem('selectedColor', JSON.stringify(selectedColor));
     localStorage.removeItem('image', JSON.stringify(image));
+    localStorage.removeItem('center', JSON.stringify(center));
+    localStorage.removeItem('right', JSON.stringify(right));
+    localStorage.removeItem('left', JSON.stringify(left));
+    localStorage.removeItem('authorCentered', JSON.stringify(authorCentered));
+    localStorage.removeItem('authorLefted', JSON.stringify(authorLefted));
+    localStorage.removeItem('authorRighted', JSON.stringify(authorRighted));
+    localStorage.removeItem('yPosition', JSON.stringify(yPosition));
+    localStorage.removeItem('authorYPosition', JSON.stringify(authorYPosition));
     setDeleteModal(false);
     setSelectedColor(null);
     setTitleChange('');
@@ -273,6 +288,15 @@ const [deleteModal, setDeleteModal] = useState(false);
     setBold(false);
     setAuthorColor('');
     setImage('');
+    setCenter(false);
+    setLeft(false);
+    setRight(false);
+    setAuthorCenter(false);
+    setAuthorLeft(false);
+    setAuthorRight(false);
+    setYposition(0);
+    setAuthorYPosition(0);
+
   }
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
