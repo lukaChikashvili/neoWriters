@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import TextFormatIcon from '@mui/icons-material/TextFormat';
 
 const Design = () => {
@@ -82,13 +82,34 @@ const Design = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [titleChange, setTitleChange] = useState('');
 const [size, setSize] = useState(16);
+const [settings, setSettings] = useState(false);
+const [center, setCenter] = useState(false);
+const [right, setRight] = useState(false);
+const [left, setLeft] = useState(false);
+const [yPosition, setYposition] = useState(0);
   // change background function
   const changeBackground = (name) => {
     setSelectedColor(name);
   }
 
-  
 
+  const handleLeft = () => {
+    setLeft(true);
+    setCenter(false);
+    setRight(false);
+  };
+  
+  const handleRight = () => {
+    setLeft(false);
+    setCenter(false);
+    setRight(true);
+  };
+
+  const handleCenter = () => {
+    setLeft(false);
+    setCenter(true);
+    setRight(false);
+  };
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
       
@@ -122,7 +143,16 @@ const [size, setSize] = useState(16);
       </div>
   
       <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor}}>
-      <h1 className='cursor-pointer' style={{fontSize: size + 'px'}}  >{titleChange}</h1>
+      <h1 className='cursor-pointer' style={{fontSize: size + 'px', textAlign: center ? "center" : right ? "end" : left ? "start" : null, marginTop: yPosition + "px"}} onClick={() => setSettings(true)} >{titleChange}</h1>
+      {settings && (
+        <div className='grid grid-cols-3'>
+          
+          <Button color = "success" onClick={handleLeft}>მარცხნივ</Button>
+          <Button  color = "success" onClick={handleCenter} >ცენტრში</Button>
+          <Button color = "success" onClick={handleRight}>მარჯვნივ</Button>
+          <span>y:</span><TextField size = "small" type = "number" className='w-24' value = {yPosition} onChange={(e) => setYposition(e.target.value)} />
+          </div>
+      )}
      
 </div>
 
