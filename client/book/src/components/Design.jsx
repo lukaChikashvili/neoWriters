@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { TextField } from '@mui/material';
+import TextFormatIcon from '@mui/icons-material/TextFormat';
 
 const Design = () => {
   // colors
@@ -70,7 +71,7 @@ const Design = () => {
     },
 
     {
-      id: 6,
+      id: 14,
       name: 'white'
     }
 
@@ -79,20 +80,29 @@ const Design = () => {
   ];
 
   const [selectedColor, setSelectedColor] = useState(null);
-
-  
-
+  const [titleChange, setTitleChange] = useState('');
+const [size, setSize] = useState(16);
   // change background function
   const changeBackground = (name) => {
     setSelectedColor(name);
   }
+
+  
+
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
       
       <div className='bg-gray-300 w-1/4 h-screen p-8 flex flex-col gap-4 '>
         <div className='flex items-center gap-8'>
         <h1 className='text-xl '> სათაური: </h1>
-        <TextField size='small' label = "სათაური..." className='w-56' />
+        <TextField size='small' label = "სათაური..." className='w-56' onChange={(e) => setTitleChange(e.target.value)} />
+
+        </div>
+
+        <div className='flex items-center gap-4'>
+          <TextFormatIcon />
+          <p>ტექსტის ზომა: </p>
+          <TextField size='small' type='number' value = {size} onChange={(e) => setSize(e.target.value)} className='w-24'/>
         </div>
 
         <div className='flex items-center gap-10'>
@@ -112,7 +122,8 @@ const Design = () => {
       </div>
   
       <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor}}>
-      
+      <h1 className='cursor-pointer' style={{fontSize: size + 'px'}}  >{titleChange}</h1>
+     
 </div>
 
 <div>
