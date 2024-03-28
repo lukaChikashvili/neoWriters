@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextField } from '@mui/material';
 
 const Design = () => {
@@ -76,7 +76,16 @@ const Design = () => {
 
 
 
-  ]
+  ];
+
+  const [selectedColor, setSelectedColor] = useState(null);
+
+  
+
+  // change background function
+  const changeBackground = (name) => {
+    setSelectedColor(name);
+  }
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
       
@@ -95,14 +104,14 @@ const Design = () => {
           <h1  className='text-xl pb-4 '>აირჩიეთ ფერი:</h1>
         
         {colors.map((value) => (
-          <div className='inline-flex gap-4 mr-2'>
-           <div style={{backgroundColor: value.name}} className='w-8 h-8 rounded-md shadow'></div>
+          <div className='inline-flex gap-4 mr-2' key={value.id}>
+           <div style={{backgroundColor: value.name}} className='w-8 h-8 rounded-md shadow cursor-pointer' onClick={() => changeBackground(value.name)}></div>
            </div>
         ))}
         </div>
       </div>
   
-      <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md'>
+      <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor}}>
       
 </div>
 
