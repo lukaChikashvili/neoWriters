@@ -29,12 +29,15 @@ const BookProvider = ({children}) => {
 
    const [useUrl, setUseUrl] = useState(false);
 
+   const [selectedItemUrl, setSelectedItemUrl] = useState('');
+
+  
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   return (
-    <BookContext.Provider value = {{books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl}}>
+    <BookContext.Provider value = {{selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl}}>
         {children}
     </BookContext.Provider>
   )

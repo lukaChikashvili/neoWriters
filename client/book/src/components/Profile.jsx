@@ -26,6 +26,7 @@ const Profile = () => {
 // navigate to full page
 const fullPage = (id) => {
   navigate(`/books/${id}`);
+  console.log(books);
 }
 
   return (

@@ -5,20 +5,27 @@ import { useNavigate } from 'react-router-dom';
 
 const MyDesign = () => {
  // take myBook array from context
-    const { myBookCover, setUseUrl } = useContext(BookContext);
+    const { myBookCover, setUseUrl, setSelectedItemUrl , selectedItemUrl } = useContext(BookContext);
     let navigate = useNavigate();
 
-   const publishCover = () => {
-     setUseUrl(true);
-     navigate('/create');
-   }
+    const publishCover = (id) => {
+      setUseUrl(true);
+      navigate('/create');
+  
+     
+      const filtered = myBookCover.filter(item => item.id === id);
+      const urls = filtered.map(item => item.url);
+     
+      setSelectedItemUrl(urls.join());
+
+    }
 
   return (
     <div className='flex flex-wrap' >
       {myBookCover.map((value, i) => (
         <div className='flex items-center flex-col '>
-        <img src = {value} key = {i} className='w-96 h-96 p-12'/>
-        <button onClick={publishCover} >გამოიყენე</button>
+        <img src = {value.url} key = {value.id} className='w-96 h-96 p-12'/>
+        <button onClick={() => publishCover(value.id)} >გამოიყენე</button>
        
         </div>
       ))}

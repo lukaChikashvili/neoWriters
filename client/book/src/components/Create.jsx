@@ -30,13 +30,13 @@ const Create = () => {
 
     let navigate = useNavigate();
 
-    const { books, setBooks, useUrl, base64} = useContext(BookContext);
+    const { books, setBooks, useUrl,  selectedItemUrl} = useContext(BookContext);
 
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
     const [desc, setDesc] = useState('');
     const [text, setText] = useState('');
-    const [url, setUrl] = useState(useUrl ? base64 : '');
+    const [url, setUrl] = useState(useUrl ?  selectedItemUrl : null);
     const [price, setPrice] = useState(0);
 
     useEffect(() => {
@@ -53,7 +53,7 @@ const Create = () => {
   if (storedPrice !== null) setPrice(JSON.parse(storedPrice));
 
   const storedText = localStorage.getItem('text');
-  if (storedText !== null) setText(storedText);
+  if (storedText !== null) setText(JSON.parse(storedText));
  
      }, []);
  
@@ -109,7 +109,7 @@ const Create = () => {
             <TextField label = "მოკლე აღწერა" variant='outlined' value = {desc} size="small" onChange={(e) => setDesc(e.target.value)}/>
             <TextField label = "წიგნის ტექსტი" variant='outlined' value = {text} size="small" onChange={(e) => setText(e.target.value)}/>
             
-            <TextField label = "ყდის სურათი: " variant='outlined' value={url} size="small" onChange={(e) => setUrl(e.target.value)}/>
+            <TextField label = "ყდის სურათი: " variant='outlined' value={selectedItemUrl} size="small" onChange={(e) => setUrl(e.target.value)}/>
             <TextField label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)}/>
             <Button variant='contained' color="success" onClick={handleCreate}>გამოქვეყნება</Button>
         </form>

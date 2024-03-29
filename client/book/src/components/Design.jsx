@@ -20,13 +20,16 @@ const Design = () => {
  const canvasRef = useRef(null);
 
  // download function
- const download = (image1, {name = 'img', extension ='png'} = {}) => {
+ const download = (image1, {name = 'img', extension ='png', id = null} = {}) => {
    const a = document.createElement('a');
    a.href = image1;
    a.download = createFileName(extension, name);
    a.click();
 
-   setMyBookCover([...myBookCover, image1]);
+   // new id
+   const newId = id !== null ? id : Math.random().toString(36).substring(2, 9);
+
+   setMyBookCover([...myBookCover, { id: newId, url: JSON.stringify(image1) }]);
 
 
  }
@@ -185,8 +188,8 @@ const [deleteModal, setDeleteModal] = useState(false);
   }
 
   useEffect(() => {
-    const title = localStorage.getItem('title');
-    setTitleChange(JSON.parse(title));
+    const titlechanged = localStorage.getItem('titlechange');
+    setTitleChange(JSON.parse(titlechanged));
     const size = localStorage.getItem('size');
     setSize(size);
 
@@ -240,7 +243,7 @@ const [deleteModal, setDeleteModal] = useState(false);
   }, [])
 
   useEffect(() => {
-  localStorage.setItem('title', JSON.stringify(titleChange));
+  localStorage.setItem('titlechange', JSON.stringify(titleChange));
   localStorage.setItem('size', size);
   localStorage.setItem('textColor', JSON.stringify(textColor));
   localStorage.setItem('author', JSON.stringify(author));
