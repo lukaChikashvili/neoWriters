@@ -39,7 +39,7 @@ const MyDesign = () => {
     <div className='flex flex-wrap' >
       {myBookCover.map((value) => (
         <div className='flex items-center flex-col '>
-        <img src = {value.url} key = {value.id} className='w-96 h-96 p-12'/>
+        <img src = {value.url} key = {value.id} className='w-96 h-96 p-12 object-cover'/>
         <div className='flex items-center gap-8'>
         <Button variant = "outlined" color = "success" onClick={() => publishCover(value.id)} >გამოყენება</Button>
         <Button variant = "contained" color = "error" onClick={() => deleteCover(value.id)}>წაშლა</Button>

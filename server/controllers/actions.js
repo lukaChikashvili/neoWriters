@@ -84,7 +84,16 @@ const getOneBook = async (req,res) => {
   return res.json({oneBook});
 }
 
+// delete book
+const removeBook = async (req, res) => {
+   const { id } = req.params;
 
+   const removedBookId = await Book.findByIdAndDelete(id);
+
+   if(!removedBookId) {
+      return res.status(404).json({message: "can't delete", removedBookId});
+   }
+}
 
 
 
@@ -96,5 +105,6 @@ module.exports = {
     loginUsers,
     createBook,
     getAllBooks,
-    getOneBook
+    getOneBook,
+    removeBook
 }
