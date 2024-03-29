@@ -28,7 +28,7 @@ const Design = () => {
 
    setMyBookCover([...myBookCover, image1]);
 
-   console.log(myBookCover);
+
  }
 
  // take screenshot
