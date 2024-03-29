@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { BookContext } from '../context/bookContext';
 import BrushIcon from '@mui/icons-material/Brush';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -60,6 +61,7 @@ const logout = () => {
           modal && <motion.div initial = {{opacity: 0, translateX: 50}} animate = {{opacity: 1, translateX: 0}} transition = {{duration: 1, delay: 0.2, type: 'spring'}} exit = {{translateX: 300}} className='absolute right-0 top-24  bottom-0 h-full w-64 bg-gray-300 -mt-2 flex flex-col gap-4'>
             <Link className='p-4 flex gap-4' to = "/design" onClick={() => setModal(false)}><BrushIcon className='text-green-800' />ყდის დიზაინის შექმნა</Link>
             <Link className='p-4 flex gap-4' to = "/myDesign"  onClick={() => setModal(false)}><InsertPhotoIcon className='text-green-800'/>ჩემი სურათები</Link>
+            <Link className='p-4 flex gap-4' to = "/myBooks"  onClick={() => setModal(false)}><MenuBookIcon className='text-green-800'/>ჩემი წიგნები</Link>
           <Button variant='contained' color="success" onClick={logout} className='w-full'>გასვლა</Button>
 
           </motion.div>

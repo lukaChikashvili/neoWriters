@@ -1,11 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { BookContext } from '../context/bookContext';
 import { useNavigate } from 'react-router-dom';
+import {Button} from '@mui/material';
 
 
 const MyDesign = () => {
  // take myBook array from context
-    const { myBookCover, setUseUrl, setSelectedItemUrl , selectedItemUrl } = useContext(BookContext);
+    const { myBookCover, setUseUrl, setSelectedItemUrl , setMyBookCover } = useContext(BookContext);
     let navigate = useNavigate();
 
     const publishCover = (id) => {
@@ -20,13 +21,29 @@ const MyDesign = () => {
 
     }
 
+
+  const deleteCover = (id) => {
+    const filtered = myBookCover.filter(item => item.id !== id);
+    
+     setMyBookCover(filtered);
+
+     localStorage.setItem('myBookCover', JSON.stringify(filtered));
+
+    
+  }
+
+
+
+ 
   return (
     <div className='flex flex-wrap' >
-      {myBookCover.map((value, i) => (
+      {myBookCover.map((value) => (
         <div className='flex items-center flex-col '>
         <img src = {value.url} key = {value.id} className='w-96 h-96 p-12'/>
-        <button onClick={() => publishCover(value.id)} >გამოიყენე</button>
-       
+        <div className='flex items-center gap-8'>
+        <Button variant = "outlined" color = "success" onClick={() => publishCover(value.id)} >გამოყენება</Button>
+        <Button variant = "contained" color = "error" onClick={() => deleteCover(value.id)}>წაშლა</Button>
+        </div>
         </div>
       ))}
     </div>

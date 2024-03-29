@@ -23,6 +23,7 @@ const BookProvider = ({children}) => {
     localStorage.setItem('myBookCover', JSON.stringify(myBookCover));
   }, [myBookCover]);
 
+  
 
   const [cartItem, setCartItem] = useState([]);
    const base64 = myBookCover.join();

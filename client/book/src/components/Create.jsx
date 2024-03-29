@@ -36,7 +36,7 @@ const Create = () => {
     const [type, setType] = useState('');
     const [desc, setDesc] = useState('');
     const [text, setText] = useState('');
-    const [url, setUrl] = useState(useUrl ?  selectedItemUrl : null);
+    const [url, setUrl] = useState(useUrl ?  selectedItemUrl : '');
     const [price, setPrice] = useState(0);
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const Create = () => {
   if (storedDesc !== null) setDesc(JSON.parse(storedDesc));
 
   const storedPrice = localStorage.getItem('price');
-  if (storedPrice !== null) setPrice(JSON.parse(storedPrice));
+  if (storedPrice !== null) setPrice(storedPrice);
 
   const storedText = localStorage.getItem('text');
   if (storedText !== null) setText(JSON.parse(storedText));

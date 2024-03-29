@@ -7,6 +7,7 @@ import FullPage from './components/FullPage';
 import Cart from './components/Cart';
 import Design from './components/Design';
 import MyDesign from './components/MyDesign';
+import MyBooks from './components/MyBooks';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
          <Route path = "/cart" element = {<Cart />} />
          <Route path = "/design" element = {<Design />} />
          <Route path = "/myDesign" element = {<MyDesign />} />
+         <Route path = "/myBooks" element = {<MyBooks />} />
        </Routes>
     </div>
   );

@@ -30,7 +30,7 @@ const fullPage = (id) => {
 }
 
   return (
-    <div className='flex items-center gap-12 p-12'>
+    <div className='flex flex-wrap items-center gap-12 p-12'>
        {books.map((value) => (
         <div key={value._id}>
           <p className='text-center text-xl font-semibold pb-6'>{value.title}</p>
@@ -38,7 +38,7 @@ const fullPage = (id) => {
            <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
            <div className='flex items-center gap-12  '>
            <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
-          <Button variant='contained' color = "success" className='absolute top-2 w-24' onClick={() => fullPage(value._id)}>ყიდვა</Button>
+          <Button variant='contained' color = "success" className='absolute top-2 w-24 -z-10' onClick={() => fullPage(value._id)}>ყიდვა</Button>
         </div>
          </div>
        ))}

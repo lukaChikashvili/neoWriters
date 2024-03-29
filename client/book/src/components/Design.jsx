@@ -29,7 +29,7 @@ const Design = () => {
    // new id
    const newId = id !== null ? id : Math.random().toString(36).substring(2, 9);
 
-   setMyBookCover([...myBookCover, { id: newId, url: JSON.stringify(image1) }]);
+   setMyBookCover([...myBookCover, { id: newId, url: image1}]);
 
 
  }
@@ -137,109 +137,112 @@ const [image, setImage] = useState('');
 const [authorColor, setAuthorColor] = useState('');
 const [deleteModal, setDeleteModal] = useState(false);
 
+// get user
+const isUserLoggedIn = localStorage.getItem('token');
+
   // change background function
   const changeBackground = (name) => {
-    setSelectedColor(name);
+    isUserLoggedIn && setSelectedColor(name);
   }
 
 
   const handleLeft = () => {
-    setLeft(true);
-    setCenter(false);
-    setRight(false);
+    isUserLoggedIn && setLeft(true);
+    isUserLoggedIn && setCenter(false);
+    isUserLoggedIn && setRight(false);
   };
   
   const handleRight = () => {
-    setLeft(false);
-    setCenter(false);
-    setRight(true);
+    isUserLoggedIn && setLeft(false);
+    isUserLoggedIn && setCenter(false);
+    isUserLoggedIn && setRight(true);
   };
 
   const handleCenter = () => {
-    setLeft(false);
-    setCenter(true);
-    setRight(false);
+    isUserLoggedIn && setLeft(false);
+    isUserLoggedIn && setCenter(true);
+    isUserLoggedIn && setRight(false);
   };
 
   const authorLeft = () => {
-    setAuthorLeft(true);
-    setAuthorCenter(false);
-    setAuthorRight(false);
+    isUserLoggedIn && setAuthorLeft(true);
+    isUserLoggedIn && setAuthorCenter(false);
+    isUserLoggedIn && setAuthorRight(false);
   };
   
   const authorRight = () => {
-    setAuthorLeft(false);
-    setAuthorCenter(false);
-    setAuthorRight(true);
+    isUserLoggedIn && setAuthorLeft(false);
+    isUserLoggedIn && setAuthorCenter(false);
+    isUserLoggedIn && setAuthorRight(true);
   };
 
   const authorCenter = () => {
-    setAuthorLeft(false);
-    setAuthorCenter(true);
-    setAuthorRight(false);
+    isUserLoggedIn && setAuthorLeft(false);
+    isUserLoggedIn && setAuthorCenter(true);
+    isUserLoggedIn && setAuthorRight(false);
   };
 
   const toggleBold = () => {
-    setBold(prev => !prev);
+    isUserLoggedIn && setBold(prev => !prev);
   };
 
   const changeBackgroundImage = (url) => {
-    setImage(`url(${url})`);
+    isUserLoggedIn && setImage(`url(${url})`);
   }
 
   useEffect(() => {
     const titlechanged = localStorage.getItem('titlechange');
-    setTitleChange(JSON.parse(titlechanged));
+    isUserLoggedIn && setTitleChange(JSON.parse(titlechanged));
     const size = localStorage.getItem('size');
-    setSize(size);
+    isUserLoggedIn && setSize(size);
 
     const textColor = localStorage.getItem('textColor');
-    setTextColor(JSON.parse(textColor));
+    isUserLoggedIn && setTextColor(JSON.parse(textColor));
 
     const author = localStorage.getItem('author');
-    setAuthor(JSON.parse(author));
+    isUserLoggedIn && setAuthor(JSON.parse(author));
 
     const authorSize = localStorage.getItem('authorSize');
-    setAuthorSize(JSON.parse(authorSize));
+    isUserLoggedIn && setAuthorSize(JSON.parse(authorSize));
 
     const bold = localStorage.getItem('bold');
-    setBold(JSON.parse(bold));
+    isUserLoggedIn && setBold(JSON.parse(bold));
 
     const authorColor = localStorage.getItem('authorColor');
-    setAuthorColor(JSON.parse(authorColor));
+    isUserLoggedIn && setAuthorColor(JSON.parse(authorColor));
 
     const selectedColor = localStorage.getItem('selectedColor');
-    setSelectedColor(JSON.parse(selectedColor));
+    isUserLoggedIn && setSelectedColor(JSON.parse(selectedColor));
 
     const image = localStorage.getItem('image');
-    setImage(JSON.parse(image));
+    isUserLoggedIn && setImage(JSON.parse(image));
 
     const center = localStorage.getItem('center');
-    setCenter(JSON.parse(center));
+    isUserLoggedIn && setCenter(JSON.parse(center));
 
     const left = localStorage.getItem('left');
-    setLeft(JSON.parse(left));
+    isUserLoggedIn && setLeft(JSON.parse(left));
 
     const right = localStorage.getItem('right');
-    setRight(JSON.parse(right));
+    isUserLoggedIn && setRight(JSON.parse(right));
 
     const yPosition = localStorage.getItem('yPosition');
-    setYposition(JSON.parse(yPosition));
+    isUserLoggedIn && setYposition(JSON.parse(yPosition));
 
     const textBackground = localStorage.getItem('textBackground');
-    setTextBackground(JSON.parse(textBackground));
+    isUserLoggedIn && setTextBackground(JSON.parse(textBackground));
 
     const authorCentered = localStorage.getItem('authorCentered');
-    setAuthorCenter(JSON.parse(authorCentered));
+    isUserLoggedIn &&setAuthorCenter(JSON.parse(authorCentered));
 
     const authorLefted = localStorage.getItem('authorLefted');
-    setAuthorLeft(JSON.parse(authorLefted));
+    isUserLoggedIn &&setAuthorLeft(JSON.parse(authorLefted));
 
     const authorRighted = localStorage.getItem('authorRighted');
-    setAuthorRight(JSON.parse(authorRighted));
+    isUserLoggedIn &&setAuthorRight(JSON.parse(authorRighted));
 
     const authorYPosition = localStorage.getItem('authorYPosition');
-    setAuthorYPosition(JSON.parse(authorYPosition));
+    isUserLoggedIn &&setAuthorYPosition(JSON.parse(authorYPosition));
   }, [])
 
   useEffect(() => {
@@ -359,7 +362,7 @@ const [deleteModal, setDeleteModal] = useState(false);
         </div>
       </div>
   
-      <div className='w-1/2 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor, backgroundImage: image, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', objectFit: 'cover'}} ref ={canvasRef}>
+      <div className='w-1/3 h-4/5 -mt-16 bg-white shadow-lg rounded-md' style={{backgroundColor: selectedColor, backgroundImage: image, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', objectFit: 'cover'}} ref ={canvasRef}>
       <h1 className='cursor-pointer' style={{fontSize: size + 'px', textAlign: center ? "center" : right ? "end" : left ? "start" : null, marginTop: yPosition + "px", color: textColor, fontWeight: bold ?  "bold" : null, backgroundColor: textBackground}} onClick={() => setSettings(true)} >{titleChange}</h1>
       {settings && (
         <div className='flex items-center gap-4 bg-gray-200 relative p-4'>
