@@ -284,6 +284,7 @@ const isUserLoggedIn = localStorage.getItem('token');
     localStorage.removeItem('authorRighted', JSON.stringify(authorRighted));
     localStorage.removeItem('yPosition', JSON.stringify(yPosition));
     localStorage.removeItem('authorYPosition', JSON.stringify(authorYPosition));
+    localStorage.removeItem('textBackground', JSON.stringify(textBackground));
     setDeleteModal(false);
     setSelectedColor(null);
     setTitleChange('');
@@ -302,6 +303,7 @@ const isUserLoggedIn = localStorage.getItem('token');
     setAuthorRight(false);
     setYposition(0);
     setAuthorYPosition(0);
+    setTextBackground('');
 
   }
   return (

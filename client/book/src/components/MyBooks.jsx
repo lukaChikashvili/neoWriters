@@ -20,6 +20,11 @@ const MyBooks = () => {
  
     }, [books]);
 
+    useEffect(() => {
+       const data = localStorage.getItem('filteredByName');
+       setMyBook(JSON.parse(data));
+    }, [])
+
     const deleteBook = async (id) => {
        await axiosInstance.delete(`http://localhost:4000/api/books/del/${id}`);
       setBooks(books.filter(item => item._id !== id));
