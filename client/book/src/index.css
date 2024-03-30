@@ -5,10 +5,18 @@
 @import url("//cdn.web-fonts.ge/fonts/bpg-algeti-compact/css/bpg-algeti-compact.min.css");
 
 body {
-    background-color: #F5F7F8;
+    background: linear-gradient(to top, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: "BPG Algeti Compact", sans-serif;
    overflow-x: hidden;
+   min-height: 100vh;
 }
+
+.sidebar {
+    background: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+}
+
 
 .line {
     position: relative;

@@ -309,7 +309,7 @@ const isUserLoggedIn = localStorage.getItem('token');
   return (
     <div className='flex items-center justify-between h-screen pr-4 '>
       
-      <div className='bg-gray-300 w-1/4 h-screen p-8 flex flex-col gap-4 '>
+      <div className='bg-gray-300 w-1/4 -mt-14  p-8 flex flex-col gap-4 sidebar shadow rounded'>
         <div className='flex items-center gap-8'>
         <h1 className='text-xl '> სათაური: </h1>
         <TextField size='small' label = "სათაური..." className='w-56' onChange={(e) => setTitleChange(e.target.value)} />
