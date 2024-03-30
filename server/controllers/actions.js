@@ -55,10 +55,11 @@ const createBook = async (req, res) => {
     }
 
     const userId = req.user.id;
+    const defaultUrl = 'https://islandpress.org/files/default_book_cover_2015.jpg';
+    const imageUrl = url || defaultUrl;
 
 
-
-    const newBook = new Book({title, type, desc, text, url, price,  author: userId});
+    const newBook = new Book({title, type, desc, text, url:imageUrl, price,  author: userId});
 
     await newBook.save();
 
