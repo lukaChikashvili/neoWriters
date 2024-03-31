@@ -27,6 +27,8 @@ const Header = () => {
    // errors
    const [nameErr, setNameErr] = useState(false);
    const [passErr, setPassErr] = useState(false);
+   // incorrect credential error
+   const [incorrect, setIncorrect] = useState(false);
 
   let navigate = useNavigate();
 
@@ -43,12 +45,17 @@ if(!name && !password) {
    setPassErr(true);
    setNameErr(false);
 }else {
-  const response = await axiosInstance.post('http://localhost:4000/api/login', {name, password});
+  try {
+    const response = await axiosInstance.post('http://localhost:4000/api/login', {name, password});
   const token = response.data.token;
   localStorage.setItem('token', token);
   localStorage.setItem('name', response.data.name);
 
   navigate('/profile');
+  } catch (error) {
+   setIncorrect(true);
+  }
+  
     
 }
  
@@ -90,9 +97,9 @@ const logout = () => {
          </div>
        ) : (
         <form className='flex items-center gap-4'>
-         <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required />
+         <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required />
          
-         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : ''} label = "პაროლი" variant='outlined' size='small' type = "password" className='w-44' onChange={(e) => setPassword(e.target.value)} required />
+         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = "password" className='w-44' onChange={(e) => setPassword(e.target.value)} required />
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
         
      </form>

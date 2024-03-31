@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../assets/logo.png';
 import { Button, TextField } from '@mui/material';
 
 import axiosInstance from './axios';
+
 
 const Home = () => {
   // register input states
@@ -13,21 +14,27 @@ const Home = () => {
   const [proffesion, setProffesion] = useState('');
   const [password, setPassword] = useState('');
 
-
+// register err
+const [registerErr, setRegisterErr] = useState(false);
 
 
   // register users
   const handleRegister = async () => {
-    try {
-       await axiosInstance.post('http://localhost:4000/api/register', {
-        name, surname, email, password, location, proffesion
-      });
+    if(!name || !surname || !email || !password || !location || !proffesion) {
+     setRegisterErr(true);
+    }else {
+      try {
+        await axiosInstance.post('http://localhost:4000/api/register', {
+         name, surname, email, password, location, proffesion
+       });
+   
   
- 
-    } catch (error) {
-      console.log(error);
+     } catch (error) {
+       setRegisterErr(true);
+     }
+       
     }
-      
+    
     
 
   }
@@ -41,12 +48,12 @@ const Home = () => {
  <div className='w-1/3'>
  <form className='w-full flex flex-col gap-6'>
    <h1 className='text-4xl font-bold text-center'>რეგისტრაცია</h1>
- <TextField label = "სახელი" variant='outlined' size="small" onChange={(e) => setName(e.target.value)} />
- <TextField label = "გვარი" variant='outlined' size='small' onChange={(e) => setSurname(e.target.value)}  />
- <TextField label = "ელ-ფოსტა" variant='outlined' size='small' type='email' onChange={(e) => setEmail(e.target.value)}/>
- <TextField label = "ქალაქი" variant='outlined' size='small' onChange={(e) => setLocation(e.target.value)}/>
- <TextField label = "პროფესია" variant='outlined' size="small" onChange={(e) => setProffesion(e.target.value)} />
- <TextField label = "პაროლი" variant='outlined' size='small' type = "password" onChange={(e) => setPassword(e.target.value)} />
+ <TextField error = {registerErr && !name}  label = "სახელი" variant='outlined' size="small" onChange={(e) => setName(e.target.value)} />
+ <TextField error = {registerErr && !surname} label = "გვარი" variant='outlined' size='small' onChange={(e) => setSurname(e.target.value)}  />
+ <TextField error = {registerErr && !email} label = "ელ-ფოსტა" variant='outlined' size='small' type='email' onChange={(e) => setEmail(e.target.value)}/>
+ <TextField error = {registerErr && !location} label = "ქალაქი" variant='outlined' size='small' onChange={(e) => setLocation(e.target.value)}/>
+ <TextField error = {registerErr && !proffesion} label = "პროფესია" variant='outlined' size="small" onChange={(e) => setProffesion(e.target.value)} />
+ <TextField error = {registerErr && !email} label = "პაროლი" variant='outlined' size='small' type = "password" onChange={(e) => setPassword(e.target.value)} />
  <Button variant='contained' color = "success" onClick={handleRegister}>რეგისტრაცია</Button>
  </form>
 
