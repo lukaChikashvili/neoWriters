@@ -49,8 +49,12 @@ const BookProvider = ({children}) => {
      event.preventDefault();
    };
 
+   // currencies
+   const [showDollar, setShowDollar] = useState(false);
+const [showEuro, setShowEuro] = useState(false);
+const [showLari, setShowLari] = useState(false);
   return (
-    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl}}>
+    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showDollar, showEuro, showLari, setShowDollar, setShowEuro, setShowLari}}>
         {children}
     </BookContext.Provider>
   )
