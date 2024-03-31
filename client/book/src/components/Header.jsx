@@ -81,7 +81,7 @@ const logout = () => {
         <div className='flex items-center gap-8 '>
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
-        <p>ბალანსი:<span>{showDollar ? "185.53" : showEuro ? '171.78' : showLari ? '500' : '500'}</span></p>
+        <p>ბალანსი:<span>{showLari}</span></p>
         <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-6 right-24 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
        {modal ? <CloseIcon className='cursor-pointer' onClick = {() => setModal(false)} /> :   <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />}
 <AnimatePresence>

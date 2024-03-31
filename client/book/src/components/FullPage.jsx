@@ -11,7 +11,7 @@ const FullPage = () => {
     // take id from route
     const { id } = useParams();
     const [fullPage, setFullPage] = useState(null);
-    const { books, setCart, setCartItem, showDollar, showEuro, showLari, setShowDollar, setShowEuro, setShowLari} = useContext(BookContext);
+    const { books, setCart, setCartItem,  showLari,  setShowLari} = useContext(BookContext);
 
     useEffect(() => {
         const getFull = async () => {
@@ -56,41 +56,42 @@ const buyBook = () => {
    
 }
 
+let buttonRef = useRef();
 
 
-const showTheLari = () => {
-    setShowDollar(false);
-    setShowEuro(false);
-    setShowLari(true);
-}
+    const handlePurchase = (price) => {
+        let result = showLari - price;
+      setShowLari(result);
+      buttonRef.current.disabled = true;
 
-const showTheDollar = () => {
-    setShowDollar(true);
-    setShowEuro(false);
-    setShowLari(true);
-}
+      localStorage.setItem('balance', JSON.stringify(result));
+    }
 
-const showTheEuro = () => {
-    setShowDollar(false);
-    setShowEuro(true);
-    setShowLari(false);
-}
+    useEffect(() => {
+        const data = localStorage.getItem('balance');
+        setShowLari(JSON.parse(data));
+    })
+
 
   return (
     <div className='p-24 px-56' >
         {buyModal && <div className='w-4/5 h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 flex flex-col gap-12'>
             <span className='absolute top-4 right-4 text-2xl font-semibold cursor-pointer' onClick={() => setBuyModal(false)}>X</span>
-               <h1 className='text-5xl font-bold'>ბალანსი: <span>{showDollar ? "185.53" : showEuro ? '171.78' : showLari ? '500' : '500'}</span></h1>
+               <h1 className='text-5xl font-bold'>ბალანსი: <span>{showLari }</span></h1>
                <p className='text-2xl'>აირჩიეთ გადახდის მეთოდი: </p>
                <div className='flex gap-12'>
-               <Button variant = "contained" color = "success" className='w-36' onClick={showTheLari}>ლარი</Button>
-               <Button variant = "contained" color = "error" className='w-36' onClick={showTheDollar} >დოლარი</Button>
-               <Button variant = "contained" color = "secondary" className='w-36' onClick={showTheEuro}>ევრო</Button>
+              
+               
+             
              
                 
                </div>
                {fullPage &&  (
+                <div className='flex gap-12'>
                     <img src = {fullPage.url} className='w-56 h-76 object-cover cursor-pointer shadow-lg rounded-md absolute right-56 top-8'/>
+                    <p className='text-3xl'>{fullPage.price}</p>
+                    <Button variant='outlined' color = "success" onClick={() => handlePurchase(fullPage.price)} ref = {buttonRef}>გადახდა</Button>
+                    </div>
                 )}
             </div>}
 

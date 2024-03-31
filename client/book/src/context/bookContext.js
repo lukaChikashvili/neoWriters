@@ -50,11 +50,10 @@ const BookProvider = ({children}) => {
    };
 
    // currencies
-   const [showDollar, setShowDollar] = useState(false);
-const [showEuro, setShowEuro] = useState(false);
-const [showLari, setShowLari] = useState(false);
+
+const [showLari, setShowLari] = useState(500);
   return (
-    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showDollar, showEuro, showLari, setShowDollar, setShowEuro, setShowLari}}>
+    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl,  showLari,  setShowLari}}>
         {children}
     </BookContext.Provider>
   )
