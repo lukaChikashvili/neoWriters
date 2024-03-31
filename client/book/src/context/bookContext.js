@@ -32,13 +32,15 @@ const BookProvider = ({children}) => {
 
    const [selectedItemUrl, setSelectedItemUrl] = useState('');
 
+   // error message
+   const [err, setErr] = useState(false);
   
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   return (
-    <BookContext.Provider value = {{selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl}}>
+    <BookContext.Provider value = {{err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl}}>
         {children}
     </BookContext.Provider>
   )

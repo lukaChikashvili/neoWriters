@@ -14,18 +14,35 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 const Header = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+
+  
   
   // cart span
-  const { cart} = useContext(BookContext);
+  const { cart, err, setErr} = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
    // logout modal
-   const [modal, setModal] = useState(false);
+   const [modal, setModal] = useState(false);  
 
+   // errors
+   const [nameErr, setNameErr] = useState(false);
+   const [passErr, setPassErr] = useState(false);
 
   let navigate = useNavigate();
 
 const handleLogin = async () => {
+  
+if(!name && !password) {
+  setErr(true);
+  setNameErr(false);
+}else if(!name) {
+  setNameErr(true);
+  setPassErr(false);
+   
+}else if(!password) {
+   setPassErr(true);
+   setNameErr(false);
+}else {
   const response = await axiosInstance.post('http://localhost:4000/api/login', {name, password});
   const token = response.data.token;
   localStorage.setItem('token', token);
@@ -33,6 +50,8 @@ const handleLogin = async () => {
 
   navigate('/profile');
     
+}
+ 
 
 }
 
@@ -71,10 +90,13 @@ const logout = () => {
          </div>
        ) : (
         <form className='flex items-center gap-4'>
-         <TextField label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)}/>
-         <TextField label = "პაროლი" variant='outlined' size='small' type = "password" className='w-44' onChange={(e) => setPassword(e.target.value)}/>
+         <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required />
+         
+         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : ''} label = "პაროლი" variant='outlined' size='small' type = "password" className='w-44' onChange={(e) => setPassword(e.target.value)} required />
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
+        
      </form>
+  
        )}
         
     </div>
