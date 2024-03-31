@@ -9,30 +9,26 @@ const MyBooks = () => {
     const [myBook, setMyBook] = useState([]);
 
     useEffect(() => {
-      initializeMyBook();
-    }, []);
-  
-    useEffect(() => {
-      localStorage.setItem('myBook', JSON.stringify(myBook));
-    }, [myBook]);
-  
-    const initializeMyBook = () => {
-      const data = localStorage.getItem('myBook');
-      if (data) {
-        setMyBook(JSON.parse(data));
-      } else {
-        const name = localStorage.getItem('name');
-        if (name) {
-          const filterByName = books.filter(item => item.author.name === name);
-          setMyBook([...myBook, filterByName]);
-        }
-      }
-    };
+      const data = localStorage.getItem('filteredByName');
+      
+       setMyBook(JSON.parse(data));
+      
+      
+   }, [])
+
+   useEffect(() => {
+  const name = localStorage.getItem('name');
+  if (name && myBook.length === 0) {
+    const filterByName = books.filter(item => item.author.name === name);
+    setMyBook(filterByName);
+    localStorage.setItem('filteredByName', JSON.stringify(filterByName));
+  }
+}, [books, myBook]);
+
+
     const deleteBook = async (id) => {
        await axiosInstance.delete(`http://localhost:4000/api/books/del/${id}`);
-      //setBooks(books.filter(item => item._id !== id));
-     setMyBook(myBook.filter(item => item._id !== id));
-     localStorage.removeItem('myBook');
+      setBooks(books.filter(item => item._id !== id));
       
     }
     
@@ -42,7 +38,6 @@ const MyBooks = () => {
       <div className='flex items-center gap-12 p-12'>
       {myBook.length === 0 ? <p className='text-2xl'>თქვენ არ გაქვთ წიგნები</p> : (myBook.map((value) => (
         <div className='flex flex-col gap-4' key={value._id}>
-          <p>{value.title}</p>
         <img src = {value.url} className='w-56 h-56 object-cover' />
         <Button variant='contained' color = "error" onClick={() => deleteBook(value._id)}>წაშლა</Button>
         </div>
