@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import {Button,   TextField} from '@mui/material';
+import {Button,   IconButton,   InputAdornment,   TextField} from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import {Link, useNavigate} from 'react-router-dom';
 import axiosInstance from './axios';
@@ -10,12 +10,23 @@ import { BookContext } from '../context/bookContext';
 import BrushIcon from '@mui/icons-material/Brush';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 const Header = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  
+  // show password
+  const [showPassword, setShowPassword] = useState(false);
+
+  // show password function
+  const handleShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   
   // cart span
   const { cart, err, setErr} = useContext(BookContext);
@@ -99,7 +110,20 @@ const logout = () => {
         <form className='flex items-center gap-4'>
          <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required />
          
-         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = "password" className='w-44' onChange={(e) => setPassword(e.target.value)} required />
+         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"}   InputProps={{ 
+    endAdornment: (
+      <InputAdornment position="end">
+        <IconButton
+          aria-label="toggle password visibility"
+          onClick={handleShowPassword}
+          onMouseDown={handleMouseDownPassword}
+          edge="end"
+        >
+          {showPassword ? <VisibilityOff sx={{fontSize: 20}} /> : <Visibility sx={{fontSize: 20}}/>}
+        </IconButton>
+      </InputAdornment>
+    )
+  }} className='w-44' onChange={(e) => setPassword(e.target.value)} required />
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
         
      </form>

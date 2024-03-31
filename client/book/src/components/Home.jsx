@@ -5,6 +5,7 @@ import { Button, TextField } from '@mui/material';
 import axiosInstance from './axios';
 
 
+
 const Home = () => {
   // register input states
   const [name, setName] = useState('');
@@ -17,9 +18,14 @@ const Home = () => {
 // register err
 const [registerErr, setRegisterErr] = useState(false);
 
+// sucessful register 
+const [success, setSuccess] = useState(false);
+
 
   // register users
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
     if(!name || !surname || !email || !password || !location || !proffesion) {
      setRegisterErr(true);
     }else {
@@ -27,8 +33,7 @@ const [registerErr, setRegisterErr] = useState(false);
         await axiosInstance.post('http://localhost:4000/api/register', {
          name, surname, email, password, location, proffesion
        });
-   
-  
+        setSuccess(true);
      } catch (error) {
        setRegisterErr(true);
      }
@@ -40,13 +45,15 @@ const [registerErr, setRegisterErr] = useState(false);
   }
 
   return (
+  
     <div className='flex items-center justify-around h-screen '>
+
        <div>
          <img src = {logo} />
        </div>
  
  <div className='w-1/3'>
- <form className='w-full flex flex-col gap-6'>
+ <form className='w-full flex flex-col gap-6' onSubmit={handleRegister}>
    <h1 className='text-4xl font-bold text-center'>რეგისტრაცია</h1>
  <TextField error = {registerErr && !name}  label = "სახელი" variant='outlined' size="small" onChange={(e) => setName(e.target.value)} />
  <TextField error = {registerErr && !surname} label = "გვარი" variant='outlined' size='small' onChange={(e) => setSurname(e.target.value)}  />
@@ -54,7 +61,8 @@ const [registerErr, setRegisterErr] = useState(false);
  <TextField error = {registerErr && !location} label = "ქალაქი" variant='outlined' size='small' onChange={(e) => setLocation(e.target.value)}/>
  <TextField error = {registerErr && !proffesion} label = "პროფესია" variant='outlined' size="small" onChange={(e) => setProffesion(e.target.value)} />
  <TextField error = {registerErr && !email} label = "პაროლი" variant='outlined' size='small' type = "password" onChange={(e) => setPassword(e.target.value)} />
- <Button variant='contained' color = "success" onClick={handleRegister}>რეგისტრაცია</Button>
+ <Button variant='contained' color = "success" type='submit'>რეგისტრაცია</Button>
+  {success && <p className='text-4xl font-bold'>sucesss</p>}
  </form>
 
    
