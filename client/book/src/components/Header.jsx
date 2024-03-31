@@ -18,18 +18,10 @@ const Header = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  // show password
-  const [showPassword, setShowPassword] = useState(false);
-
-  // show password function
-  const handleShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+ 
   
   // cart span
-  const { cart, err, setErr} = useContext(BookContext);
+  const { cart, err, setErr, showPassword, handleShowPassword, handleMouseDownPassword } = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
    // logout modal

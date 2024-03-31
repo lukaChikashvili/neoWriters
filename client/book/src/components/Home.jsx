@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react'
 import logo from '../assets/logo.png';
-import { Button, TextField } from '@mui/material';
-
+import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
+import { BookContext } from '../context/bookContext';
 import axiosInstance from './axios';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
 
 
 
@@ -21,6 +23,7 @@ const [registerErr, setRegisterErr] = useState(false);
 // sucessful register 
 const [success, setSuccess] = useState(false);
 
+const  { showPassword, handleShowPassword, handleMouseDownPassword } = useContext(BookContext);
 
   // register users
   const handleRegister = async (e) => {
@@ -60,7 +63,15 @@ const [success, setSuccess] = useState(false);
  <TextField error = {registerErr && !email} label = "ელ-ფოსტა" variant='outlined' size='small' type='email' onChange={(e) => setEmail(e.target.value)}/>
  <TextField error = {registerErr && !location} label = "ქალაქი" variant='outlined' size='small' onChange={(e) => setLocation(e.target.value)}/>
  <TextField error = {registerErr && !proffesion} label = "პროფესია" variant='outlined' size="small" onChange={(e) => setProffesion(e.target.value)} />
- <TextField error = {registerErr && !email} label = "პაროლი" variant='outlined' size='small' type = "password" onChange={(e) => setPassword(e.target.value)} />
+ <TextField error = {registerErr && !password} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"}  InputProps={{
+    endAdornment: (
+      <InputAdornment position='end'>
+         <IconButton onClick={handleShowPassword} onMouseDown={handleMouseDownPassword} edge = "end">
+           {showPassword ? <VisibilityOff sx={{fontSize: 20}} /> : <Visibility sx={{fontSize: 20}} />}
+         </IconButton>
+      </InputAdornment>
+    )
+ }}        onChange={(e) => setPassword(e.target.value)} />
  <Button variant='contained' color = "success" type='submit'>რეგისტრაცია</Button>
   {success && <p className='text-4xl font-bold'>sucesss</p>}
  </form>

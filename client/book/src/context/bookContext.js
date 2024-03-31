@@ -39,8 +39,18 @@ const BookProvider = ({children}) => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
+   // show password
+   const [showPassword, setShowPassword] = useState(false);
+
+   // show password function
+   const handleShowPassword = () => setShowPassword((show) => !show);
+ 
+   const handleMouseDownPassword = (event) => {
+     event.preventDefault();
+   };
+
   return (
-    <BookContext.Provider value = {{err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl}}>
+    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl}}>
         {children}
     </BookContext.Provider>
   )
