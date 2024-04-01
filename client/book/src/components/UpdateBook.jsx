@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react'
 import { BookContext } from '../context/bookContext'
 import { Button, MenuItem, TextField } from '@mui/material'
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from './axios';
 
 const UpdateBook = () => {
@@ -44,12 +44,26 @@ const UpdateBook = () => {
       // take url from useParams
       const {id } = useParams();
 
+      // navigate
+      let navigate = useNavigate();
+
       // update function
       const handleUpdate = async () => {
         try {
-            await axiosInstance.put(`http://localhost:4000/api/books/${id}/update`, {
-                title: newTitle, type: newType, desc: newDesc, text: newText, url: newUrl, price: newPrice
-            });
+           const updatedFields = {};
+
+           if(newTitle) updatedFields.title = newTitle;
+           if (newType) updatedFields.type = newType;
+           if (newDesc) updatedFields.desc = newDesc;
+           if (newText) updatedFields.text = newText;
+           if (newUrl) updatedFields.url = newUrl;
+           if (newPrice) updatedFields.price = newPrice;
+
+            await axiosInstance.put(`http://localhost:4000/api/books/${id}/update`, 
+               updatedFields
+            );
+            
+            navigate('/profile');
         } catch (error) {
             console.error('Axios error:', error);
         }

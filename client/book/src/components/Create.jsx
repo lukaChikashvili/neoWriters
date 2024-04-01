@@ -84,21 +84,7 @@ const Create = () => {
         setBooks([...books, response.data.book]);
         navigate('/profile');
 
-        // remove states from localstorage
-        localStorage.removeItem('title', JSON.stringify(title));
-        localStorage.removeItem('type', JSON.stringify(type));
-        localStorage.removeItem('desc', JSON.stringify(desc));
-        localStorage.removeItem('text', JSON.stringify(text));
-        localStorage.removeItem('price', price);
-
-        // set back to initial state
-        setTitle('');
-        setType('');
-        setText('');
-        setDesc('');
-        setPrice('');
-        setUrl('');
-      
+        
     }
   }
 
