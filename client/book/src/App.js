@@ -8,6 +8,7 @@ import Cart from './components/Cart';
 import Design from './components/Design';
 import MyDesign from './components/MyDesign';
 import MyBooks from './components/MyBooks';
+import UpdateBook from './components/UpdateBook';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
          <Route path = "/design" element = {<Design />} />
          <Route path = "/myDesign" element = {<MyDesign />} />
          <Route path = "/myBooks" element = {<MyBooks />} />
+         <Route path = "/books/:id/update" element = { <UpdateBook />} />
        </Routes>
     </div>
   );

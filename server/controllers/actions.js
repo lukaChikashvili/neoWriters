@@ -98,20 +98,22 @@ const removeBook = async (req, res) => {
 
 // update book
 const updateBook = async (req, res) => {
-   const { id } = req.params;
+   try {
+      const { id } = req.params;
+      const { title, type, desc, text, url, price } = req.body;
 
-   const { title, type, desc, text, url, price  } = req.body;
+      const updatedBook = await Book.findByIdAndUpdate(id, { title, type, desc, text, url, price });
 
-   const updatedBook = await Book.findByIdAndUpdate(id, {title, type, desc, text, url, price});
+      if (!updatedBook) {
+         return res.status(404).json({ message: "Book not found" });
+      }
 
-
-   if(!updatedBook) {
-      return res.status(404).json({message: "book is not updated"});
-
+      return res.json({ message: "Book updated", updatedBook });
+   } catch (error) {
+      // Handle errors
+      console.error("Error updating book:", error);
+      return res.status(500).json({ message: "Internal server error" });
    }
-
-   res.json({message: "book updated", updatedBook})
-
 }
 
 

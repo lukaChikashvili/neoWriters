@@ -2,9 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import { BookContext } from '../context/bookContext';
 import { Button } from '@mui/material';
 import axiosInstance from './axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const MyBooks = () => {
+
+       let navigate = useNavigate();
+
     const { books, setBooks } = useContext(BookContext);
     const [myBook, setMyBook] = useState([]);
 
@@ -25,12 +29,19 @@ const MyBooks = () => {
   }
 }, [books, myBook]);
 
-
+  // delete book
     const deleteBook = async (id) => {
        await axiosInstance.delete(`http://localhost:4000/api/books/del/${id}`);
       setBooks(books.filter(item => item._id !== id));
       
     }
+
+    // update book
+    
+    const updateBook = (id) => {
+      navigate(`/books/${id}/update`)
+    }
+
     
   return (
     <div className='flex flex-col'>
@@ -40,6 +51,7 @@ const MyBooks = () => {
         <div className='flex flex-col gap-4' key={value._id}>
         <img src = {value.url} className='w-56 h-56 object-cover' />
         <Button variant='contained' color = "error" onClick={() => deleteBook(value._id)}>წაშლა</Button>
+        <Button variant='contained' color = "success" onClick={() => updateBook(value._id)}>რედაქტირება</Button>
         </div>
       )))}
        </div>
