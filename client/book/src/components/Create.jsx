@@ -30,7 +30,7 @@ const Create = () => {
 
     let navigate = useNavigate();
 
-    const { books, setBooks, useUrl,  selectedItemUrl} = useContext(BookContext);
+    const { books, setBooks, useUrl,  selectedItemUrl, err, setErr} = useContext(BookContext);
 
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
@@ -67,6 +67,11 @@ const Create = () => {
      }, [title, type, desc, text, price]);
 
     const handleCreate = async () => {
+      if(!title || !type ||  !desc || !text || !url || !price) {
+        setErr(true);
+      }else {
+
+      
       const token = localStorage.getItem('token');
       const response = await axiosInstance.post('http://localhost:4000/api/create', {title, type, desc, text, url, price}, {
         headers: {
@@ -95,6 +100,7 @@ const Create = () => {
         setUrl('');
       
     }
+  }
 
     const handleSelect = (e) => {
       setType(e.target.value);
@@ -106,7 +112,7 @@ const Create = () => {
       <div className='flex flex-col items-center justify-center h-screen'>
         <h1 className='text-4xl pb-12'>შექმენით წიგნი</h1>
         <form className='flex flex-col gap-4 w-1/3'>
-            <TextField label = "სათაური" variant='outlined' size="small" value = {title} onChange={(e) => setTitle(e.target.value)}/>
+            <TextField error = {err} label = "სათაური" variant='outlined' size="small" value = {title} onChange={(e) => setTitle(e.target.value)}/>
             <TextField
           id="outlined-select-currency"
           select
@@ -114,7 +120,7 @@ const Create = () => {
           defaultValue='მოთხრობა'
           helperText="აირჩიეთ წიგნის ტიპი"
           size='small'
-       
+          error = {err}
           onChange={handleSelect}
         >
           {types.map((option) => (
@@ -123,11 +129,11 @@ const Create = () => {
             </MenuItem>
           ))}
         </TextField>
-            <TextField label = "მოკლე აღწერა" variant='outlined' value = {desc} size="small" onChange={(e) => setDesc(e.target.value)}/>
-            <TextField label = "წიგნის ტექსტი" variant='outlined' value = {text} size="small" onChange={(e) => setText(e.target.value)}/>
+            <TextField error = {err} label = "მოკლე აღწერა" variant='outlined' value = {desc} size="small" onChange={(e) => setDesc(e.target.value)}/>
+            <TextField error = {err} label = "წიგნის ტექსტი" variant='outlined' value = {text} size="small" onChange={(e) => setText(e.target.value)}/>
             
-            <TextField label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)}/>
-            <TextField label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)}/>
+            <TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)}/>
+            <TextField error = {err} label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)}/>
             <Button variant='contained' color="success" onClick={handleCreate}>გამოქვეყნება</Button>
         </form>
       </div>

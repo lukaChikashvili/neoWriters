@@ -50,10 +50,19 @@ const BookProvider = ({children}) => {
    };
 
    // currencies
+   const [showLari, setShowLari] = useState(() => {
+    const data =  localStorage.getItem('balance');
+    return data ? JSON.parse(data) : 500;
+  });
 
-const [showLari, setShowLari] = useState(500);
+   useEffect(() => {
+    localStorage.setItem('balance', JSON.stringify(showLari));
+  }, [showLari]);
+
+
+
   return (
-    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl,  showLari,  setShowLari}}>
+    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
         {children}
     </BookContext.Provider>
   )

@@ -59,25 +59,29 @@ const buyBook = () => {
 let buttonRef = useRef();
 
 
+
+
     const handlePurchase = (price) => {
-        let result = showLari - price;
-      setShowLari(result);
-      buttonRef.current.disabled = true;
+      
+            let result = showLari - price;
+            setShowLari(result);
+           buttonRef.current.disabled = true;
+     
+        }
+          
+          
+        const token = localStorage.getItem('token');
+       
+    
 
-      localStorage.setItem('balance', JSON.stringify(result));
-    }
-
-    useEffect(() => {
-        const data = localStorage.getItem('balance');
-        setShowLari(JSON.parse(data));
-    })
+    
 
 
   return (
     <div className='p-24 px-56' >
         {buyModal && <div className='w-4/5 h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 flex flex-col gap-12'>
             <span className='absolute top-4 right-4 text-2xl font-semibold cursor-pointer' onClick={() => setBuyModal(false)}>X</span>
-               <h1 className='text-5xl font-bold'>ბალანსი: <span>{showLari }</span></h1>
+               <h1 className='text-5xl font-bold'>ბალანსი: <span>{ showLari}</span></h1>
                <p className='text-2xl'>აირჩიეთ გადახდის მეთოდი: </p>
                <div className='flex gap-12'>
               
