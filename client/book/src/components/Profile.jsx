@@ -5,6 +5,8 @@ import lari from '../assets/lari.png';
 import { Button } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import CategoryIcon from '@mui/icons-material/Category';
+import {motion} from 'framer-motion';
+
 
 const Profile = () => {
 
@@ -92,7 +94,7 @@ const handleCategory = (type) => {
    const filterByType = books.filter(item => item.type === type);
 
    setCategoriesArr(filterByType);
-   setShowFiltered(!showFiltered);
+   setShowFiltered(true);
 }
 
 
@@ -115,7 +117,7 @@ const handleCategory = (type) => {
    {showFiltered ? (
       
     categoriesArr.map((value) => (
-      <div key={value._id}>
+      <motion.div initial = {{translateY: -20}} animate = {{translateY: 0}} key={value._id} >
       <p className='text-center text-xl font-semibold pb-6'>{value.title}</p>
      
        <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
@@ -123,7 +125,7 @@ const handleCategory = (type) => {
        <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
       <Button variant='contained' color = "success" className='absolute top-2 w-24 ' onClick={() => fullPage(value._id)}>ყიდვა</Button>
     </div>
-     </div>
+     </motion.div>
     ))
    ) : (
     books.map((value) => (

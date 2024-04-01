@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {Button,   IconButton,   InputAdornment,   TextField} from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import {Link, useNavigate} from 'react-router-dom';
@@ -12,6 +12,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 
 const Header = () => {
@@ -21,7 +22,7 @@ const Header = () => {
  
   
   // cart span
-  const { cart, err, setErr, showPassword, handleShowPassword, handleMouseDownPassword,  showLari } = useContext(BookContext);
+  const { cart, err, setErr, showPassword, handleShowPassword, handleMouseDownPassword,  showLari, books } = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
    // logout modal
@@ -32,6 +33,11 @@ const Header = () => {
    const [passErr, setPassErr] = useState(false);
    // incorrect credential error
    const [incorrect, setIncorrect] = useState(false);
+
+   // saerch input
+   const [search, setSearch] = useState('');
+   const [searchResult, setSearchResult] = useState([]);
+
 
   let navigate = useNavigate();
 
@@ -65,7 +71,7 @@ if(!name && !password) {
 
 }
 
-const token = localStorage.getItem('token');
+
 
 
 const logout = () => {
@@ -74,13 +80,36 @@ const logout = () => {
   navigate('/');
 }
 
+useEffect(() => {
+   const filterSearch = books.filter(item => item.title.startsWith(search));
+     
+   setSearchResult(filterSearch);
+
+}, [books, search]);
+
+
+// navigate to full page
+const showFull = (id) => {
+  navigate(`/books/${id}`);
+  setSearch(false);
+  
+}
   return (
-    <div className='w-full flex items-center justify-between px-12 py-6 shadow'>
-      <div className="logo">
+    <div className='w-full flex items-center justify-between px-12 py-6 shadow relative'>
+      <div className="logo flex gap-12">
         <h1 className='text-3xl font-bold cursor-pointer' onClick={() => navigate('/profile')}>მწერალი</h1>
+       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..." style={{width: "500px"}} onChange={(e) => setSearch(e.target.value)} /> }
+       <div className='absolute -bottom-20 bg-gray-400 left-48 rounded-md shadow-md' style={{width: "500px", marginLeft: "7px"}}>
+       {search && searchResult.map((value) => (
+     
+         <p  className='p-4 px-8 flex items-center justify-between gap-12 text-lg'><img src = {value.url} className='w-12' />{value.title}  <span className='font-bold'>{value.price}ლ</span> <OpenInNewIcon className='cursor-pointer'  onClick = {() => showFull(value._id)} /> </p>
+   
+       ))}
+       </div>
       </div>
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
+         
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
         <p>ბალანსი:<span> {showLari}</span></p>
