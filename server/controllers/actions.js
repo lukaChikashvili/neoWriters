@@ -96,6 +96,23 @@ const removeBook = async (req, res) => {
    }
 }
 
+// update book
+const updateBook = async (req, res) => {
+   const { id } = req.params;
+
+   const { title, type, desc, text, url, price  } = req.body;
+
+   const updatedBook = await Book.findByIdAndUpdate(id, {title, type, desc, text, url, price});
+
+
+   if(!updatedBook) {
+      return res.status(404).json({message: "book is not updated"});
+
+   }
+
+   res.json({message: "book updated", updatedBook})
+
+}
 
 
 
@@ -107,5 +124,6 @@ module.exports = {
     createBook,
     getAllBooks,
     getOneBook,
-    removeBook
+    removeBook,
+    updateBook
 }

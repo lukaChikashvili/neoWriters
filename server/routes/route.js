@@ -12,4 +12,5 @@ router.post('/create', authenticateUser, actions.createBook );
 router.get('/books', actions.getAllBooks);
 router.get('/books/:id',actions.getOneBook);
 router.delete('/books/del/:id', actions.removeBook);
+router.put('/books/update/:id', actions.updateBook);
 module.exports = router;
