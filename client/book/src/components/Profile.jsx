@@ -62,6 +62,8 @@ const Profile = () => {
 
   // show categories
   const [showCate, setShowCate] = useState(true);
+  const [categoriesArr, setCategoriesArr] = useState([]);
+  const [showFiltered, setShowFiltered] = useState(false);
 
   const { books, setBooks} = useContext(BookContext);
  
@@ -85,6 +87,14 @@ const fullPage = (id) => {
  
 }
 
+// filter categories
+const handleCategory = (type) => {
+   const filterByType = books.filter(item => item.type === type);
+
+   setCategoriesArr(filterByType);
+   setShowFiltered(!showFiltered);
+}
+
 
 
   return (
@@ -93,26 +103,42 @@ const fullPage = (id) => {
       <div className='flex gap-8' >
        { categories.map((value) => (
          
-          <button  style={{backgroundColor: value.color, color: "white",visibility: showCate ? "visible" : 'hidden' }} className='w-36 rounded-md h-8 shadow-lg'>{value.name}</button>
+          <button  style={{backgroundColor: value.color, color: "white",visibility: showCate ? "visible" : 'hidden' }} className='w-36 rounded-md h-8 shadow-lg' key={value.id} onClick={() => handleCategory(value.name)}>{value.name}</button>
   
           
        ))}
       
-<CategoryIcon onClick = {() => setShowCate(!showCate)} />
+<CategoryIcon onClick = {() => setShowCate(!showCate)} sx={{color: showCate ? "green" : "black", cursor: "pointer"}} />
 </div>
 
 <div className='flex flex-wrap gap-12'>
-       {books.map((value) => (
-        <div key={value._id}>
-          <p className='text-center text-xl font-semibold pb-6'>{value.title}</p>
-         
-           <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
-           <div className='flex items-center gap-12  '>
-           <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
-          <Button variant='contained' color = "success" className='absolute top-2 w-24 ' onClick={() => fullPage(value._id)}>ყიდვა</Button>
-        </div>
-         </div>
-       ))}
+   {showFiltered ? (
+      
+    categoriesArr.map((value) => (
+      <div key={value._id}>
+      <p className='text-center text-xl font-semibold pb-6'>{value.title}</p>
+     
+       <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
+       <div className='flex items-center gap-12  '>
+       <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
+      <Button variant='contained' color = "success" className='absolute top-2 w-24 ' onClick={() => fullPage(value._id)}>ყიდვა</Button>
+    </div>
+     </div>
+    ))
+   ) : (
+    books.map((value) => (
+      <div key={value._id}>
+        <p className='text-center text-xl font-semibold pb-6'>{value.title}</p>
+       
+         <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
+         <div className='flex items-center gap-12  '>
+         <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
+        <Button variant='contained' color = "success" className='absolute top-2 w-24 ' onClick={() => fullPage(value._id)}>ყიდვა</Button>
+      </div>
+       </div>
+     ))
+   )}
+       
        </div>
     </div>
   )
