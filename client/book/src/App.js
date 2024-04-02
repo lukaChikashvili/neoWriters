@@ -9,6 +9,7 @@ import Design from './components/Design';
 import MyDesign from './components/MyDesign';
 import MyBooks from './components/MyBooks';
 import UpdateBook from './components/UpdateBook';
+import Comments from './components/Comments';
 
 
 function App() {
@@ -28,7 +29,9 @@ function App() {
           }
         />
          <Route path = "/create" element = {<Create />} />
-         <Route path = "/books/:id" element = {<FullPage />} />
+         <Route path = "/books/:id" element = {<FullPage />} >
+             <Route path = "comment" element =  {<Comments />} />
+         </Route>
          <Route path = "/cart" element = {<Cart />} />
          <Route path = "/design" element = {<Design />} />
          <Route path = "/myDesign" element = {<MyDesign />} />

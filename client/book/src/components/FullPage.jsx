@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from './axios';
 import lari from '../assets/lari.png';
 import tag from '../assets/tag.png';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { BookContext } from '../context/bookContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -13,6 +13,8 @@ const FullPage = () => {
     const { id } = useParams();
     const [fullPage, setFullPage] = useState(null);
     const { books, setCart, setCartItem,  showLari,  setShowLari} = useContext(BookContext);
+
+  
 
     useEffect(() => {
         const getFull = async () => {
@@ -53,6 +55,8 @@ const [buyModal, setBuyModal] = useState(false);
 // preview modal
 const [preview, setPreview] = useState(false);
 
+
+
 // show modal
 const buyBook = () => {
    setBuyModal(true);
@@ -73,13 +77,17 @@ let buttonRef = useRef();
         }
           
           
-        const token = localStorage.getItem('token');
-       
+    
+       let navigate = useNavigate();
     
 const handlePreview = () => {
   setPreview(true);
 }    
 
+
+const handleComment = (id) => {
+   navigate(`/books/${id}/comment`);
+}
 
   return (
     <div className='p-24 px-56' >
@@ -140,6 +148,13 @@ const handlePreview = () => {
             <p>იტვირთება...</p>
         )}
     
+
+    <div className='pt-12'>
+        <h2 className='text-2xl pb-8' onClick={() => handleComment(fullPage._id)}>კომენტარები</h2>
+     
+   <Outlet />
+  
+    </div>
     </div>
   )
 }

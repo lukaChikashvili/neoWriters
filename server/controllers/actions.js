@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { User } = require('../models/userModel');
 const { Book } = require('../models/bookModel');
+const { Comment } = require('../models/commentModel');
 const jwt = require('jsonwebtoken');
 
 // register users
@@ -117,6 +118,30 @@ const updateBook = async (req, res) => {
 }
 
 
+// create comment
+const createComment = async (req, res) => {
+   try {
+      if (!req.user) {
+         return res.status(401).json({ message: 'Unauthorized: Token not provided' });
+       }
+   
+       const { text } = req.body;
+  
+       if (!text) {
+        return res.status(400).json({ message: 'Text field is required' });
+      }
+       const { id } = req.params;
+       const userId = req.user.id;
+
+       const newComment = new Comment({text, author: userId, book: id });
+   
+       await newComment.save();
+       res.json({message: 'comment created', comment: newComment });
+   } catch (error) {
+      console.log(error);
+   }
+}
+
 
 
 // export functions
@@ -127,5 +152,6 @@ module.exports = {
     getAllBooks,
     getOneBook,
     removeBook,
-    updateBook
+    updateBook,
+    createComment
 }
