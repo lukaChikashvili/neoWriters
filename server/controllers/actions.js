@@ -142,6 +142,21 @@ const createComment = async (req, res) => {
    }
 }
 
+// get all comments
+const getAllComment = async (req, res) => {
+   const { id } = req.params;
+
+   const getComment = await Comment.find({ book: id }).populate('author', 'name');
+
+   const commentsWithUserNames = getComment.map(comment => ({
+      _id: comment._id,
+      text: comment.text,
+      createdAt: comment.createdAt,
+      user: comment.user?.name 
+  }));
+
+    return res.status(200).json({ getComment: commentsWithUserNames });
+}
 
 
 // export functions
@@ -153,5 +168,6 @@ module.exports = {
     getOneBook,
     removeBook,
     updateBook,
-    createComment
+    createComment,
+    getAllComment
 }
