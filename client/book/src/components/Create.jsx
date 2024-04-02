@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import axiosInstance from './axios';
 import { BookContext } from "../context/bookContext";
 import { useNavigate} from 'react-router-dom';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
 
 const Create = () => {
     // select menu options
@@ -35,7 +37,7 @@ const Create = () => {
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
     const [desc, setDesc] = useState('');
-    const [text, setText] = useState('');
+    const [text, setText] = useState(null);
     const [url, setUrl] = useState(useUrl ?  selectedItemUrl : '');
     const [price, setPrice] = useState(0);
 
@@ -93,6 +95,17 @@ const Create = () => {
     }
 
 
+    const handleFileChange = (e) => {
+      const selectedFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+          setText(reader.result);
+      };
+      reader.readAsText(selectedFile);
+  
+  }
+
+
   return (
     <div>
       <div className='flex flex-col items-center justify-center h-screen'>
@@ -116,9 +129,39 @@ const Create = () => {
           ))}
         </TextField>
             <TextField error = {err} label = "მოკლე აღწერა" variant='outlined' value = {desc} size="small" onChange={(e) => setDesc(e.target.value)}/>
-            <TextField error = {err} label = "წიგნის ტექსტი" variant='outlined' value = {text} size="small" onChange={(e) => setText(e.target.value)}/>
-            
-            <TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)}/>
+            <div className=' flex items-center gap-12'>
+             <p className='text-lg'>ატვირთე წიგნის ტექსტი: </p> 
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              color = "success"
+              tabIndex={-1}
+              className='h-10 w-44'
+              startIcon={<CloudUploadIcon />}
+              
+>
+   ატვირთვა 
+  <TextField type="file" className='fileInput' onChange={handleFileChange} />
+</Button>
+
+</div>
+             <div className='flex items-center gap-8'>
+            <TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)} className='w-96'/>
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              color = "success"
+              tabIndex={-1}
+              className='h-10 w-44'
+              startIcon={<CloudUploadIcon />}
+              
+>
+  ატვირთვა
+  <TextField type="file" className='fileInput' onChange={handleFileChange} />
+</Button>
+            </div>
             <TextField error = {err} label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)}/>
             <Button variant='contained' color="success" onClick={handleCreate}>გამოქვეყნება</Button>
         </form>
