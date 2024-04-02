@@ -105,6 +105,15 @@ const Create = () => {
   
   }
 
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        setUrl(reader.result);
+    };
+    reader.readAsText(selectedFile);
+
+}
 
   return (
     <div>
@@ -146,22 +155,7 @@ const Create = () => {
 </Button>
 
 </div>
-             <div className='flex items-center gap-8'>
-            <TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)} className='w-96'/>
-            <Button
-              component="label"
-              role={undefined}
-              variant="outlined"
-              color = "success"
-              tabIndex={-1}
-              className='h-10 w-44'
-              startIcon={<CloudUploadIcon />}
-              
->
-  ატვირთვა
-  <TextField type="file" className='fileInput' onChange={handleFileChange} />
-</Button>
-            </div>
+<TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)}/>
             <TextField error = {err} label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)}/>
             <Button variant='contained' color="success" onClick={handleCreate}>გამოქვეყნება</Button>
         </form>
