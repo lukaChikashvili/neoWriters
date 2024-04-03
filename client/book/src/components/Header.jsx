@@ -22,7 +22,7 @@ const Header = () => {
  
   
   // cart span
-  const { cart, err, setErr, showPassword, handleShowPassword, handleMouseDownPassword,  showLari, books } = useContext(BookContext);
+  const { cart, err, setErr, showPassword, handleShowPassword, handleMouseDownPassword,  showLari, books, image, setImage, fetchImages } = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
    // logout modal
@@ -94,6 +94,13 @@ const showFull = (id) => {
   setSearch(false);
   
 }
+
+
+useEffect(() => {
+  fetchImages();
+}, [image]);
+
+
   return (
     <div className='w-full flex items-center justify-between px-12 py-6 shadow relative'>
       <div className="logo flex gap-12">
@@ -112,6 +119,7 @@ const showFull = (id) => {
          <Button onClick={() => navigate('/myProfile')}>ჩემი პროფილი</Button>
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
+        <img src = {image[image.length - 1]?.dataURL} className='w-8 h-8 rounded-full' />
         <p>ბალანსი:<span> {showLari}</span></p>
         <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-6 right-24 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
        {modal ? <CloseIcon className='cursor-pointer' onClick = {() => setModal(false)} /> :   <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />}

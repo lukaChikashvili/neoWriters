@@ -1,4 +1,5 @@
 import {createContext, useEffect, useState} from 'react';
+import axiosInstance from '../components/axios';
 
 export const BookContext = createContext();
 
@@ -32,8 +33,14 @@ const BookProvider = ({children}) => {
 
    const [selectedItemUrl, setSelectedItemUrl] = useState('');
 
+   // images
+   const [image, setImage] = useState([]);
+
    // error message
    const [err, setErr] = useState(false);
+
+   const [uploadModal, setUploadModal] = useState(false);
+
   
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -61,8 +68,23 @@ const BookProvider = ({children}) => {
 
 
 
+    const fetchImages = async () => {
+       try {
+          const response = await axiosInstance.get('http://localhost:4000/api/users/profileImage');
+          setImage(response.data);
+          console.log(image);
+       } catch (error) {
+         console.log(error);
+       }
+    }
+
+   
+
+
+
+
   return (
-    <BookContext.Provider value = {{showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
+    <BookContext.Provider value = {{fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
         {children}
     </BookContext.Provider>
   )
