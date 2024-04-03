@@ -97,7 +97,7 @@ const showFull = (id) => {
   return (
     <div className='w-full flex items-center justify-between px-12 py-6 shadow relative'>
       <div className="logo flex gap-12">
-        <h1 className='text-3xl font-bold cursor-pointer' onClick={() => navigate('/profile')}>მწერალი</h1>
+        <h1 className='text-3xl font-bold cursor-pointer' onClick={() => isUserLoggedIn && navigate('/profile')}>მწერალი</h1>
        {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..." style={{width: "500px"}} onChange={(e) => setSearch(e.target.value)} /> }
        <div className='absolute -bottom-20 bg-gray-400 left-48 rounded-md shadow-md' style={{width: "500px", marginLeft: "7px"}}>
        {search && searchResult.map((value) => (
@@ -109,7 +109,7 @@ const showFull = (id) => {
       </div>
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
-         
+         <Button onClick={() => navigate('/myProfile')}>ჩემი პროფილი</Button>
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
         <p>ბალანსი:<span> {showLari}</span></p>

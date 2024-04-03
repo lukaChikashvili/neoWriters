@@ -37,13 +37,15 @@ const Comments = () => {
  
   return (
     <div>
-
-      <TextField size = "small" onChange={(e) => setComment(e.target.value)}/>
-      <Button onClick={writeComment}>გამოქვეყნება</Button>
-
+   <div className='flex items-center gap-8'>
+      <TextField size = "small" label = "დაწერეთ კომენტარი..." className = "w-96" onChange={(e) => setComment(e.target.value)}/>
+      <Button onClick={writeComment} variant='contained' color = "success">გამოქვეყნება</Button>
+      </div>
       {Array.isArray(allComments) ? (
   allComments.map((value) => (
-    <p key={value._id}>{value.text}</p>
+    <div className='pt-6'>
+    <p key={value._id} className='rounded-md bg-gray-400 p-8 shadow-gray-600 shadow-lg'>{value.text}</p>
+    </div>
   ))
 ) : (
   <p>No comments available</p>

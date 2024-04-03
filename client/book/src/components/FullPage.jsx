@@ -150,7 +150,7 @@ const handleComment = (id) => {
     
 
     <div className='pt-12'>
-        <h2 className='text-2xl pb-8' onClick={() => handleComment(fullPage._id)}>კომენტარები</h2>
+        <h2 className='text-2xl pb-8' onClick={() => handleComment(fullPage._id)}>კომენტარების ჩვენება</h2>
      
    <Outlet />
   

@@ -10,6 +10,7 @@ import MyDesign from './components/MyDesign';
 import MyBooks from './components/MyBooks';
 import UpdateBook from './components/UpdateBook';
 import Comments from './components/Comments';
+import MyProfile from './components/MyProfile';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
          <Route path = "/myDesign" element = {<MyDesign />} />
          <Route path = "/myBooks" element = {<MyBooks />} />
          <Route path = "/books/:id/update" element = { <UpdateBook />} />
+         <Route path = "/myProfile" element = { <MyProfile />} />
        </Routes>
     </div>
   );
