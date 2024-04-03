@@ -205,7 +205,7 @@ const getImage = async (req, res) => {
    try {
       const allImages = await Image.find();
       const imagesBase64URL = allImages.map(image => ({
-         name: image.name,
+         
          dataURL: `data:${image.img.contentType};base64,${image.img.data.toString('base64')}`,
          contentType: image.img.contentType
       }));

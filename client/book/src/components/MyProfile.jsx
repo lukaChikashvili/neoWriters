@@ -9,6 +9,8 @@ const MyProfile = () => {
     // images
     const [image, setImage] = useState([]);
 
+    const [selectedFile, setSelectedFile] = useState(null);
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -46,7 +48,37 @@ const MyProfile = () => {
         }
 
         fetchImages();
-    }, [image])
+    }, [image]);
+
+
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const handleUpload = async () => {
+        if (!selectedFile) {
+            console.error("No file selected.");
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('testImage', selectedFile);
+
+            await axiosInstance.post('http://localhost:4000/api/users/profileImage', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            setImage(selectedFile);
+
+            console.log("Image uploaded successfully!");
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+    };
 
   return (
     <div className='flex p-12 items-center' >
@@ -55,14 +87,15 @@ const MyProfile = () => {
 
         <div>
             
-         {image.map((value) => (
-            <>
-            <p>{value.name}</p>
-            <img src={value.dataURL} alt={image.name} />
-            </>
-         ))}
+        {image.length > 0 && (
+        <>
+            <p>{image[image.length - 1].name}</p>
+            <img src={image[image.length - 1].dataURL} alt={image[image.length - 1].name} />
+        </>
+    )}
    
-            
+   <input type="file" onChange={handleFileChange} />
+            <button onClick={handleUpload}>Upload</button>
         </div>
 
 
