@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 // register users
 
 const registerUsers = async (req, res) => {
-    const { name, surname,  email, password, location, proffesion } = req.body;
+    const { name, surname,  email, password, location, proffesion, image } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -45,6 +45,8 @@ const loginUsers = async (req, res) => {
    const token = jwt.sign({id: user._id}, 'secret', {expiresIn: '30d'});
 
    res.json({message: 'loggin succesfull', token, name});
+
+ 
 
 }
 
@@ -163,14 +165,20 @@ const getAllComment = async (req, res) => {
 // get user info
 const getUserInfo = async (req, res) => {
    try {
-      const users = await User.find();
-      if (users.length === 0) {
-         return res.status(404).json({ message: "No users found" });
+    
+      const userId = req.user.id;
+
+      
+      const user = await User.findById(userId);
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
       }
-      return res.json({ users });
+
+      res.json({ user });
   } catch (error) {
-      console.error("Error fetching users:", error);
-      return res.status(500).json({ message: "Internal server error" });
+      console.error("Error fetching user info:", error);
+      res.status(500).json({ message: "Internal server error" });
   }
 }
 

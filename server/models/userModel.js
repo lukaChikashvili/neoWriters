@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     proffesion: {
         type: String,
         required: true
-    }
+    },
 
 
 }, {timestamps: true});

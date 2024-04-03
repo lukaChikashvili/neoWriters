@@ -15,5 +15,5 @@ router.delete('/books/del/:id', actions.removeBook);
 router.put('/books/:id/update',  authenticateUser, actions.updateBook);
 router.post('/books/:id/comment', authenticateUser, actions.createComment);
 router.get('/books/:id/comment/all', authenticateUser, actions.getAllComment);
-router.get('/users', actions.getUserInfo);
+router.get('/users', authenticateUser, actions.getUserInfo);
 module.exports = router;

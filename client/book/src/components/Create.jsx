@@ -105,15 +105,6 @@ const Create = () => {
   
   }
 
-  const handleImageChange = (e) => {
-    const selectedFile = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-        setUrl(reader.result);
-    };
-    reader.readAsText(selectedFile);
-
-}
 
   return (
     <div>
@@ -153,6 +144,7 @@ const Create = () => {
    ატვირთვა 
   <TextField type="file" className='fileInput' onChange={handleFileChange} />
 </Button>
+
 
 </div>
 <TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)}/>

@@ -5,6 +5,7 @@ import { BookContext } from '../context/bookContext';
 import axiosInstance from './axios';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 
 
@@ -16,6 +17,7 @@ const Home = () => {
   const [location, setLocation] = useState('');
   const [proffesion, setProffesion] = useState('');
   const [password, setPassword] = useState('');
+  const [image, setImage] = useState('');
 
 // register err
 const [registerErr, setRegisterErr] = useState(false);
@@ -34,7 +36,7 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword } = useContex
     }else {
       try {
         await axiosInstance.post('http://localhost:4000/api/register', {
-         name, surname, email, password, location, proffesion
+         name, surname, email, password, location, proffesion, image
        });
         setSuccess(true);
      } catch (error) {
@@ -46,6 +48,8 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword } = useContex
     
 
   }
+
+
 
   return (
   
@@ -72,6 +76,11 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword } = useContex
       </InputAdornment>
     )
  }}        onChange={(e) => setPassword(e.target.value)} />
+ 
+
+
+
+
  <Button variant='contained' color = "success" type='submit'>რეგისტრაცია</Button>
   {success && <p className='text-4xl font-bold'>sucesss</p>}
  </form>
