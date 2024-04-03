@@ -6,6 +6,9 @@ import profile from '../assets/profile.png';
 const MyProfile = () => {
     const [users, setUsers] = useState([]);
 
+    // images
+    const [image, setImage] = useState([]);
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -26,11 +29,24 @@ const MyProfile = () => {
         };
 
         fetchUsers();
-    }, []);
+    }, [image]);
+
+
+
 
     useEffect(() => {
-    console.log(users);
-    }, [users])
+        const fetchImages = async () => {
+           try {
+              const response = await axiosInstance.get('http://localhost:4000/api/users/profileImage');
+              setImage(response.data);
+              console.log(image);
+           } catch (error) {
+             console.log(error);
+           }
+        }
+
+        fetchImages();
+    }, [image])
 
   return (
     <div className='flex p-12 items-center' >
@@ -38,8 +54,18 @@ const MyProfile = () => {
         <h1 className='text-4xl font-bold'>ჩემი პროფილი</h1>
 
         <div>
-             <img src = {profile} className='w-36'/>
+            
+         {image.map((value) => (
+            <>
+            <p>{value.name}</p>
+            <img src={value.dataURL} alt={image.name} />
+            </>
+         ))}
+   
+            
         </div>
+
+
 
  
      <h2 className='text-2xl'><span className='text-green-600'>სახელი: </span>{users.name}</h2>

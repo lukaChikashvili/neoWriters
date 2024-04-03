@@ -2,6 +2,9 @@ const bcrypt = require('bcryptjs');
 const { User } = require('../models/userModel');
 const { Book } = require('../models/bookModel');
 const { Comment } = require('../models/commentModel');
+const { Image } = require('../models/ImageModel');
+const fs  = require('fs');
+
 const jwt = require('jsonwebtoken');
 
 // register users
@@ -182,7 +185,37 @@ const getUserInfo = async (req, res) => {
   }
 }
 
+// upload images
+const uploadImage = async (req, res) => {
+   const saveImage = new Image({
+      name: req.body.name,
+      img: {
+         data: fs.readFileSync('uploads/' + req.file.filename),
+         contentType: "image/png"
+      }
+   });
 
+   await saveImage.save();
+   res.json({message: 'image is saved'});
+}
+
+
+// get image
+const getImage = async (req, res) => {
+   try {
+      const allImages = await Image.find();
+      const imagesBase64URL = allImages.map(image => ({
+         name: image.name,
+         dataURL: `data:${image.img.contentType};base64,${image.img.data.toString('base64')}`,
+         contentType: image.img.contentType
+      }));
+
+      res.json(imagesBase64URL);
+   } catch (error) {
+      console.error("Error fetching images:", error);
+      res.status(500).json({ message: 'Internal server error' });
+   }
+}
 
 // export functions
 module.exports = {
@@ -195,5 +228,7 @@ module.exports = {
     updateBook,
     createComment,
     getAllComment,
-    getUserInfo
+    getUserInfo,
+    uploadImage,
+    getImage
 }

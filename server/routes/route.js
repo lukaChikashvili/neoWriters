@@ -2,6 +2,23 @@ const express = require('express');
 const router = express.Router();
 const actions = require('../controllers/actions');
 const {authenticateUser} = require('../middleware/auth');
+const multer = require('multer');
+
+
+ // create storage
+ const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+       cb(null, 'uploads');
+    },
+ 
+    filename: (req, file, cb) => {
+       cb(null, file.originalname);
+    }
+  });
+ 
+  const upload = multer({storage: storage});
+ 
+  
 
 
 // all routes
@@ -16,4 +33,6 @@ router.put('/books/:id/update',  authenticateUser, actions.updateBook);
 router.post('/books/:id/comment', authenticateUser, actions.createComment);
 router.get('/books/:id/comment/all', authenticateUser, actions.getAllComment);
 router.get('/users', authenticateUser, actions.getUserInfo);
+router.post('/users/profileImage', upload.single('testImage'),  actions.uploadImage);
+router.get('/users/profileImage', actions.getImage);
 module.exports = router;
