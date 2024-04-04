@@ -33,6 +33,7 @@ router.put('/books/:id/update',  authenticateUser, actions.updateBook);
 router.post('/books/:id/comment', authenticateUser, actions.createComment);
 router.get('/books/:id/comment/all', authenticateUser, actions.getAllComment);
 router.get('/users', authenticateUser, actions.getUserInfo);
-router.post('/users/profileImage', upload.single('testImage'),  actions.uploadImage);
-router.get('/users/profileImage', actions.getImage);
+router.post('/users/profileImage', upload.single('testImage'), authenticateUser,  actions.uploadImage);
+router.get('/users/:id/profileImage', authenticateUser, actions.getImage);
+
 module.exports = router;

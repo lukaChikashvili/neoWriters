@@ -187,12 +187,18 @@ const getUserInfo = async (req, res) => {
 
 // upload images
 const uploadImage = async (req, res) => {
+ 
+   const userId = req.user.id;
+
    const saveImage = new Image({
-      name: req.body.name,
+     
       img: {
          data: fs.readFileSync('uploads/' + req.file.filename),
          contentType: "image/png"
-      }
+      },
+
+      uploadedBy: userId
+
    });
 
    await saveImage.save();
@@ -202,8 +208,9 @@ const uploadImage = async (req, res) => {
 
 // get image
 const getImage = async (req, res) => {
+   const userId = req.user.id;
    try {
-      const allImages = await Image.find();
+      const allImages = await Image.find({uploadedBy: userId});
       const imagesBase64URL = allImages.map(image => ({
          
          dataURL: `data:${image.img.contentType};base64,${image.img.data.toString('base64')}`,

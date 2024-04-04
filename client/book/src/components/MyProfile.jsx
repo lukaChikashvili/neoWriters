@@ -30,6 +30,8 @@ const MyProfile = () => {
                 
                 
                 setUsers(response.data.user);
+            
+               
             } catch (error) {
              
                 console.error("Error fetching users:", error);
@@ -41,7 +43,9 @@ const MyProfile = () => {
 
 
 useEffect(() => {
-    fetchImages();
+    if (users && users._id) { 
+        fetchImages(users._id); 
+    }
 }, [image]);
 
 
@@ -57,7 +61,7 @@ useEffect(() => {
         {image.length > 0 && (
         <>
          <div className='flex items-center gap-6'>
-            <img src={image[image.length - 1].dataURL} alt={image[image.length - 1].name} className='w-56 h-56 rounded-full'/>
+            <img src={image[image.length - 1].dataURL}  className='w-56 h-56 rounded-full'/>
             <EditIcon onClick = {() => setUploadModal(true)} />
             </div>
         </>
@@ -74,11 +78,11 @@ useEffect(() => {
 
 
  
-     <h2 className='text-xl'><span className='text-green-600'>სახელი: </span>{users.name}</h2>
-     <h2 className='text-xl'><span className='text-green-600'>გვარი: </span>{users.surname}</h2>
-     <h2 className='text-xl'><span className='text-green-600'>ელ-ფოსტა: </span>{users.email}</h2>
-     <h2 className='text-xl'><span className='text-green-600'>ქალაქი: </span>{users.location}</h2>
-     <h2 className='text-xl'><span className='text-green-600'>პროფესია: </span>{users.proffesion}</h2>
+     <h2 className='text-xl'><span className='text-green-600'>სახელი: </span>{users?.name}</h2>
+     <h2 className='text-xl'><span className='text-green-600'>გვარი: </span>{users?.surname}</h2>
+     <h2 className='text-xl'><span className='text-green-600'>ელ-ფოსტა: </span>{users?.email}</h2>
+     <h2 className='text-xl'><span className='text-green-600'>ქალაქი: </span>{users?.location}</h2>
+     <h2 className='text-xl'><span className='text-green-600'>პროფესია: </span>{users?.proffesion}</h2>
      </div>
 
      <div>

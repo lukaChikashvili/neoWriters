@@ -68,11 +68,15 @@ const BookProvider = ({children}) => {
 
 
 
-    const fetchImages = async () => {
+    const fetchImages = async (userId) => {
        try {
-          const response = await axiosInstance.get('http://localhost:4000/api/users/profileImage');
+          const response = await axiosInstance.get(`http://localhost:4000/api/users/${userId}/profileImage`,  {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+         });
           setImage(response.data);
-          console.log(image);
+         
        } catch (error) {
          console.log(error);
        }
