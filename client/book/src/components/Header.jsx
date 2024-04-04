@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {Button,   IconButton,   InputAdornment,   TextField} from '@mui/material';
+import {Button,   IconButton,   InputAdornment,   TextField, Tooltip} from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import {Link, useNavigate} from 'react-router-dom';
 import axiosInstance from './axios';
@@ -13,7 +13,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-
+import PersonPinIcon from '@mui/icons-material/PersonPin';
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -116,13 +116,32 @@ useEffect(() => {
       </div>
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
-         <Button onClick={() => navigate('/myProfile')}>ჩემი პროფილი</Button>
+          <Tooltip title = "ჩემი პროფილი">
+          <IconButton>
+         <PersonPinIcon onClick={() => navigate('/myProfile')} sx = {{fontSize: "30px", color: "green", cursor: "pointer"}} />
+         </IconButton>
+         </Tooltip>
+          
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
         <img src = {image[image.length - 1]?.dataURL} className='w-8 h-8 rounded-full' />
         <p>ბალანსი:<span> {showLari}</span></p>
-        <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-6 right-24 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
-       {modal ? <CloseIcon className='cursor-pointer' onClick = {() => setModal(false)} /> :   <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />}
+        <Tooltip title = "ჩემი კალათა">
+          <IconButton>
+          <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-0 right-0 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
+          </IconButton>
+        </Tooltip>
+        
+       {modal ? <CloseIcon className='cursor-pointer' onClick = {() => setModal(false)} /> :  ( 
+       
+       <Tooltip title = "მენიუ">
+        <IconButton>
+        <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />
+        </IconButton>
+       </Tooltip>
+     
+       
+       )}
 <AnimatePresence>
          {
          

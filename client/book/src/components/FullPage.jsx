@@ -6,6 +6,7 @@ import tag from '../assets/tag.png';
 import { Button, TextField } from '@mui/material';
 import { BookContext } from '../context/bookContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import ReactImageMagnify from 'react-image-magnify';
 
 const FullPage = () => {
     
@@ -89,6 +90,8 @@ const handleComment = (id) => {
    navigate(`/books/${id}/comment`);
 }
 
+
+
   return (
     <div className='p-24 px-56' >
 
@@ -124,7 +127,26 @@ const handleComment = (id) => {
         {fullPage ? (
             <div className='flex items-center gap-12'>
         <div className='flex flex-col gap-6'>
-         <img src = {fullPage.url} className='w-96 h-96 object-cover cursor-pointer shadow-lg rounded-md'/>
+
+
+
+<div className='w-64 '>
+        <ReactImageMagnify {...{
+    smallImage: {
+        
+        isFluidWidth: true,
+        src: fullPage.url,
+        
+    },
+    largeImage: {
+        src: fullPage.url,
+       width: 1200,
+       height: 1600
+       
+    }
+}} />
+</div>
+         
          <Button variant="text" color = "success" className='flex gap-8' onClick={handlePreview}> <VisibilityIcon /> უფასო ნაწილის წაკითხვა </Button>
    </div>
          <div className='flex flex-col gap-4 w-4/5'>
