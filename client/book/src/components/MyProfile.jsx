@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axiosInstance from './axios';
 import profile from '../assets/profile.png';
 import EditIcon from '@mui/icons-material/Edit';
@@ -18,6 +18,12 @@ const MyProfile = () => {
   // update profile
   const [updateModal, setUpdateModal] = useState(false);
 
+  // update input states
+  const [newName, setNewName] = useState('');
+  const [newSurname, setNewSurname] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newLocation, setNewLocation] = useState('');
+  const [newProffesion, setNewProffesion] = useState('');
 
 
     useEffect(() => {
@@ -41,7 +47,43 @@ const MyProfile = () => {
     }, [image]);
 
 
+    // update profile
+    const handleProfileUpdate = async () => {
+      try {
+        const updatedObj = {};
+
+        if(newName) updatedObj.name = newName;
+        if(newSurname) updatedObj.surname = newSurname;
+        if(newEmail) updatedObj.email = newEmail;
+        if(newLocation) updatedObj.location = newLocation;
+        if(newProffesion) updatedObj.proffesion = newProffesion;
+
+        await axiosInstance.put(`http://localhost:4000/api/users/${users._id}`, updatedObj);
+
+       
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    let modalRef = useRef(null);
+
+    // detect outside click
+    useEffect(() => {
+        const detectClick = (e) => {
+            if ( modalRef.current && !modalRef.current.contains(e.target)) {
+                  setUpdateModal(false);
+                  setUploadModal(false);
+            }
+        };
     
+        document.addEventListener('mousedown', detectClick);
+    
+        return () => {
+            document.removeEventListener('mousedown', detectClick);
+        };
+    }, [modalRef]);
   return (
     <div className='flex p-12 items-center relative' >
         <div className='flex flex-col gap-4 items-center shadow-lg p-12 rounded-md'>
@@ -64,7 +106,7 @@ const MyProfile = () => {
     )}
    
    {uploadModal && (
-    <UploadModal closeModal={() => setUploadModal(false)} />
+    <UploadModal closeModal={() => setUploadModal(false)} UploadModalRef={modalRef} />
    )}
          
 
@@ -88,15 +130,16 @@ const MyProfile = () => {
      </div>
 
  <div>
-    {updateModal && <div className='bg-white absolute w-1/2 h-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg rounded-md '>
-        <h1>რედაქტირება</h1>
+    {updateModal && <div className='bg-white absolute w-1/2 h-3/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg rounded-md p-8 ' ref= {modalRef}>
+        <h1 className='text-3xl font-semibold text-center pb-4'>რედაქტირება</h1>
+        <span className='absolute top-4 right-4 text-2xl cursor-pointer' onClick={() => setUpdateModal(false)}>X</span>
         <form className='flex flex-col gap-4'>
-        <TextField size = "small" label = "სახელი"/>
-        <TextField size = "small" label = "გვარი"/>
-        <TextField size = "small" label = "ელ-ფოსტა"/>
-        <TextField size = "small" label = "ქალაქი"/>
-        <TextField size = "small" label = "პროფესია"/>
-      <Button>რედაქტირება</Button>
+        <TextField size = "small" label = "სახელი" value = {newName} onChange={(e) => setNewName(e.target.value)}/>
+        <TextField size = "small" label = "გვარი" value = {newSurname} onChange={(e) => setNewSurname(e.target.value)}/>
+        <TextField size = "small" label = "ელ-ფოსტა" value = {newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
+        <TextField size = "small" label = "ქალაქი" value = {newLocation} onChange={(e) => setNewLocation(e.target.value)}/>
+        <TextField size = "small" label = "პროფესია" value = {newProffesion}  onChange={(e) => setNewProffesion(e.target.value)}/>
+      <Button variant='contained' color ="success" onClick={handleProfileUpdate}>რედაქტირება</Button>
       </form>
         </div>}
  </div>
