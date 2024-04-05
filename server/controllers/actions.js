@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 // register users
 
 const registerUsers = async (req, res) => {
-    const { name, surname,  email, password, location, proffesion, image } = req.body;
+    const { name, surname,  email, password, location, proffesion } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -224,6 +224,21 @@ const getImage = async (req, res) => {
    }
 }
 
+// update profile info
+const updateProfileInfo = async (req, res) => {
+   const { id } = req.params;
+   const { name, surname,  email, location, proffesion } = req.body;
+
+   const newInfo = await User.findByIdAndUpdate(id, { name, surname,  email, location, proffesion })
+
+   if(!newInfo) {
+      return res.status(404).json({message: "not updated"});
+   }
+
+   return res.status(200).json({message: 'profile info updated', newInfo});
+   
+}
+
 // export functions
 module.exports = {
     registerUsers,
@@ -237,5 +252,6 @@ module.exports = {
     getAllComment,
     getUserInfo,
     uploadImage,
-    getImage
+    getImage,
+    updateProfileInfo
 }

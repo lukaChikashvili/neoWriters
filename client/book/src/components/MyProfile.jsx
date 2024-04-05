@@ -4,7 +4,7 @@ import profile from '../assets/profile.png';
 import EditIcon from '@mui/icons-material/Edit';
 import UploadModal from './UploadModal';
 import { BookContext } from '../context/bookContext';
-import { IconButton, Tooltip } from '@mui/material';
+import { Button, IconButton, TextField, Tooltip } from '@mui/material';
 
 
 
@@ -15,7 +15,8 @@ const MyProfile = () => {
     const {  image, setImage, uploadModal, setUploadModal, fetchImages } = useContext(BookContext);
 
 
-  
+  // update profile
+  const [updateModal, setUpdateModal] = useState(false);
 
 
 
@@ -51,7 +52,7 @@ const MyProfile = () => {
         {image.length > 0 && (
         <>
          <div className='flex items-center gap-6'>
-            <img src={image[image.length - 1].dataURL}  className='w-56 h-56 rounded-full '/>
+            <img src={image[image.length - 1].dataURL}  className='w-56 h-56 rounded-full object-cover '/>
             <Tooltip title = "რედაქტირება">
                 <IconButton>
                 <EditIcon onClick = {() => setUploadModal(true)}  />
@@ -72,8 +73,14 @@ const MyProfile = () => {
 
 
 
- 
+ <div className='flex items-center gap-4'>
      <h2 className='text-xl'><span className='text-green-600'>სახელი: </span>{users?.name}</h2>
+     <Tooltip title = "რედაქტირება">
+                <IconButton>
+                <EditIcon onClick = {() => setUpdateModal(true)}  />
+                </IconButton>
+            </Tooltip>
+            </div>   
      <h2 className='text-xl'><span className='text-green-600'>გვარი: </span>{users?.surname}</h2>
      <h2 className='text-xl'><span className='text-green-600'>ელ-ფოსტა: </span>{users?.email}</h2>
      <h2 className='text-xl'><span className='text-green-600'>ქალაქი: </span>{users?.location}</h2>
@@ -81,11 +88,21 @@ const MyProfile = () => {
      </div>
 
  <div>
-   
+    {updateModal && <div className='bg-white absolute w-1/2 h-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg rounded-md '>
+        <h1>რედაქტირება</h1>
+        <form className='flex flex-col gap-4'>
+        <TextField size = "small" label = "სახელი"/>
+        <TextField size = "small" label = "გვარი"/>
+        <TextField size = "small" label = "ელ-ფოსტა"/>
+        <TextField size = "small" label = "ქალაქი"/>
+        <TextField size = "small" label = "პროფესია"/>
+      <Button>რედაქტირება</Button>
+      </form>
+        </div>}
  </div>
 
      <div>
-        
+       
      </div>
      </div>
   

@@ -35,5 +35,7 @@ router.get('/books/:id/comment/all', authenticateUser, actions.getAllComment);
 router.get('/users', authenticateUser, actions.getUserInfo);
 router.post('/users/profileImage', upload.single('testImage'), authenticateUser,  actions.uploadImage);
 router.get('/users/:id/profileImage', authenticateUser, actions.getImage);
+router.put('/users/:id', actions.updateProfileInfo);
+
 
 module.exports = router;

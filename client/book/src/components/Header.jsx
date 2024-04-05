@@ -13,7 +13,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
+
 
 const Header = () => {
   const [name, setName] = useState('');
@@ -98,11 +98,11 @@ const showFull = (id) => {
 
 useEffect(() => {
   fetchImages();
-}, [image]);
+}, []);
 
 
   return (
-    <div className='w-full flex items-center justify-between px-12 py-6 shadow relative'>
+    <div className='w-full flex items-center justify-between px-12 py-8 shadow relative'>
       <div className="logo flex gap-12">
         <h1 className='text-3xl font-bold cursor-pointer' onClick={() => isUserLoggedIn && navigate('/profile')}>მწერალი</h1>
        {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..." style={{width: "500px"}} onChange={(e) => setSearch(e.target.value)} /> }
@@ -116,15 +116,21 @@ useEffect(() => {
       </div>
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
-          <Tooltip title = "ჩემი პროფილი">
-          <IconButton>
-         <PersonPinIcon onClick={() => navigate('/myProfile')} sx = {{fontSize: "30px", color: "green", cursor: "pointer"}} />
-         </IconButton>
-         </Tooltip>
+          
           
        <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
         <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
-        <img src = {image[image.length - 1]?.dataURL} className='w-8 h-8 rounded-full' />
+
+        <Tooltip title = "ჩემი პროფილი">
+          <IconButton>
+          <img src = {image[image.length - 1]?.dataURL} onClick={() => navigate('/myProfile')} className='w-8 h-8 rounded-full object-cover' />
+         
+         </IconButton>
+         </Tooltip>
+
+      
+
+
         <p>ბალანსი:<span> {showLari}</span></p>
         <Tooltip title = "ჩემი კალათა">
           <IconButton>
@@ -174,9 +180,12 @@ useEffect(() => {
       </InputAdornment>
     )
   }} className='w-44' onChange={(e) => setPassword(e.target.value)} required />
+
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
-        
+         <span className='absolute bottom-2 text-sm right-36 underline cursor-pointer'>დაგავიწყდათ პაროლი?</span>
      </form>
+
+   
   
        )}
         
