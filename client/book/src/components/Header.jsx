@@ -22,7 +22,9 @@ const Header = () => {
  
   
   // cart span
-  const { cart, err, setErr, showPassword, handleShowPassword, handleMouseDownPassword,  showLari, books, image, setImage, fetchImages } = useContext(BookContext);
+  const { cart, err, setErr, showPassword,
+          handleShowPassword, handleMouseDownPassword,  
+          showLari, books, image, setImage, fetchImages } = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
    // logout modal
@@ -102,7 +104,7 @@ useEffect(() => {
 
 
   return (
-    <div className='w-full flex items-center justify-between px-12 py-8 shadow relative'>
+    <div className='w-full flex items-center justify-between px-12 py-6 shadow relative'>
       <div className="logo flex gap-12">
         <h1 className='text-3xl font-bold cursor-pointer' onClick={() => isUserLoggedIn && navigate('/profile')}>მწერალი</h1>
        {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..." style={{width: "500px"}} onChange={(e) => setSearch(e.target.value)} /> }
@@ -182,7 +184,7 @@ useEffect(() => {
   }} className='w-44' onChange={(e) => setPassword(e.target.value)} required />
 
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
-         <span className='absolute bottom-2 text-sm right-36 underline cursor-pointer'>დაგავიწყდათ პაროლი?</span>
+         <span className='absolute bottom-2 text-sm right-36 underline cursor-pointer' onClick={() => navigate('/reset')}>დაგავიწყდათ პაროლი?</span>
      </form>
 
    

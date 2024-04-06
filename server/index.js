@@ -10,7 +10,6 @@ require('dotenv').config();
 app.use(cors());
 app.use(express.json());
 
-
 const PORT =  4000;
 
 
@@ -18,7 +17,7 @@ const PORT =  4000;
 app.use('/api', routes);
 
 // connect database
- mongoose.connect('mongodb+srv://lukachikashvili2020:admin123@cluster0.ab82fus.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+ mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log('database connected');
  }).catch((err) => {
     console.log(err);

@@ -36,6 +36,7 @@ router.get('/users', authenticateUser, actions.getUserInfo);
 router.post('/users/profileImage', upload.single('testImage'), authenticateUser,  actions.uploadImage);
 router.get('/users/:id/profileImage', authenticateUser, actions.getImage);
 router.put('/users/:id', actions.updateProfileInfo);
+router.post('/reset', actions.resetPassword);
 
 
 module.exports = router;

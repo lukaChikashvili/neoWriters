@@ -60,7 +60,7 @@ const MyProfile = () => {
 
         await axiosInstance.put(`http://localhost:4000/api/users/${users._id}`, updatedObj);
 
-       
+         setUpdateModal(false);
         
       } catch (error) {
         console.log(error);
@@ -85,7 +85,7 @@ const MyProfile = () => {
         };
     }, [modalRef]);
   return (
-    <div className='flex p-12 items-center relative' >
+    <div className='flex p-12 items-center relative justify-between gap-12' >
         <div className='flex flex-col gap-4 items-center shadow-lg p-12 rounded-md'>
         <h1 className='text-4xl font-bold'>ჩემი პროფილი</h1>
 
@@ -144,7 +144,7 @@ const MyProfile = () => {
         </div>}
  </div>
 
-     <div>
+     <div className='w-1/2'>
        
      </div>
      </div>

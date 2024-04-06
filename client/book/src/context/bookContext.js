@@ -82,13 +82,11 @@ const BookProvider = ({children}) => {
        }
     }
 
-   
-
 
 
 
   return (
-    <BookContext.Provider value = {{fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
+    <BookContext.Provider value = {{ fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
         {children}
     </BookContext.Provider>
   )
