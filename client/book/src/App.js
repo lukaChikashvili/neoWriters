@@ -12,6 +12,7 @@ import UpdateBook from './components/UpdateBook';
 import Comments from './components/Comments';
 import MyProfile from './components/MyProfile';
 import ResetPass from './components/ResetPass';
+import ErrorPage from './components/ErrorPage';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
          <Route path = "/books/:id/update" element = { <UpdateBook />} />
          <Route path = "/myProfile" element = { <MyProfile />} />
          <Route path = "/reset" element = { <ResetPass />} />
+         <Route path = "*" element = {<ErrorPage />}/>
        </Routes>
     </div>
   );
