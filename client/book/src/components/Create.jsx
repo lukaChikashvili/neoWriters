@@ -130,7 +130,7 @@ const Create = () => {
         </TextField>
             <TextField error = {err} label = "მოკლე აღწერა" variant='outlined' value = {desc} size="small" onChange={(e) => setDesc(e.target.value)}/>
             <div className=' flex items-center gap-12'>
-             <p className='text-lg'>ატვირთე წიგნის ტექსტი: </p> 
+             <p className='text-lg hidden md:block'>ატვირთე წიგნის ტექსტი: </p> 
             <Button
               component="label"
               role={undefined}

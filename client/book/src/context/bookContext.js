@@ -1,12 +1,14 @@
 import {createContext, useEffect, useState} from 'react';
 import axiosInstance from '../components/axios';
 
+
 export const BookContext = createContext();
 
 
 const BookProvider = ({children}) => {
 
   const [books, setBooks] = useState([]);
+
 
   const [cart, setCart] = useState(() => {
 
@@ -82,11 +84,45 @@ const BookProvider = ({children}) => {
        }
     }
 
+   // responsive modal
+   const [responsiveModal, setResponsiveModal] = useState(false);
+
+// errors
+const [nameErr, setNameErr] = useState(false);
+const [passErr, setPassErr] = useState(false);
+// incorrect credential error
+const [incorrect, setIncorrect] = useState(false);
+
+
+// dark mode
+const [isDarkMode, setIsDarkMode] = useState(() => {
+  return JSON.parse(localStorage.getItem('isDarkMode')) || false;
+});
+
+
+const toggleDarkMode = () => {
+  setIsDarkMode(prevMode => {
+    const newMode = !prevMode;
+  
+    localStorage.setItem('isDarkMode', JSON.stringify(newMode));
+    return newMode;
+});
+  
+  };
+
+  useEffect(() => {
+
+    localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+}, [isDarkMode]);
+
+  const toggleLightMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  }
 
 
 
   return (
-    <BookContext.Provider value = {{ fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
+    <BookContext.Provider value = {{isDarkMode, toggleDarkMode, toggleLightMode, nameErr, setNameErr, passErr, setPassErr, incorrect, setIncorrect, responsiveModal, setResponsiveModal, fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
         {children}
     </BookContext.Provider>
   )

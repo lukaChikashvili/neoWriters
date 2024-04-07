@@ -102,7 +102,7 @@ const handleCategory = (type) => {
   return (
     <div className='flex flex-col  items-center gap-12 p-8'>
   
-      <div className='flex gap-8' >
+      <div className=' gap-8 hidden md:flex' >
        { categories.map((value) => (
          
           <button  style={{backgroundColor: value.color, color: "white",visibility: showCate ? "visible" : 'hidden' }} className='w-36 rounded-md h-8 shadow-lg' key={value.id} onClick={() => handleCategory(value.name)}>{value.name}</button>
@@ -113,7 +113,7 @@ const handleCategory = (type) => {
 <CategoryIcon onClick = {() => setShowCate(!showCate)} sx={{color: showCate ? "green" : "black", cursor: "pointer"}} />
 </div>
 
-<div className='flex flex-wrap gap-12'>
+<div className='flex flex-wrap justify-center gap-12'>
    {showFiltered ? (
       
     categoriesArr.map((value) => (

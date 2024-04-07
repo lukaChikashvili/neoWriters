@@ -6,6 +6,7 @@ import axiosInstance from './axios';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -25,7 +26,11 @@ const [registerErr, setRegisterErr] = useState(false);
 // sucessful register 
 const [success, setSuccess] = useState(false);
 
-const  { showPassword, handleShowPassword, handleMouseDownPassword } = useContext(BookContext);
+const  { showPassword, handleShowPassword, handleMouseDownPassword, 
+  responsiveModal, setResponsiveModal, err, nameErr,  passErr, 
+  incorrect } = useContext(BookContext);
+
+  let navigate = useNavigate();
 
   // register users
   const handleRegister = async (e) => {
@@ -49,17 +54,27 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword } = useContex
 
   }
 
+  const naviLogin = () => {
+    navigate('/login');
+    setResponsiveModal(false);
+  }
 
 
   return (
   
-    <div className='flex items-center justify-around h-screen '>
+    <div className='flex items-center justify-around h-screen  '>
+
+      {responsiveModal && <div className='absolute bg-black text-white z-10 opacity-80 w-full h-screen flex flex-col items-center justify-center gap-8 lg:hidden'>
+    <h2 className='text-2xl'>შედით სისტემაში</h2>
+     <Button variant='contained' color = "success" className='w-56 'onClick={naviLogin}>შესვლა</Button>
+    
+  </div>}
 
        <div>
-         <img src = {logo} />
+         <img src = {logo} className='hidden md:block'/>
        </div>
  
- <div className='w-1/3'>
+ <div className='w-4/5 m-auto md:m-0 md:w-1/3'>
  <form className='w-full flex flex-col gap-6' onSubmit={handleRegister}>
    <h1 className='text-4xl font-bold text-center'>რეგისტრაცია</h1>
  <TextField error = {registerErr && !name}  label = "სახელი" variant='outlined' size="small" onChange={(e) => setName(e.target.value)} />
@@ -87,6 +102,7 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword } = useContex
 
    
 </div>
+
 
    
     </div>

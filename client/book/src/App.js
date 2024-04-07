@@ -13,34 +13,33 @@ import Comments from './components/Comments';
 import MyProfile from './components/MyProfile';
 import ResetPass from './components/ResetPass';
 import ErrorPage from './components/ErrorPage';
+import Login from './components/Login';
+import { useContext, useEffect } from 'react';
+import { BookContext } from './context/bookContext';
 
 
 function App() {
-  const isUserLoggedIn = !!localStorage.getItem('token');
+  const isUserLoggedIn = localStorage.getItem('token');
 
+  const  { isDarkMode } = useContext(BookContext);
+
+  useEffect(() => {
+    if(isDarkMode) {
+      document.body.style.background ='linear-gradient(to right, #232526, #414345)';
+      document.body.style.transition = 'all 0.9s ease-in';
+      
+    }else {
+      document.body.style.background = 'linear-gradient(to top, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%)';
+    }
+  }, [isDarkMode]);
   return (
     <div className="App">
       <Header />
        <Routes>
         <Route path = "/" element = {<Home />} />
    
-       {isUserLoggedIn ? (
-        <Route
-          path="/profile"
-          element={
-          
-            <Profile />
-            
-          }
-        />
-       ) :  <Route
-       path="/profile"
-       element={
-       
-        <Navigate to = "/" />
-         
-       }
-     />} 
+        
+         <Route path="/profile" element={<Profile />} />
          <Route path = "/create" element = {<Create />} />
          <Route path = "/books/:id" element = {<FullPage />} >
              <Route path = "comment" element =  {<Comments />} />
@@ -53,6 +52,7 @@ function App() {
          <Route path = "/myProfile" element = { <MyProfile />} />
          <Route path = "/reset" element = { <ResetPass />} />
          <Route path = "*" element = {<ErrorPage />}/>
+         <Route path = "/login" element = {<Login />} />
        </Routes>
     </div>
   );

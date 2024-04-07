@@ -13,67 +13,70 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeSharpIcon from '@mui/icons-material/LightModeSharp';
 
 const Header = () => {
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
+ 
 
  
   
   // cart span
   const { cart, err, setErr, showPassword,
           handleShowPassword, handleMouseDownPassword,  
-          showLari, books, image, setImage, fetchImages } = useContext(BookContext);
+          showLari, books, image, setImage, fetchImages, 
+          setResponsiveModal, nameErr, setNameErr, passErr,
+           responsiveModal, setPassErr, incorrect, setIncorrect ,
+          isDarkMode, toggleDarkMode, toggleLightMode} = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
    // logout modal
    const [modal, setModal] = useState(false);  
 
-   // errors
-   const [nameErr, setNameErr] = useState(false);
-   const [passErr, setPassErr] = useState(false);
-   // incorrect credential error
-   const [incorrect, setIncorrect] = useState(false);
-
+   
    // saerch input
    const [search, setSearch] = useState('');
    const [searchResult, setSearchResult] = useState([]);
-
-
+   const [name, setName] = useState('');
+   const [password, setPassword] = useState('');
+   
+ 
   let navigate = useNavigate();
 
-const handleLogin = async () => {
-  
-if(!name && !password) {
-  setErr(true);
-  setNameErr(false);
-}else if(!name) {
-  setNameErr(true);
-  setPassErr(false);
-   
-}else if(!password) {
-   setPassErr(true);
-   setNameErr(false);
-}else {
-  try {
-    const response = await axiosInstance.post('http://localhost:4000/api/login', {name, password});
-  const token = response.data.token;
-  localStorage.setItem('token', token);
-  localStorage.setItem('name', response.data.name);
 
-  navigate('/profile');
-  } catch (error) {
-   setIncorrect(true);
-  }
+  const handleLogin = async () => {
   
+    if(!name && !password) {
+      setErr(true);
+      setNameErr(false);
+    }else if(!name) {
+      setNameErr(true);
+      setPassErr(false);
+       
+    }else if(!password) {
+       setPassErr(true);
+       setNameErr(false);
+    }else {
+      try {
+        const response = await axiosInstance.post('http://localhost:4000/api/login', {name, password});
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      localStorage.setItem('name', response.data.name);
+
+        navigate('/profile');
     
-}
- 
-
-}
-
-
+   
+      } catch (error) {
+       setIncorrect(true);
+      }
+      
+        
+    }
+     
+    
+    }
+    
 
 
 const logout = () => {
@@ -103,12 +106,19 @@ useEffect(() => {
 }, []);
 
 
+const showModal = () => {
+  setResponsiveModal(true);
+
+  if(responsiveModal === false) {
+    setResponsiveModal(true);
+  }
+}
   return (
     <div className='w-full flex items-center justify-between px-12 py-6 shadow relative'>
       <div className="logo flex gap-12">
-        <h1 className='text-3xl font-bold cursor-pointer' onClick={() => isUserLoggedIn && navigate('/profile')}>მწერალი</h1>
-       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..." style={{width: "500px"}} onChange={(e) => setSearch(e.target.value)} /> }
-       <div className='absolute -bottom-20 bg-gray-400 left-48 rounded-md shadow-md' style={{width: "500px", marginLeft: "7px"}}>
+        <h1 className='text-3xl font-bold cursor-pointer hidden md:block' onClick={() => isUserLoggedIn && navigate('/profile')}>Litera</h1>
+       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..."  className='w-24 ' style = {{width: "500px"}} onChange={(e) => setSearch(e.target.value)} /> }
+       <div className='absolute -bottom-20 bg-gray-400 left-40 rounded-md shadow-md' style={{width: "500px", marginLeft: "7px"}}>
        {search && searchResult.map((value) => (
      
          <p  className='p-4 px-8 flex items-center justify-between gap-12 text-lg'><img src = {value.url} className='w-12' />{value.title}  <span className='font-bold'>{value.price}ლ</span> <OpenInNewIcon className='cursor-pointer'  onClick = {() => showFull(value._id)} /> </p>
@@ -119,13 +129,13 @@ useEffect(() => {
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
           
-          
-       <Button variant='outlined' color = "success"> <Link to = "/create" className='text-md'>წიგნის დაწერა</Link></Button>
-        <p className='text-2xl font-semibold'>{localStorage.getItem('name')}</p>
+        {isDarkMode ?  <DarkModeIcon sx = {{color: "#525CEB", cursor: 'pointer'}} onClick = {toggleDarkMode} /> :  <LightModeSharpIcon onClick = {toggleLightMode} />}  
+       <Button variant='outlined' color = "success" style={{marginLeft: '30px'}}> <Link to = "/create" className='text-md flex gap-4 '><AutoStoriesIcon  /><span className='hidden md:block'>წიგნის დაწერა</span></Link></Button>
+        <p className='text-2xl font-semibold hidden md:block'>{localStorage.getItem('name')}</p>
 
         <Tooltip title = "ჩემი პროფილი">
           <IconButton>
-          <img src = {image[image.length - 1]?.dataURL} onClick={() => navigate('/myProfile')} className='w-8 h-8 rounded-full object-cover' />
+          <img src = {image[image.length - 1]?.dataURL} onClick={() => navigate('/myProfile')} className='w-8 h-8 rounded-full object-cover hidden md:block' />
          
          </IconButton>
          </Tooltip>
@@ -133,10 +143,10 @@ useEffect(() => {
       
 
 
-        <p>ბალანსი:<span> {showLari}</span></p>
-        <Tooltip title = "ჩემი კალათა">
+        <p className='hidden md:block'>ბალანსი:<span> {showLari}</span></p>
+        <Tooltip title = "ჩემი კალათა" >
           <IconButton>
-          <ShoppingCartIcon className='cursor-pointer relative' onClick = {() => navigate('/cart')} /><span className='absolute top-0 right-0 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4'>{cart}</span>
+          <ShoppingCartIcon className='cursor-pointer relative right-16 md:right-0' onClick = {() => navigate('/cart')} /><span className='absolute top-0 right-16 md:right-0 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4 '>{cart}</span>
           </IconButton>
         </Tooltip>
         
@@ -144,7 +154,7 @@ useEffect(() => {
        
        <Tooltip title = "მენიუ">
         <IconButton>
-        <DragHandleIcon className='cursor-pointer' onClick = {() => setModal(true)} />
+        <DragHandleIcon className='cursor-pointer '  onClick = {() => setModal(true)} />
         </IconButton>
        </Tooltip>
      
@@ -165,7 +175,11 @@ useEffect(() => {
          </AnimatePresence>
          </div>
        ) : (
-        <form className='flex items-center gap-4'>
+ <>
+   
+        <DragHandleIcon className='lg:hiddne cursor-pointer' onClick = {showModal}/>
+        <form className=' items-center gap-4 hidden md:flex'>
+          
          <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required />
          
          <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"}   InputProps={{ 
@@ -187,10 +201,10 @@ useEffect(() => {
          <span className='absolute bottom-2 text-sm right-36 underline cursor-pointer' onClick={() => navigate('/reset')}>დაგავიწყდათ პაროლი?</span>
      </form>
 
-   
+     </>
   
        )}
-        
+      
     </div>
   )
 }

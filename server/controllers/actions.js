@@ -241,39 +241,17 @@ const updateProfileInfo = async (req, res) => {
 
 // reset password
 const resetPassword = async (req, res) => {
-   const { email } = req.body;
+   const userId = req.user.id;
+   const {password} = req.body;
 
-   const findUser =  await User.findOne({email});
+   const findUser =  await User.findByIdAndUpdate(userId, { password });
 
    if(!findUser) {
       return res.status(404).json({message: "user not found"});
 
    }
 
-   const token = jwt.sign({id: findUser._id}, process.env.NEW_SECRET, {expiresIn: "1d"});
-
-   var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'litera616@gmail.com',
-        pass: 'litera123'
-      }
-    });
-    
-    var mailOptions = {
-      from: 'litera616@gmail.com',
-      to: findUser.email,
-      subject: 'პაროლის აღდგენა',
-      text: `http://localhost:3000/reset-password/${findUser._id}/${token}`
-    };
-    
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
-         return res.json({message: 'email send'});
-      }
-    });
+  return res.json({findUser});
 
 }
 // export functions
