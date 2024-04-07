@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     if(isDarkMode) {
-      document.body.style.background ='linear-gradient(to right, #232526, #414345)';
+      document.body.style.background ='linear-gradient( #31363F, #31363F)';
       document.body.style.transition = 'all 0.9s ease-in';
       
     }else {

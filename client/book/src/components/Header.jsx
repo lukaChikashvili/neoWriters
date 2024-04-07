@@ -114,10 +114,12 @@ const showModal = () => {
   }
 }
   return (
-    <div className='w-full flex items-center justify-between px-12 py-6 shadow relative'>
+    <div className='w-full flex items-center justify-between px-12 py-6 shadow relative' style={{color: isDarkMode && '#fff'}}>
       <div className="logo flex gap-12">
-        <h1 className='text-3xl font-bold cursor-pointer hidden md:block' onClick={() => isUserLoggedIn && navigate('/profile')}>Litera</h1>
-       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..."  className='w-24 ' style = {{width: "500px"}} onChange={(e) => setSearch(e.target.value)} /> }
+        <h1 className='text-3xl font-bold cursor-pointer hidden md:block'  style={{color: isDarkMode ? "#fff" : 'black'}}  onClick={() => isUserLoggedIn && navigate('/profile')}>Litera</h1>
+       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..."  className='w-24 input  ' style = {{width: "500px", border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} onChange={(e) => setSearch(e.target.value)} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} /> }
        <div className='absolute -bottom-20 bg-gray-400 left-40 rounded-md shadow-md' style={{width: "500px", marginLeft: "7px"}}>
        {search && searchResult.map((value) => (
      
@@ -130,8 +132,8 @@ const showModal = () => {
         <div className='flex items-center gap-8 '>
           
         {isDarkMode ?  <DarkModeIcon sx = {{color: "#525CEB", cursor: 'pointer'}} onClick = {toggleDarkMode} /> :  <LightModeSharpIcon onClick = {toggleLightMode} />}  
-       <Button variant='outlined' color = "success" style={{marginLeft: '30px'}}> <Link to = "/create" className='text-md flex gap-4 '><AutoStoriesIcon  /><span className='hidden md:block'>წიგნის დაწერა</span></Link></Button>
-        <p className='text-2xl font-semibold hidden md:block'>{localStorage.getItem('name')}</p>
+       <Button variant={isDarkMode ? "contained" : 'outlined'} color = "success" style={{marginLeft: '30px'}}> <Link to = "/create" className='text-md flex gap-4 '><AutoStoriesIcon  /><span className='hidden md:block'>წიგნის დაწერა</span></Link></Button>
+        <p className='text-2xl font-semibold hidden md:block' style={{color: isDarkMode && '#fff'}}>{localStorage.getItem('name')}</p>
 
         <Tooltip title = "ჩემი პროფილი">
           <IconButton>
@@ -146,7 +148,7 @@ const showModal = () => {
         <p className='hidden md:block'>ბალანსი:<span> {showLari}</span></p>
         <Tooltip title = "ჩემი კალათა" >
           <IconButton>
-          <ShoppingCartIcon className='cursor-pointer relative right-16 md:right-0' onClick = {() => navigate('/cart')} /><span className='absolute top-0 right-16 md:right-0 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4 '>{cart}</span>
+          <ShoppingCartIcon className='cursor-pointer relative right-16 md:right-0' style={{color: isDarkMode && '#fff'}} onClick = {() => navigate('/cart')} /><span className='absolute top-0 right-16 md:right-0 text-white text-sm text-center bg-green-800 rounded-full w-4 h-4 '>{cart}</span>
           </IconButton>
         </Tooltip>
         
@@ -154,7 +156,7 @@ const showModal = () => {
        
        <Tooltip title = "მენიუ">
         <IconButton>
-        <DragHandleIcon className='cursor-pointer '  onClick = {() => setModal(true)} />
+        <DragHandleIcon className='cursor-pointer '  onClick = {() => setModal(true)} style={{color: isDarkMode && '#fff'}} />
         </IconButton>
        </Tooltip>
      
