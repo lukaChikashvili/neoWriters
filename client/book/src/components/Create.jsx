@@ -32,7 +32,7 @@ const Create = () => {
 
     let navigate = useNavigate();
 
-    const { books, setBooks, useUrl,  selectedItemUrl, err, setErr} = useContext(BookContext);
+    const { books, setBooks, useUrl,  selectedItemUrl, err, setErr, isDarkMode} = useContext(BookContext);
 
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');
@@ -108,19 +108,30 @@ const Create = () => {
 
   return (
     <div>
-      <div className='flex flex-col items-center justify-center h-screen'>
+      <div className='flex flex-col items-center justify-center h-screen' style={{color: isDarkMode && '#fff'}} >
         <h1 className='text-4xl pb-12'>შექმენით წიგნი</h1>
         <form className='flex flex-col gap-4 w-1/3'>
-            <TextField error = {err} label = "სათაური" variant='outlined' size="small" value = {title} onChange={(e) => setTitle(e.target.value)}/>
+            <TextField error = {err} label = "სათაური" variant='outlined' size="small" value = {title} onChange={(e) => setTitle(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
             <TextField
           id="outlined-select-currency"
           select
           value = {type}
+          
           defaultValue='მოთხრობა'
           helperText="აირჩიეთ წიგნის ტიპი"
           size='small'
           error = {err}
           onChange={handleSelect}
+          sx = {{input: {color: isDarkMode && "#fff"}, color: isDarkMode && 'white',
+          '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: isDarkMode && 'white'
+          },
+          '& .MuiSvgIcon-root': {
+              color: isDarkMode &&  'white'
+          }}}  
+        
         >
           {types.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -128,7 +139,9 @@ const Create = () => {
             </MenuItem>
           ))}
         </TextField>
-            <TextField error = {err} label = "მოკლე აღწერა" variant='outlined' value = {desc} size="small" onChange={(e) => setDesc(e.target.value)}/>
+            <TextField error = {err} label = "მოკლე აღწერა" variant='outlined' value = {desc} size="small" onChange={(e) => setDesc(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
             <div className=' flex items-center gap-12'>
              <p className='text-lg hidden md:block'>ატვირთე წიგნის ტექსტი: </p> 
             <Button
@@ -147,8 +160,12 @@ const Create = () => {
 
 
 </div>
-<TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)}/>
-            <TextField error = {err} label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)}/>
+<TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
+            <TextField error = {err} label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
             <Button variant='contained' color="success" onClick={handleCreate}>გამოქვეყნება</Button>
         </form>
       </div>

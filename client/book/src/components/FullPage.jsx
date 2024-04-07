@@ -13,7 +13,7 @@ const FullPage = () => {
     // take id from route
     const { id } = useParams();
     const [fullPage, setFullPage] = useState(null);
-    const { books, setCart, setCartItem,  showLari,  setShowLari} = useContext(BookContext);
+    const { books, setCart, setCartItem,  showLari,  setShowLari, isDarkMode} = useContext(BookContext);
 
   
 
@@ -115,7 +115,7 @@ const handleComment = (id) => {
                 
                </div>
                {fullPage &&  (
-                <div className='flex gap-12'>
+                <div className='flex gap-12' style={{color: isDarkMode && '#fff'}}>
                     <img src = {fullPage.url} className='w-56 h-76 object-cover cursor-pointer shadow-lg rounded-md absolute right-56 top-8'/>
                     <p className='text-3xl'>{fullPage.price}</p>
                     <Button variant='outlined' color = "success" onClick={() => handlePurchase(fullPage.price)} ref = {buttonRef}>გადახდა</Button>
@@ -147,9 +147,9 @@ const handleComment = (id) => {
 }} />
 </div>
          
-         <Button variant="text" color = "success" className='flex gap-8' onClick={handlePreview}> <VisibilityIcon /> უფასო ნაწილის წაკითხვა </Button>
+         <Button variant={'text'} color = "success" className='flex gap-8' style = {{fontWeight: isDarkMode && 'bold'}} onClick={handlePreview}> <VisibilityIcon /> უფასო ნაწილის წაკითხვა </Button>
    </div>
-         <div className='flex flex-col gap-4 w-4/5'>
+         <div className='flex flex-col gap-4 w-4/5' style={{color: isDarkMode && '#fff'}}>
             <h1 className='text-4xl font-bold'>{fullPage.title}</h1>
             <p className='text-2xl text-green-600'>{fullPage.author.name}</p>
             <p className='text-2xl'>{fullPage.createdAt.substring(0, 10)}</p>
@@ -160,18 +160,18 @@ const handleComment = (id) => {
              
             <p className='line pt-4 text-lg'>{fullPage.desc}</p>
             <div className='flex gap-8 '>
-            <Button variant='outlined' color = "success" className = "w-56" onClick={() => addToCart(fullPage._id)}>კალათში დამატება</Button>
-        <Button variant='contained' color = "success"  className = "w-56" onClick={() => buyBook(fullPage._id)}>ყიდვა</Button>
+            <Button variant='outlined' color = "success" className = "w-56" style = {{fontWeight: isDarkMode && 'bold'}} onClick={() => addToCart(fullPage._id)}>კალათში დამატება</Button>
+        <Button variant='contained' color = "success"  className = "w-56"  onClick={() => buyBook(fullPage._id)}>ყიდვა</Button>
             </div>
             </div>
            
                 </div>
         ) : (
-            <p>იტვირთება...</p>
+            <p style={{color: isDarkMode && '#fff'}}>იტვირთება...</p>
         )}
     
 
-    <div className='pt-12'>
+    <div className='pt-12' style={{color: isDarkMode && '#fff'}}>
         <h2 className='text-2xl pb-8' onClick={() => handleComment(fullPage._id)}>კომენტარების ჩვენება</h2>
      
    <Outlet />

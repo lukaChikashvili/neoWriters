@@ -1,7 +1,8 @@
 import { Button, TextField } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import axiosInstance from './axios';
+import { BookContext } from '../context/bookContext';
 
 const Comments = () => {
 
@@ -9,6 +10,7 @@ const Comments = () => {
     const [allComments, setAllComments] = useState([]);
 
     let { id } = useParams();
+    const { isDarkMode } = useContext(BookContext);
 
     const writeComment = async () => {
         const token = localStorage.getItem("token");
@@ -38,7 +40,9 @@ const Comments = () => {
   return (
     <div>
    <div className='flex items-center gap-8'>
-      <TextField size = "small" label = "დაწერეთ კომენტარი..." className = "w-96" onChange={(e) => setComment(e.target.value)}/>
+      <TextField size = "small" label = "დაწერეთ კომენტარი..." className = "w-96" onChange={(e) => setComment(e.target.value)}  InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}  sx = {{input: {color: isDarkMode && "#fff"}}}/>
       <Button onClick={writeComment} variant='contained' color = "success">გამოქვეყნება</Button>
       </div>
       {Array.isArray(allComments) ? (

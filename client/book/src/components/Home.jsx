@@ -28,7 +28,7 @@ const [success, setSuccess] = useState(false);
 
 const  { showPassword, handleShowPassword, handleMouseDownPassword, 
   responsiveModal, setResponsiveModal, err, nameErr,  passErr, 
-  incorrect } = useContext(BookContext);
+  incorrect , isDarkMode} = useContext(BookContext);
 
   let navigate = useNavigate();
 
@@ -62,7 +62,7 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword,
 
   return (
   
-    <div className='flex items-center justify-around h-screen  '>
+    <div className='flex items-center justify-around h-screen  ' style = {{color: isDarkMode && '#fff'}}>
 
       {responsiveModal && <div className='absolute bg-black text-white z-10 opacity-80 w-full h-screen flex flex-col items-center justify-center gap-8 lg:hidden'>
     <h2 className='text-2xl'>შედით სისტემაში</h2>

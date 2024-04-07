@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import {Button,   IconButton,   InputAdornment,   TextField, Tooltip} from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import {Link, useNavigate} from 'react-router-dom';
@@ -113,6 +113,27 @@ const showModal = () => {
     setResponsiveModal(true);
   }
 }
+
+// menu ref
+let menuRef = useRef(null);
+
+// close menu on outside click
+useEffect(()=> {
+
+  const detectClick = (e) => {
+    if(menuRef.current && !menuRef.current.contains(e.target)){
+      setModal(false);
+     }
+  
+  }
+
+
+   document.body.addEventListener('mousedown', detectClick);
+
+   return () => {
+    document.body.removeEventListener('mousedown', detectClick);
+   }
+}, [])
   return (
     <div className='w-full flex items-center justify-between px-12 py-6 shadow relative' style={{color: isDarkMode && '#fff'}}>
       <div className="logo flex gap-12">
@@ -131,8 +152,8 @@ const showModal = () => {
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
           
-        {isDarkMode ?  <DarkModeIcon sx = {{color: "#525CEB", cursor: 'pointer'}} onClick = {toggleDarkMode} /> :  <LightModeSharpIcon onClick = {toggleLightMode} />}  
-       <Button variant={isDarkMode ? "contained" : 'outlined'} color = "success" style={{marginLeft: '30px'}}> <Link to = "/create" className='text-md flex gap-4 '><AutoStoriesIcon  /><span className='hidden md:block'>წიგნის დაწერა</span></Link></Button>
+        {isDarkMode ?  <DarkModeIcon sx = {{color: "#fff", cursor: 'pointer'}} onClick = {toggleDarkMode} /> :  <LightModeSharpIcon onClick = {toggleLightMode} />}  
+       <Button variant={isDarkMode ? "contained" : 'outlined'} color = "success" style={{marginLeft: '30px'}} className='flex items-center gap-4 text-md' onClick={() => navigate('/create')}><AutoStoriesIcon  /><span className='hidden md:block'>წიგნის დაწერა</span></Button>
         <p className='text-2xl font-semibold hidden md:block' style={{color: isDarkMode && '#fff'}}>{localStorage.getItem('name')}</p>
 
         <Tooltip title = "ჩემი პროფილი">
@@ -165,10 +186,14 @@ const showModal = () => {
 <AnimatePresence>
          {
          
-          modal && <motion.div initial = {{opacity: 0, translateX: 50}} animate = {{opacity: 1, translateX: 0}} transition = {{duration: 1, delay: 0.2, type: 'spring'}} exit = {{translateX: 300}} className='absolute right-0 top-24  bottom-0 h-full w-64 bg-gray-300 -mt-2 flex flex-col gap-4'>
-            <Link className='p-4 flex gap-4' to = "/design" onClick={() => setModal(false)}><BrushIcon className='text-green-800' />ყდის დიზაინის შექმნა</Link>
-            <Link className='p-4 flex gap-4' to = "/myDesign"  onClick={() => setModal(false)}><InsertPhotoIcon className='text-green-800'/>ჩემი სურათები</Link>
-            <Link className='p-4 flex gap-4' to = "/myBooks"  onClick={() => setModal(false)}><MenuBookIcon className='text-green-800'/>ჩემი წიგნები</Link>
+          modal && <motion.div initial = {{opacity: 0, translateX: 50}} animate = {{opacity: 1, translateX: 0}} 
+          transition = {{duration: 1, delay: 0.2, type: 'spring'}} 
+          exit = {{translateX: 300}} 
+          className='absolute right-0 top-24  z-10 bottom-0 min-h-screen w-64 bg-gray-400 -mt-2 flex flex-col gap-4' ref = {menuRef}>
+
+            <Link className='p-4 flex gap-4' to = "/design" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><BrushIcon className='text-green-800' />ყდის დიზაინის შექმნა</Link>
+            <Link className='p-4 flex gap-4' to = "/myDesign" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><InsertPhotoIcon className='text-green-800'/>ჩემი სურათები</Link>
+            <Link className='p-4 flex gap-4' to = "/myBooks" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><MenuBookIcon className='text-green-800'/>ჩემი წიგნები</Link>
           <Button variant='contained' color="success" onClick={logout} className='w-full'>გასვლა</Button>
 
           </motion.div>
@@ -182,9 +207,11 @@ const showModal = () => {
         <DragHandleIcon className='lg:hiddne cursor-pointer' onClick = {showModal}/>
         <form className=' items-center gap-4 hidden md:flex'>
           
-         <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required />
+         <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} />
          
-         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"}   InputProps={{ 
+         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"} style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}  InputProps={{ 
     endAdornment: (
       <InputAdornment position="end">
         <IconButton
@@ -193,11 +220,13 @@ const showModal = () => {
           onMouseDown={handleMouseDownPassword}
           edge="end"
         >
-          {showPassword ? <VisibilityOff sx={{fontSize: 20}} /> : <Visibility sx={{fontSize: 20}}/>}
+          {showPassword ? <VisibilityOff sx={{fontSize: 20, color: isDarkMode && '#fff'}} /> : <Visibility sx={{fontSize: 20, color: isDarkMode && '#fff'}}/>}
         </IconButton>
       </InputAdornment>
     )
-  }} className='w-44' onChange={(e) => setPassword(e.target.value)} required />
+  }} className='w-44' onChange={(e) => setPassword(e.target.value)} required  sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
+    style: { color: isDarkMode &&  '#fff' }, 
+}}/>
 
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
          <span className='absolute bottom-2 text-sm right-36 underline cursor-pointer' onClick={() => navigate('/reset')}>დაგავიწყდათ პაროლი?</span>

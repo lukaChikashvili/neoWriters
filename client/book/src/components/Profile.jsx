@@ -67,7 +67,7 @@ const Profile = () => {
   const [categoriesArr, setCategoriesArr] = useState([]);
   const [showFiltered, setShowFiltered] = useState(false);
 
-  const { books, setBooks} = useContext(BookContext);
+  const { books, setBooks, isDarkMode} = useContext(BookContext);
  
   const getAllBooks = async () =>{
       const data = await axiosInstance.get('http://localhost:4000/api/books');
@@ -100,7 +100,7 @@ const handleCategory = (type) => {
 
 
   return (
-    <div className='flex flex-col  items-center gap-12 p-8'>
+    <div className='flex flex-col  items-center gap-12 p-8' style={{color: isDarkMode && '#fff'}}>
   
       <div className=' gap-8 hidden md:flex' >
        { categories.map((value) => (
