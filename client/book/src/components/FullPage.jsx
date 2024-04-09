@@ -115,7 +115,7 @@ useEffect(() => {
           {preview && <div className='w-3/5 h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 overflow-y-auto' ref = {previewRef}>
           <span className='absolute top-4 right-4 text-2xl font-semibold cursor-pointer' onClick={() => setPreview(false)}>X</span>
 
-          <p className='text-xl'>{fullPage.text}</p>
+          <p className='text-xl'>{fullPage.text.substring(0, 2000)}...</p>
             </div>}
   
 

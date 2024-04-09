@@ -43,6 +43,8 @@ const MyProfile = () => {
             }
         };
 
+        
+
         fetchUserData();
     }, [image]);
 

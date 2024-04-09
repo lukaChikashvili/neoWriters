@@ -36,7 +36,8 @@ const Login = () => {
               const token = response.data.token;
               localStorage.setItem('token', token);
               localStorage.setItem('name', response.data.name);
-            
+              
+        
               navigate('/profile');
               
               } catch (error) {

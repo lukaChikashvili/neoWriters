@@ -20,9 +20,9 @@ const Comments = () => {
         }
     } 
     );
-     
-    setAllComments([...allComments, response.data]);
     setComment('');
+    setAllComments([...allComments, response.data]);
+
   
     }
 
@@ -40,7 +40,7 @@ const Comments = () => {
   return (
     <div>
    <div className='flex items-center gap-8'>
-      <TextField size = "small" label = "დაწერეთ კომენტარი..." className = "w-96" onChange={(e) => setComment(e.target.value)}  InputLabelProps={{
+      <TextField size = "small" label = "დაწერეთ კომენტარი..." value = {comment} className = "w-96" onChange={(e) => setComment(e.target.value)}  InputLabelProps={{
           style: { color: isDarkMode &&  '#fff' }, 
    }} style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}  sx = {{input: {color: isDarkMode && "#fff"}}}/>
       <Button onClick={writeComment} variant='contained' color = "success">გამოქვეყნება</Button>
@@ -49,6 +49,13 @@ const Comments = () => {
   allComments.map((value) => (
     <div className='pt-6'>
     <p key={value._id} className='rounded-md bg-gray-400 p-8 shadow-gray-600 shadow-lg'>{value.text}</p>
+{value.user === localStorage.getItem('name') &&  (
+  <div>
+     <Button>რედაქტირება</Button>
+        <Button>წაშლა</Button>
+    </div>
+)}
+       
     </div>
   ))
 ) : (

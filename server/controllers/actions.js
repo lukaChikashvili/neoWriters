@@ -159,7 +159,7 @@ const getAllComment = async (req, res) => {
       _id: comment._id,
       text: comment.text,
       createdAt: comment.createdAt,
-      user: comment.user?.name 
+      user: comment.author?.name 
   }));
 
     return res.status(200).json({ getComment: commentsWithUserNames });
