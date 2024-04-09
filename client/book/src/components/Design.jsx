@@ -9,7 +9,7 @@ import { BookContext } from '../context/bookContext';
 
 const Design = () => {
   // take states from bookContext
-  const {myBookCover, setMyBookCover} = useContext(BookContext)
+  const {myBookCover, setMyBookCover, isDarkMode} = useContext(BookContext)
 
 // take screenshot
  const [image1, takeScreenshot] = useScreenshot({
@@ -390,7 +390,7 @@ const isUserLoggedIn = localStorage.getItem('token');
 </div>
 
 <div>
-  <DeleteForeverIcon sx={{fontSize: 40}} className='cursor-pointer absolute bottom-4 right-4' onClick = {() => setDeleteModal(true)} />
+  <DeleteForeverIcon sx={{fontSize: 40, color: isDarkMode && "#fff"}} className='cursor-pointer absolute bottom-4 right-4' onClick = {() => setDeleteModal(true)} />
   {deleteModal && (
     <div className='bg-gray-200 w-2/5 absolute left-1/2 top-2/4 -translate-x-1/2 ml-44 h-56 rounded-md shadow-lg flex flex-col gap-12 p-12 '>
       <h1 className='text-center text-2xl'>ნამდვილად გსურთ წაშლა? მერე არ ინანოთ</h1>

@@ -186,7 +186,7 @@ useEffect(()=> {
 <AnimatePresence>
          {
          
-          modal && <motion.div initial = {{opacity: 0, translateX: 50}} animate = {{opacity: 1, translateX: 0}} 
+          modal && <motion.div initial = {{opacity: 0, translateX: 30}} animate = {{opacity: 1, translateX: 0}} 
           transition = {{duration: 1, delay: 0.2, type: 'spring'}} 
           exit = {{translateX: 300}} 
           className='absolute right-0 top-24  z-10 bottom-0 min-h-screen w-64 bg-gray-400 -mt-2 flex flex-col gap-4' ref = {menuRef}>

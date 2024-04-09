@@ -80,6 +80,8 @@ let buttonRef = useRef();
           
     
        let navigate = useNavigate();
+       let previewRef = useRef(null);
+
     
 const handlePreview = () => {
   setPreview(true);
@@ -90,12 +92,27 @@ const handleComment = (id) => {
    navigate(`/books/${id}/comment`);
 }
 
+// close preview modal on outside click
+useEffect(() => {
+   
+    const detectClick = (e) => {
+      if(previewRef.current && !previewRef.current.contains(e.target))  {
+         setPreview(false);
+      }
+    }
 
+
+    document.addEventListener('mousedown', detectClick);
+
+    return () => {
+        document.removeEventListener('mousedown', detectClick);
+    }
+}, [])
 
   return (
     <div className='p-24 px-56' >
 
-          {preview && <div className='w-3/5 h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 overflow-y-auto'>
+          {preview && <div className='w-3/5 h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 overflow-y-auto' ref = {previewRef}>
           <span className='absolute top-4 right-4 text-2xl font-semibold cursor-pointer' onClick={() => setPreview(false)}>X</span>
 
           <p className='text-xl'>{fullPage.text}</p>
@@ -154,8 +171,8 @@ const handleComment = (id) => {
             <p className='text-2xl text-green-600'>{fullPage.author.name}</p>
             <p className='text-2xl'>{fullPage.createdAt.substring(0, 10)}</p>
             <p className='text-2xl underline underline-offset-4'>{fullPage.type}</p>
-             <img src = {tag} className='w-40 absolute right-40' />
-             <p className='flex text-5xl  absolute right-52 top-56 text-white'>{fullPage.price}</p>
+            
+             <p className='flex text-5xl  absolute right-52 top-56 font-semibold'>{fullPage.price}</p>
               
              
             <p className='line pt-4 text-lg'>{fullPage.desc}</p>
