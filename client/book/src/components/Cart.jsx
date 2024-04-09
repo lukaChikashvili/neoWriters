@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { BookContext } from '../context/bookContext';
 
 const Cart = () => {
-    const { cartItem, isDarkMode} = useContext(BookContext);
+    const { cartItem, setCartItem, isDarkMode} = useContext(BookContext);
     // total price
     const [totalPrice, setTotalPrice] = useState(0);
     const [stock, setStock] = useState({});
@@ -24,11 +24,39 @@ const Cart = () => {
       setStock(initialStock);
   }, [cartItem]);
 
+
   const doubleSum = (itemId) => {
     setStock(prevStock => ({
-        ...prevStock,
-        [itemId]: (prevStock[itemId] || 0) + 1
+      ...prevStock,
+      [itemId]: (prevStock[itemId] || 0) + 1
     }));
+  
+    setCartItem(prevCartItems => {
+      return prevCartItems.map(item => {
+        if (item._id === itemId) {
+          return {
+            ...item,
+            price: parseFloat(item.price) * 2
+          };
+        }
+        return item;
+      });
+    });
+  };
+  
+
+const minusSum = (itemId) => {
+  if (stock[itemId] > 0) {
+      setStock(prevStock => ({
+          ...prevStock, 
+          [itemId]: prevStock[itemId] - 1
+      }));
+  }
+}
+
+// delete cart item
+const deleteItem = (id) => {
+   setCartItem(prevCartItems => prevCartItems.filter(item => item._id !== id));
 }
   return (
     <div className='p-16 ' style={{color:isDarkMode && '#fff'}}>
@@ -40,9 +68,11 @@ const Cart = () => {
            <p key={value._id} >{value.title}</p>
            <p className='font-bold text-2xl'>{value.price}</p>
 
-           <button onClick={() => doubleSum(value._id)}>-</button>
+           <button onClick={() => minusSum(value._id)}>-</button>
            <p>{stock[value._id]}</p>
            <button onClick={() => doubleSum(value._id)}>+</button>
+          
+           <h2 className='text-4xl absolute right-36 cursor-pointer' onClick={() => deleteItem(value._id)}>X</h2>
         </div>
       ))}
     </div>
