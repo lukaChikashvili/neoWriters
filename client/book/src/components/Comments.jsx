@@ -36,6 +36,14 @@ const Comments = () => {
     useEffect(() => {
         getAll();
      }, [comment]);
+
+
+     // delete comment
+ const handleDelete =async (id) => {
+    await axiosInstance.delete(`http://localhost:4000/api/books/${id}/comment/del`);
+
+    getAll();
+ }
  
   return (
     <div>
@@ -52,7 +60,7 @@ const Comments = () => {
 {value.user === localStorage.getItem('name') &&  (
   <div>
      <Button>რედაქტირება</Button>
-        <Button>წაშლა</Button>
+       <Button onClick={() => handleDelete(value._id)}>წაშლა</Button>
     </div>
 )}
        
