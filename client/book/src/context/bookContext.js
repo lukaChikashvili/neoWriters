@@ -134,7 +134,7 @@ const toggleDarkMode = () => {
 
 
   return (
-    <BookContext.Provider value = {{isDarkMode, toggleDarkMode, toggleLightMode, nameErr, setNameErr, passErr, setPassErr, incorrect, setIncorrect, responsiveModal, setResponsiveModal, fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
+    <BookContext.Provider value = {{setCart, isDarkMode, toggleDarkMode, toggleLightMode, nameErr, setNameErr, passErr, setPassErr, incorrect, setIncorrect, responsiveModal, setResponsiveModal, fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
         {children}
     </BookContext.Provider>
   )

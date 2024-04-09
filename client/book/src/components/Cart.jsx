@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { BookContext } from '../context/bookContext';
 
 const Cart = () => {
-    const { cartItem, setCartItem, isDarkMode} = useContext(BookContext);
+    const { cartItem, setCartItem, isDarkMode, setCart} = useContext(BookContext);
     // total price
     const [totalPrice, setTotalPrice] = useState(0);
     const [stock, setStock] = useState({});
@@ -56,7 +56,16 @@ const minusSum = (itemId) => {
 
 // delete cart item
 const deleteItem = (id) => {
-   setCartItem(prevCartItems => prevCartItems.filter(item => item._id !== id));
+  setCartItem(prevCartItems => {
+    const updatedCartItems = prevCartItems.filter(item => item._id !== id);
+    setCart(prevCart => prevCart - 1); 
+    return updatedCartItems;
+  });
+
+
+  
+
+  
 }
   return (
     <div className='p-16 ' style={{color:isDarkMode && '#fff'}}>
