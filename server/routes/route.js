@@ -38,5 +38,6 @@ router.get('/users/:id/profileImage', authenticateUser, actions.getImage);
 router.put('/users/:id', actions.updateProfileInfo);
 router.post('/reset', actions.resetPassword);
 router.delete('/books/:id/comment/del', actions.deleteComment);
+router.put('/books/:id/comment/update', actions.updateComment);
 
 module.exports = router;

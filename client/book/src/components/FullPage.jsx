@@ -38,12 +38,14 @@ const addToCart = (id) => {
 
    
     if (filteredBook) {
-     
-        setCartItem(prev => [...prev, filteredBook]);
+        setCartItem((prev) => {
+            const updatedCartItem = [...prev, filteredBook];
+            localStorage.setItem('cartItem', JSON.stringify(updatedCartItem));
+            return updatedCartItem;
+        });
     } else {
         console.log(`Book with id ${id} not found.`);
     }
-
   
 
     

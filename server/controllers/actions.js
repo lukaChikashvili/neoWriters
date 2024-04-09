@@ -184,9 +184,22 @@ const deleteComment = async (req, res) => {
    }
 }
 
+// update comment
+const updateComment = async (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    try {
+        const commentToUpdate = await Comment.findByIdAndUpdate(id, {text});
+        if(!commentToUpdate) {
+         return res.status(404).json({message: "comment not updated"});
 
 
-
+        }
+        return res.status(200).json({message: "comment updated"});
+    } catch (error) {
+      console.log(error);
+    }
+}
 
 
 // get user info
@@ -294,5 +307,6 @@ module.exports = {
     getImage,
     updateProfileInfo,
     resetPassword,
-    deleteComment
+    deleteComment,
+    updateComment
 }

@@ -18,7 +18,7 @@ const MyBooks = () => {
        setMyBook(JSON.parse(data));
       
       
-   }, [])
+   }, [myBook])
 
    useEffect(() => {
   const name = localStorage.getItem('name');

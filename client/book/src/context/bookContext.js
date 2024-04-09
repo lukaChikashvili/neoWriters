@@ -17,6 +17,13 @@ const BookProvider = ({children}) => {
     return savedCart ? JSON.parse(savedCart) : 0;
   });
 
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
+  
   const [myBookCover, setMyBookCover] = useState(() => {
     const savedMyBookCover = localStorage.getItem('myBookCover');
     return savedMyBookCover ? JSON.parse(savedMyBookCover) : [];
@@ -28,7 +35,12 @@ const BookProvider = ({children}) => {
 
   
 
-  const [cartItem, setCartItem] = useState([]);
+  const [cartItem, setCartItem] = useState(() => {
+    const savedCartItem = localStorage.getItem('cartItem');
+    return savedCartItem ? JSON.parse(savedCartItem) : [];
+});
+
+
    const base64 = myBookCover.join();
 
    const [useUrl, setUseUrl] = useState(false);
