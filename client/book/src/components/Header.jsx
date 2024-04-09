@@ -138,7 +138,7 @@ useEffect(()=> {
     <div className='w-full flex items-center justify-between px-12 py-6 shadow relative' style={{color: isDarkMode && '#fff'}}>
       <div className="logo flex gap-12">
         <h1 className='text-3xl font-bold cursor-pointer hidden md:block'  style={{color: isDarkMode ? "#fff" : 'black'}}  onClick={() => isUserLoggedIn && navigate('/profile')}>Litera</h1>
-       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..."  className='w-24 input  ' style = {{width: "500px", border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} onChange={(e) => setSearch(e.target.value)} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
+       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..."  className='w-12 input  ' style = {{width: "500px", border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} onChange={(e) => setSearch(e.target.value)} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
           style: { color: isDarkMode &&  '#fff' }, 
    }} /> }
        <div className='absolute -bottom-20 bg-gray-400 left-40 rounded-md shadow-md' style={{width: "500px", marginLeft: "7px"}}>

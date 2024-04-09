@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import CategoryIcon from '@mui/icons-material/Category';
 import {motion} from 'framer-motion';
-
+import whitelari from '../assets/whitelari.png';
 
 const Profile = () => {
 
@@ -113,7 +113,7 @@ const handleCategory = (type) => {
 <CategoryIcon onClick = {() => setShowCate(!showCate)} sx={{color: showCate ? "green" : "black", cursor: "pointer"}} />
 </div>
 
-<div className='flex flex-wrap justify-center gap-12'>
+<div className='flex flex-wrap px-8 gap-12'>
    {showFiltered ? (
       
     categoriesArr.map((value) => (
@@ -122,7 +122,7 @@ const handleCategory = (type) => {
      
        <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
        <div className='flex items-center gap-12  '>
-       <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
+       <p className='flex items-center text-2xl pt-6 '>{value.price}{isDarkMode ? <img src = {whitelari} className='w-8' /> : <img src = {lari} className='w-8' />}</p>
       <Button variant='contained' color = "success" className='absolute top-2 w-24 ' onClick={() => fullPage(value._id)}>ყიდვა</Button>
     </div>
      </motion.div>
@@ -134,8 +134,8 @@ const handleCategory = (type) => {
        
          <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
          <div className='flex items-center gap-12  '>
-         <p className='flex items-center text-2xl pt-6 '>{value.price}<img src = {lari} className='w-8' /></p>
-        <Button variant='contained' color = "success" className='absolute top-2 w-24 ' onClick={() => fullPage(value._id)}>ყიდვა</Button>
+         <p className='flex items-center text-2xl pt-6 '>{value.price === 0 ? <span className='text-green-800 font-bold text-lg'>უფასო</span> : value.price}{isDarkMode ? <img src = {whitelari} className='w-8'  style={{visibility: value.price === 0 && 'hidden' }}  /> : <img src = {lari} className='w-8' style={{visibility: value.price === 0 && 'hidden' }} />}</p>
+        <Button variant='contained' color = "success" className='absolute top-2 w-24 ' onClick={() => fullPage(value._id)}>{value.price === 0 ? 'წაკითხვა' : 'ყიდვა'}</Button>
       </div>
        </div>
      ))

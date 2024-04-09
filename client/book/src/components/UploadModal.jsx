@@ -41,10 +41,10 @@ const UploadModal = ({closeModal, UploadModalRef}) => {
 
   return (
     <div>
-        <div className=' bg-white absolute w-1/2 h-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg rounded-md' ref = {UploadModalRef}>
+        <div className=' bg-white absolute w-1/2 h-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg rounded-md p-4' ref = {UploadModalRef}>
             <span className='absolute right-2 top-2 cursor-pointer' onClick={closeModal}>X</span>
     
-            
+            <h1 className='text-3xl font-semibold text-center'>შეცვალე ფოტო</h1>
  <input type="file" onChange={handleFileChange}  />
  <button onClick={handleUpload}>Upload</button>
 

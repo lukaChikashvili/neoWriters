@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from './axios';
 import lari from '../assets/lari.png';
-import tag from '../assets/tag.png';
-import { Button, TextField } from '@mui/material';
+import whitelari from '../assets/whitelari.png';
+
+import { Button, Rating, TextField, Typography } from '@mui/material';
 import { BookContext } from '../context/bookContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ReactImageMagnify from 'react-image-magnify';
@@ -15,7 +16,7 @@ const FullPage = () => {
     const [fullPage, setFullPage] = useState(null);
     const { books, setCart, setCartItem,  showLari,  setShowLari, isDarkMode} = useContext(BookContext);
 
-  
+  const [value, setValue] = useState(2);
 
     useEffect(() => {
         const getFull = async () => {
@@ -117,7 +118,7 @@ useEffect(() => {
           {preview && <div className='w-3/5 h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 overflow-y-auto' ref = {previewRef}>
           <span className='absolute top-4 right-4 text-2xl font-semibold cursor-pointer' onClick={() => setPreview(false)}>X</span>
 
-          <p className='text-xl'>{fullPage.text.substring(0, 2000)}...</p>
+          <p className='text-xl'>{fullPage.price === 0 ? fullPage.text : fullPage.text.substring(0, 2000)}...</p>
             </div>}
   
 
@@ -135,15 +136,18 @@ useEffect(() => {
                </div>
                {fullPage &&  (
                 <div className='flex gap-12' style={{color: isDarkMode && '#fff'}}>
+
                     <img src = {fullPage.url} className='w-56 h-76 object-cover cursor-pointer shadow-lg rounded-md absolute right-56 top-8'/>
-                    <p className='text-3xl'>{fullPage.price}</p>
+                    <p className='text-3xl'>{fullPage.price === 0 ? 'უფასო' : fullPage.price}</p>
                     <Button variant='outlined' color = "success" onClick={() => handlePurchase(fullPage.price)} ref = {buttonRef}>გადახდა</Button>
                     </div>
+
+                    
                 )}
             </div>}
 
-
-        {fullPage ? (
+           
+   {fullPage ? (
             <div className='flex items-center gap-12'>
         <div className='flex flex-col gap-6'>
 
@@ -166,7 +170,16 @@ useEffect(() => {
 }} />
 </div>
          
-         <Button variant={'text'} color = "success" className='flex gap-8' style = {{fontWeight: isDarkMode && 'bold'}} onClick={handlePreview}> <VisibilityIcon /> უფასო ნაწილის წაკითხვა </Button>
+         <Button variant={'text'} color = "success" className='flex gap-8' style = {{fontWeight: isDarkMode && 'bold'}} onClick={handlePreview}> <VisibilityIcon /> {fullPage.price === 0 ? 'წიგნის წაკითხვა' : 'უფასო ნაწილის წაკითხვა'} </Button>
+         <Rating
+  name="simple-controlled"
+  value={value}
+  onChange={( newValue) => {
+    setValue(newValue);
+  }}
+ className='m-auto'
+/>
+     
    </div>
          <div className='flex flex-col gap-4 w-4/5' style={{color: isDarkMode && '#fff'}}>
             <h1 className='text-4xl font-bold'>{fullPage.title}</h1>
@@ -174,10 +187,10 @@ useEffect(() => {
             <p className='text-2xl'>{fullPage.createdAt.substring(0, 10)}</p>
             <p className='text-2xl underline underline-offset-4'>{fullPage.type}</p>
             
-             <p className='flex text-5xl  absolute right-52 top-56 font-semibold'>{fullPage.price}</p>
+             <p className='flex text-5xl  absolute right-52 top-56 font-semibold'>{fullPage.price === 0 ? 'უფასო' : fullPage.price}{isDarkMode ? <img src = {whitelari} className='w-8'  style={{visibility: fullPage.price === 0 && 'hidden' }}  /> : <img src = {lari} className='w-8' style={{visibility: fullPage.price === 0 && 'hidden' }} />}</p>
               
              
-            <p className='line pt-4 text-lg'>{fullPage.desc}</p>
+            <p className=' line pt-4 text-lg'  >{fullPage.desc}</p>
             <div className='flex gap-8 '>
             <Button variant='outlined' color = "success" className = "w-56" style = {{fontWeight: isDarkMode && 'bold'}} onClick={() => addToCart(fullPage._id)}>კალათში დამატება</Button>
         <Button variant='contained' color = "success"  className = "w-56"  onClick={() => buyBook(fullPage._id)}>ყიდვა</Button>

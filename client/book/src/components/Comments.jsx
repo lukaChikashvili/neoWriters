@@ -15,7 +15,7 @@ const Comments = () => {
  
 
     let { id } = useParams();
-    const { isDarkMode } = useContext(BookContext);
+    const { isDarkMode, image } = useContext(BookContext);
 
     const writeComment = async () => {
         const token = localStorage.getItem("token");
@@ -70,12 +70,13 @@ const Comments = () => {
       {Array.isArray(allComments) ? (
   allComments.map((value) => (
     <div className='pt-6'>
-    <p key={value._id} className='rounded-md bg-gray-400 p-8 shadow-gray-600 shadow-lg'>{showInput ?
+     
+    <p key={value._id} className='rounded-md bg-gray-400 p-8 shadow-gray-600 shadow-lg flex items-center gap-8'><img src = {image[image.length - 1]?.dataURL} className='w-12 h-12 rounded-full object-cover'/>{showInput ?
     <div className='flex items-center gap-4'>
     <TextField size = "small" placeholder='ახალი კომენტარი..' value = {updatedText} onChange={(e) => setUpdatedText(e.target.value)}/> 
      <Button onClick={() => handleUpdate(value._id)} variant='outlined' color = "success" >გამოქვეყნება</Button>
      </div>
-    : value.text}</p>
+    : value.text} </p>
 {value.user === localStorage.getItem('name') &&  (
  showEdit ? (
   <div className='pt-4 flex items-center gap-4'>

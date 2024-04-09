@@ -14,25 +14,26 @@ const MyBooks = () => {
 
     useEffect(() => {
       const data = localStorage.getItem('filteredByName');
-      
-       setMyBook(JSON.parse(data));
-      
-      
-   }, [myBook])
-
-   useEffect(() => {
-  const name = localStorage.getItem('name');
-  if (name && myBook.length === 0) {
-    const filterByName = books.filter(item => item.author.name === name);
-    setMyBook(filterByName);
-    localStorage.setItem('filteredByName', JSON.stringify(filterByName));
-  }
-}, [books, myBook]);
+      if (data) {
+        setMyBook(JSON.parse(data));
+      }
+    }, []);
+  
+    useEffect(() => {
+      const name = localStorage.getItem('name');
+      if (name && books.length > 0) {
+        const filterByName = books.filter(item => item.author.name === name);
+        setMyBook(filterByName);
+        localStorage.setItem('filteredByName', JSON.stringify(filterByName));
+      }
+    }, [books]);
 
   // delete book
     const deleteBook = async (id) => {
        await axiosInstance.delete(`http://localhost:4000/api/books/del/${id}`);
-      setBooks(books.filter(item => item._id !== id));
+       const filteredBook = books.filter(item => item._id !== id);
+      setBooks(filteredBook);
+      
       
     }
 
