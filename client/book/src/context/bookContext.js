@@ -137,7 +137,7 @@ const toggleDarkMode = () => {
   // fetch user data
   const fetchUserData = async () => {
     try {
-        const response = await axiosInstance.get(`${process.env.BASE_URL}/api/users`, {
+        const response = await axiosInstance.get(`https://neowriters.onrender.com/api/users`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
