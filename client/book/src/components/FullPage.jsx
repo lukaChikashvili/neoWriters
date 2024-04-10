@@ -153,7 +153,7 @@ useEffect(() => {
 
 
 
-
+<img src = {fullPage.url} className='w-72' />
          
          <Button variant={'text'} color = "success" className='flex gap-8' style = {{fontWeight: isDarkMode && 'bold'}} onClick={handlePreview}> <VisibilityIcon /> {fullPage.price === 0 ? 'წიგნის წაკითხვა' : 'უფასო ნაწილის წაკითხვა'} </Button>
          <Rating
