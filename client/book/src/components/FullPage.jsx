@@ -7,7 +7,7 @@ import whitelari from '../assets/whitelari.png';
 import { Button, CircularProgress, Rating, TextField, Typography } from '@mui/material';
 import { BookContext } from '../context/bookContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import ReactImageMagnify from 'react-image-magnify';
+
 
 const FullPage = () => {
     
@@ -153,22 +153,7 @@ useEffect(() => {
 
 
 
-<div className='w-64 '>
-        <ReactImageMagnify {...{
-    smallImage: {
-        
-        isFluidWidth: true,
-        src: fullPage.url,
-        
-    },
-    largeImage: {
-        src: fullPage.url,
-       width: 1200,
-       height: 1600
-       
-    }
-}} />
-</div>
+
          
          <Button variant={'text'} color = "success" className='flex gap-8' style = {{fontWeight: isDarkMode && 'bold'}} onClick={handlePreview}> <VisibilityIcon /> {fullPage.price === 0 ? 'წიგნის წაკითხვა' : 'უფასო ნაწილის წაკითხვა'} </Button>
          <Rating
