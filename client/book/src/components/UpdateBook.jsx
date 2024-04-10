@@ -59,7 +59,7 @@ const UpdateBook = () => {
            if (newUrl) updatedFields.url = newUrl;
            if (newPrice) updatedFields.price = newPrice;
 
-            await axiosInstance.put(`http://localhost:4000/api/books/${id}/update`, 
+            await axiosInstance.put(`${process.env.BASE_URL}/api/books/${id}/update`, 
                updatedFields
             );
             

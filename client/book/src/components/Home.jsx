@@ -40,7 +40,7 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword,
      setRegisterErr(true);
     }else {
       try {
-        await axiosInstance.post('http://localhost:4000/api/register', {
+        await axiosInstance.post(`${process.env.BASE_URL}/api/register`, {
          name, surname, email, password, location, proffesion, image
        });
         setSuccess(true);

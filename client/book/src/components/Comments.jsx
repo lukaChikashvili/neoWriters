@@ -19,7 +19,7 @@ const Comments = () => {
 
     const writeComment = async () => {
         const token = localStorage.getItem("token");
-    const response = await axiosInstance.post(`http://localhost:4000/api/books/${id}/comment`, {text: comment}, {
+    const response = await axiosInstance.post(`${process.env.BASE_URL}/api/books/${id}/comment`, {text: comment}, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -32,7 +32,7 @@ const Comments = () => {
     }
 
     const getAll = async () => {
-        const response = await axiosInstance.get(`http://localhost:4000/api/books/${id}/comment/all`);
+        const response = await axiosInstance.get(`${process.env.BASE_URL}/api/books/${id}/comment/all`);
 
         setAllComments(response.data.getComment);
         
@@ -45,14 +45,14 @@ const Comments = () => {
 
      // delete comment
  const handleDelete =async (id) => {
-    await axiosInstance.delete(`http://localhost:4000/api/books/${id}/comment/del`);
+    await axiosInstance.delete(`${process.env.BASE_URL}/api/books/${id}/comment/del`);
 
     getAll();
  }
  
  // update comment
  const handleUpdate = async (id) => {
-  await axiosInstance.put(`http://localhost:4000/api/books/${id}/comment/update`, {text: updatedText});
+  await axiosInstance.put(`${process.env.BASE_URL}/api/books/${id}/comment/update`, {text: updatedText});
 
   getAll();
   setShowInput(false);

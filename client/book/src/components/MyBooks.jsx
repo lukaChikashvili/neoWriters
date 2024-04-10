@@ -32,7 +32,7 @@ const MyBooks = () => {
 
   // delete book
     const deleteBook = async (id) => {
-       await axiosInstance.delete(`http://localhost:4000/api/books/del/${id}`);
+       await axiosInstance.delete(`${process.env.BASE_URL}/api/books/del/${id}`);
        const filteredBook = books.filter(item => item._id !== id);
       setBooks(filteredBook);
       

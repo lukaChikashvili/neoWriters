@@ -61,7 +61,7 @@ const Header = () => {
        setNameErr(false);
     }else {
       try {
-        const response = await axiosInstance.post('http://localhost:4000/api/login', {name, password});
+        const response = await axiosInstance.post(`${process.env.BASE_URL}/api/login`, {name, password});
       const token = response.data.token;
       localStorage.setItem('token', token);
       localStorage.setItem('name', response.data.name);
