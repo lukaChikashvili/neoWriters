@@ -40,7 +40,7 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword,
      setRegisterErr(true);
     }else {
       try {
-        await axiosInstance.post(`${process.env.BASE_URL}/api/register`, {
+        await axiosInstance.post(`https://neowriters.onrender.com/api/register`, {
          name, surname, email, password, location, proffesion, image
        });
         setSuccess(true);
