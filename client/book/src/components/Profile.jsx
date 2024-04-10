@@ -119,7 +119,7 @@ const handleCategory = (type) => {
       
     categoriesArr.map((value) => (
       <motion.div initial = {{translateY: -20}} animate = {{translateY: 0}} key={value._id} >
-      <p className='text-center text-xl font-semibold pb-6'>{value.title}</p>
+      <p className='text-center text-xl font-semibold pb-6'>{value.title || ''}</p>
      
        <img src = {value.url} className='shadow-lg rounded-md cursor-pointer w-56 h-64 object-cover'  />
        <div className='flex items-center gap-12  '>
