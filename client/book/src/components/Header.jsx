@@ -16,7 +16,9 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeSharpIcon from '@mui/icons-material/LightModeSharp';
-
+import profile from '../assets/profile.png';
+import HomeIcon from '@mui/icons-material/Home';
+import titleLogo from '../assets/titleLogo.png';
 const Header = () => {
  
 
@@ -28,7 +30,7 @@ const Header = () => {
           showLari, books, image, setImage, fetchImages, 
           setResponsiveModal, nameErr, setNameErr, passErr,
            responsiveModal, setPassErr, incorrect, setIncorrect ,
-          isDarkMode, toggleDarkMode, toggleLightMode} = useContext(BookContext);
+          isDarkMode, toggleDarkMode, toggleLightMode, users} = useContext(BookContext);
    const isUserLoggedIn = localStorage.getItem('token');
 
    // logout modal
@@ -135,10 +137,10 @@ useEffect(()=> {
    }
 }, [])
   return (
-    <div className='w-full flex items-center justify-between px-12 py-6 shadow relative' style={{color: isDarkMode && '#fff'}}>
-      <div className="logo flex gap-12">
-        <h1 className='text-3xl font-bold cursor-pointer hidden md:block'  style={{color: isDarkMode ? "#fff" : 'black'}}  onClick={() => isUserLoggedIn && navigate('/profile')}>Litera</h1>
-       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..."  className='w-12 input  ' style = {{width: "500px", border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} onChange={(e) => setSearch(e.target.value)} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
+    <div className='w-full flex flex-col md:flex-row items-center justify-between px-4 md:px-12 py-6 shadow relative' style={{color: isDarkMode && '#fff'}}>
+      <div className="logo flex gap-4 md:gap-12">
+        <h1 className='text-sm md:text-3xl font-bold cursor-pointer hidden md:block '  style={{color: isDarkMode ? "#fff" : 'black'}}  onClick={() => isUserLoggedIn && navigate('/profile')}><img src = {titleLogo} className='w-56'/></h1>
+       {isUserLoggedIn &&  <TextField size='small' variant='outlined' label = "მოძებნე წიგნი..."  className='input' style = {{width: '500px',  border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} onChange={(e) => setSearch(e.target.value)} sx = {{input: {color: isDarkMode && "#fff"}, width: {xs: '100px'}}}  InputLabelProps={{
           style: { color: isDarkMode &&  '#fff' }, 
    }} /> }
        <div className='absolute -bottom-20 bg-gray-400 left-40 rounded-md shadow-md' style={{width: "500px", marginLeft: "7px"}}>
@@ -151,14 +153,14 @@ useEffect(()=> {
       </div>
        {isUserLoggedIn ? (
         <div className='flex items-center gap-8 '>
-          
+         <Link to = "/profile" className='absolute left-12 md:hidden'><HomeIcon /></Link>
         {isDarkMode ?  <DarkModeIcon sx = {{color: "#fff", cursor: 'pointer'}} onClick = {toggleDarkMode} /> :  <LightModeSharpIcon onClick = {toggleLightMode} />}  
        <Button variant={isDarkMode ? "contained" : 'outlined'} color = "success" style={{marginLeft: '30px'}} className='flex items-center gap-4 text-md' onClick={() => navigate('/create')}><AutoStoriesIcon  /><span className='hidden md:block'>წიგნის დაწერა</span></Button>
-        <p className='text-2xl font-semibold hidden md:block' style={{color: isDarkMode && '#fff'}}>{localStorage.getItem('name')}</p>
+
 
         <Tooltip title = "ჩემი პროფილი">
           <IconButton>
-          <img src = {image[image.length - 1]?.dataURL} onClick={() => navigate('/myProfile')} className='w-8 h-8 rounded-full object-cover hidden md:block' />
+          <img src = {image.length > 0 ? image[image.length - 1].dataURL : profile} onClick={() => navigate('/myProfile')} className='w-8 h-8 rounded-full object-cover hidden md:block' />
          
          </IconButton>
          </Tooltip>
@@ -191,8 +193,8 @@ useEffect(()=> {
           exit = {{translateX: 300}} 
           className='absolute right-0 top-24  z-10 bottom-0 min-h-screen w-64 bg-gray-400 -mt-2 flex flex-col gap-4' ref = {menuRef}>
 
-            <Link className='p-4 flex gap-4' to = "/design" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><BrushIcon className='text-green-800' />ყდის დიზაინის შექმნა</Link>
-            <Link className='p-4 flex gap-4' to = "/myDesign" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><InsertPhotoIcon className='text-green-800'/>ჩემი სურათები</Link>
+            <Link className='p-4 hidden md:flex gap-4' to = "/design" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><BrushIcon className='text-green-800' />ყდის დიზაინის შექმნა</Link>
+            <Link className='p-4 hidden md:flex gap-4' to = "/myDesign" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><InsertPhotoIcon className='text-green-800'/>ჩემი სურათები</Link>
             <Link className='p-4 flex gap-4' to = "/myBooks" style={{color: isDarkMode && 'black'}} onClick={() => setModal(false)}><MenuBookIcon className='text-green-800'/>ჩემი წიგნები</Link>
           <Button variant='contained' color="success" onClick={logout} className='w-full'>გასვლა</Button>
 
@@ -204,7 +206,7 @@ useEffect(()=> {
        ) : (
  <>
    
-        <DragHandleIcon className='lg:hiddne cursor-pointer' onClick = {showModal}/>
+        <DragHandleIcon className=' md:hidden cursor-pointer icon' onClick = {showModal}/>
         <form className=' items-center gap-4 hidden md:flex'>
           
          <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
@@ -229,7 +231,7 @@ useEffect(()=> {
 }}/>
 
          <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
-         <span className='absolute bottom-2 text-sm right-36 underline cursor-pointer' onClick={() => navigate('/reset')}>დაგავიწყდათ პაროლი?</span>
+
      </form>
 
      </>

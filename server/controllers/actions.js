@@ -276,21 +276,6 @@ const updateProfileInfo = async (req, res) => {
    
 }
 
-// reset password
-const resetPassword = async (req, res) => {
-   const userId = req.user.id;
-   const {password} = req.body;
-
-   const findUser =  await User.findByIdAndUpdate(userId, { password });
-
-   if(!findUser) {
-      return res.status(404).json({message: "user not found"});
-
-   }
-
-  return res.json({findUser});
-
-}
 // export functions
 module.exports = {
     registerUsers,
@@ -306,7 +291,6 @@ module.exports = {
     uploadImage,
     getImage,
     updateProfileInfo,
-    resetPassword,
     deleteComment,
     updateComment
 }

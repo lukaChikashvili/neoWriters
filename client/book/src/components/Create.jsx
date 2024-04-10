@@ -27,7 +27,22 @@ const Create = () => {
         {
             value: 'ლექსი'
 
-        }
+        },
+
+        {
+          value: 'თვით-განვითარება'
+
+      },
+
+      {
+        value: 'ფენტეზი'
+
+    },
+
+    {
+      value: 'სხვა'
+
+  }
     ];
 
     let navigate = useNavigate();
@@ -110,7 +125,7 @@ const Create = () => {
     <div>
       <div className='flex flex-col items-center justify-center h-screen' style={{color: isDarkMode && '#fff'}} >
         <h1 className='text-4xl pb-12'>შექმენით წიგნი</h1>
-        <form className='flex flex-col gap-4 w-1/3'>
+        <form className='flex flex-col gap-4 w-4/5 md:w-1/3'>
             <TextField error = {err} label = "სათაური" variant='outlined' size="small" value = {title} onChange={(e) => setTitle(e.target.value)} InputLabelProps={{
           style: { color: isDarkMode &&  '#fff' }, 
    }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
@@ -160,7 +175,7 @@ const Create = () => {
 
 
 </div>
-<TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : ''} size="small" onChange={(e) => setUrl(e.target.value)} InputLabelProps={{
+<TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={useUrl ? selectedItemUrl : url} size="small" onChange={(e) => setUrl(e.target.value)} InputLabelProps={{
           style: { color: isDarkMode &&  '#fff' }, 
    }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
             <TextField error = {err} label = "ფასი " variant='outlined' size="small" value = {price} onChange={(e) => setPrice(e.target.value)} InputLabelProps={{

@@ -73,7 +73,7 @@ const UpdateBook = () => {
   return (
     <div className='flex flex-col items-center justify-center h-screen'>
         <h2 className='text-4xl font-bold pb-12'>წიგნის რედაქტირება</h2>
-       <form className='flex flex-col gap-4 w-1/3'>
+       <form className='flex flex-col gap-4 w-4/5 md:w-1/3'>
             <TextField error = {err} label = "სათაური" variant='outlined' size="small" value = {newTitle} onChange={(e) => setNewTitle(e.target.value)}/>
             <TextField
           id="outlined-select-currency"
@@ -96,7 +96,7 @@ const UpdateBook = () => {
             
             <TextField error = {err} label = "ყდის სურათი: " variant='outlined' value={newUrl} size="small" onChange={(e) => setNewUrl(e.target.value)}/>
             <TextField error = {err} label = "ფასი " variant='outlined' size="small" value = {newPrice} onChange={(e) => setNewPrice(e.target.value)}/>
-            <Button variant='contained' color="success" onClick={handleUpdate}>გამოქვეყნება</Button>
+            <Button variant='contained' color="success" onClick={handleUpdate}>რედაქტირება</Button>
         </form>
     </div>
   )

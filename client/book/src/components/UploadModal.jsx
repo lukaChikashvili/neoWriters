@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { BookContext } from '../context/bookContext';
 import axiosInstance from './axios';
+import { Button } from '@mui/material';
 
 const UploadModal = ({closeModal, UploadModalRef}) => {
 
@@ -45,9 +46,10 @@ const UploadModal = ({closeModal, UploadModalRef}) => {
             <span className='absolute right-2 top-2 cursor-pointer' onClick={closeModal}>X</span>
     
             <h1 className='text-3xl font-semibold text-center'>შეცვალე ფოტო</h1>
+            <div className='p-12'>
  <input type="file" onChange={handleFileChange}  />
- <button onClick={handleUpload}>Upload</button>
-
+ <Button onClick={handleUpload} variant = "contained" color = "success">ატვირთვა</Button>
+ </div>
           
  
   </div>

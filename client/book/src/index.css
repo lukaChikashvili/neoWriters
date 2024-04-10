@@ -72,8 +72,21 @@ visibility: hidden;
 
 }
 
+.input {
+  width: 500px;
+
+}
+
+.icon {
+    visibility: hidden;
+}
+
 @media only screen and (max-width: 600px) {
     .input {
-        visibility: hidden;
+       visibility: hidden;
     }  
+
+    .icon {
+        visibility: visible;
+    }
   }

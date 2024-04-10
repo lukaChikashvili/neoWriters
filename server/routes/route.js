@@ -36,7 +36,6 @@ router.get('/users', authenticateUser, actions.getUserInfo);
 router.post('/users/profileImage', upload.single('testImage'), authenticateUser,  actions.uploadImage);
 router.get('/users/:id/profileImage', authenticateUser, actions.getImage);
 router.put('/users/:id', actions.updateProfileInfo);
-router.post('/reset', actions.resetPassword);
 router.delete('/books/:id/comment/del', actions.deleteComment);
 router.put('/books/:id/comment/update', actions.updateComment);
 

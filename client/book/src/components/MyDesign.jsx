@@ -36,7 +36,7 @@ const MyDesign = () => {
 
  
   return (
-    <div className='flex flex-wrap' >
+    <div className='flex flex-col md:-row flex-wrap' >
       {myBookCover.map((value) => (
         <div className='flex items-center flex-col '>
         <img src = {value.url} key = {value.id} className='w-96 h-96 p-12 object-cover'/>

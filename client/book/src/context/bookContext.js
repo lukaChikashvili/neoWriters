@@ -132,9 +132,29 @@ const toggleDarkMode = () => {
   }
 
 
+  const [users, setUsers] = useState([]);
+
+  // fetch user data
+  const fetchUserData = async () => {
+    try {
+        const response = await axiosInstance.get('http://localhost:4000/api/users', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        setUsers(response.data.user);
+        if (response.data.user && response.data.user._id) {
+            fetchImages(response.data.user._id);
+        }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+    }
+};
+
+
 
   return (
-    <BookContext.Provider value = {{setCart, isDarkMode, toggleDarkMode, toggleLightMode, nameErr, setNameErr, passErr, setPassErr, incorrect, setIncorrect, responsiveModal, setResponsiveModal, fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
+    <BookContext.Provider value = {{users, setUsers, fetchUserData, setCart, isDarkMode, toggleDarkMode, toggleLightMode, nameErr, setNameErr, passErr, setPassErr, incorrect, setIncorrect, responsiveModal, setResponsiveModal, fetchImages, uploadModal, setUploadModal, image, setImage, showPassword, setShowPassword, handleShowPassword, handleMouseDownPassword, err, setErr, selectedItemUrl, setSelectedItemUrl, books, setBooks, cart, setCart, cartItem, setCartItem, myBookCover, setMyBookCover, base64, useUrl, setUseUrl, showLari,  setShowLari}}>
         {children}
     </BookContext.Provider>
   )

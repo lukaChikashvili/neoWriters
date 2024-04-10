@@ -77,20 +77,32 @@ const  { showPassword, handleShowPassword, handleMouseDownPassword,
  <div className='w-4/5 m-auto md:m-0 md:w-1/3'>
  <form className='w-full flex flex-col gap-6' onSubmit={handleRegister}>
    <h1 className='text-4xl font-bold text-center'>რეგისტრაცია</h1>
- <TextField error = {registerErr && !name}  label = "სახელი" variant='outlined' size="small" onChange={(e) => setName(e.target.value)} />
- <TextField error = {registerErr && !surname} label = "გვარი" variant='outlined' size='small' onChange={(e) => setSurname(e.target.value)}  />
- <TextField error = {registerErr && !email} label = "ელ-ფოსტა" variant='outlined' size='small' type='email' onChange={(e) => setEmail(e.target.value)}/>
- <TextField error = {registerErr && !location} label = "ქალაქი" variant='outlined' size='small' onChange={(e) => setLocation(e.target.value)}/>
- <TextField error = {registerErr && !proffesion} label = "პროფესია" variant='outlined' size="small" onChange={(e) => setProffesion(e.target.value)} />
+ <TextField error = {registerErr && !name}  label = "სახელი" variant='outlined' size="small" onChange={(e) => setName(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} />
+ <TextField error = {registerErr && !surname} label = "გვარი" variant='outlined' size='small' onChange={(e) => setSurname(e.target.value)}  InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
+ <TextField error = {registerErr && !email} label = "ელ-ფოსტა" variant='outlined' size='small' type='email' onChange={(e) => setEmail(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
+ <TextField error = {registerErr && !location} label = "ქალაქი" variant='outlined' size='small' onChange={(e) => setLocation(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
+ <TextField error = {registerErr && !proffesion} label = "პროფესია" variant='outlined' size="small" onChange={(e) => setProffesion(e.target.value)} InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} />
  <TextField error = {registerErr && !password} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"}  InputProps={{
     endAdornment: (
       <InputAdornment position='end'>
          <IconButton onClick={handleShowPassword} onMouseDown={handleMouseDownPassword} edge = "end">
-           {showPassword ? <VisibilityOff sx={{fontSize: 20}} /> : <Visibility sx={{fontSize: 20}} />}
+           {showPassword ? <VisibilityOff sx={{fontSize: 20, color: isDarkMode && "#fff"}} /> : <Visibility sx={{fontSize: 20, color: isDarkMode && "#fff"}} />}
          </IconButton>
       </InputAdornment>
     )
- }}        onChange={(e) => setPassword(e.target.value)} />
+ }}        onChange={(e) => setPassword(e.target.value)} InputLabelProps={{
+  style: { color: isDarkMode &&  '#fff' }, 
+}} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} />
  
 
 

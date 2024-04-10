@@ -4,7 +4,7 @@ import axiosInstance from './axios';
 import lari from '../assets/lari.png';
 import whitelari from '../assets/whitelari.png';
 
-import { Button, Rating, TextField, Typography } from '@mui/material';
+import { Button, CircularProgress, Rating, TextField, Typography } from '@mui/material';
 import { BookContext } from '../context/bookContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ReactImageMagnify from 'react-image-magnify';
@@ -14,7 +14,7 @@ const FullPage = () => {
     // take id from route
     const { id } = useParams();
     const [fullPage, setFullPage] = useState(null);
-    const { books, setCart, setCartItem,  showLari,  setShowLari, isDarkMode} = useContext(BookContext);
+    const { books, setCart, setCartItem,  showLari,  setShowLari, isDarkMode, users} = useContext(BookContext);
 
   const [value, setValue] = useState(2);
 
@@ -24,7 +24,7 @@ const FullPage = () => {
 
            setFullPage(response.data.oneBook);
 
-        
+        console.log(response.data.oneBook);
         
         }
 
@@ -113,9 +113,9 @@ useEffect(() => {
 }, [])
 
   return (
-    <div className='p-24 px-56' >
+    <div className='p-24 px-2 md:px-56' >
 
-          {preview && <div className='w-3/5 h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 overflow-y-auto' ref = {previewRef}>
+          {preview && <div className='w-full h-screen    md:w-3/5 md:h-4/5 mt-12 rounded-md shadow-lg bg-white border-4  border-green-500 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-12 overflow-y-auto' ref = {previewRef}>
           <span className='absolute top-4 right-4 text-2xl font-semibold cursor-pointer' onClick={() => setPreview(false)}>X</span>
 
           <p className='text-xl'>{fullPage.price === 0 ? fullPage.text : fullPage.text.substring(0, 2000)}...</p>
@@ -135,7 +135,7 @@ useEffect(() => {
                 
                </div>
                {fullPage &&  (
-                <div className='flex gap-12' style={{color: isDarkMode && '#fff'}}>
+                <div className='flex-col md:flex-row gap-12' style={{color: isDarkMode && '#fff'}}>
 
                     <img src = {fullPage.url} className='w-56 h-76 object-cover cursor-pointer shadow-lg rounded-md absolute right-56 top-8'/>
                     <p className='text-3xl'>{fullPage.price === 0 ? 'უფასო' : fullPage.price}</p>
@@ -148,7 +148,7 @@ useEffect(() => {
 
            
    {fullPage ? (
-            <div className='flex items-center gap-12'>
+            <div className=' flex flex-col md:flex-row px-8  items-center gap-12 '>
         <div className='flex flex-col gap-6'>
 
 
@@ -183,11 +183,12 @@ useEffect(() => {
    </div>
          <div className='flex flex-col gap-4 w-4/5' style={{color: isDarkMode && '#fff'}}>
             <h1 className='text-4xl font-bold'>{fullPage.title}</h1>
-            <p className='text-2xl text-green-600'>{fullPage.author.name}</p>
+            <p className='text-2xl text-green-600'>{fullPage.author?.name}</p>
+     
             <p className='text-2xl'>{fullPage.createdAt.substring(0, 10)}</p>
             <p className='text-2xl underline underline-offset-4'>{fullPage.type}</p>
             
-             <p className='flex text-5xl  absolute right-52 top-56 font-semibold'>{fullPage.price === 0 ? 'უფასო' : fullPage.price}{isDarkMode ? <img src = {whitelari} className='w-8'  style={{visibility: fullPage.price === 0 && 'hidden' }}  /> : <img src = {lari} className='w-8' style={{visibility: fullPage.price === 0 && 'hidden' }} />}</p>
+             <p className='flex text-5xl  absolute right-28 top-36 md:right-52 md:top-56 font-semibold'>{fullPage.price === 0 ? 'უფასო' : fullPage.price}{isDarkMode ? <img src = {whitelari} className='w-8'  style={{visibility: fullPage.price === 0 && 'hidden' }}  /> : <img src = {lari} className='w-8' style={{visibility: fullPage.price === 0 && 'hidden' }} />}</p>
               
              
             <p className=' line pt-4 text-lg'  >{fullPage.desc}</p>
@@ -199,7 +200,10 @@ useEffect(() => {
            
                 </div>
         ) : (
+        <>
             <p style={{color: isDarkMode && '#fff'}}>იტვირთება...</p>
+            <CircularProgress  />
+            </>
         )}
     
 

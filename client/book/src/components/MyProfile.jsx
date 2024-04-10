@@ -9,10 +9,10 @@ import { Button, IconButton, TextField, Tooltip } from '@mui/material';
 
 
 const MyProfile = () => {
-    const [users, setUsers] = useState([]);
+
 
     // images
-    const {  image, setImage, uploadModal, setUploadModal, fetchImages, isDarkMode } = useContext(BookContext);
+    const {  image, setImage, uploadModal, setUploadModal, fetchImages, isDarkMode , fetchUserData, users} = useContext(BookContext);
 
 
   // update profile
@@ -27,22 +27,7 @@ const MyProfile = () => {
 
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await axiosInstance.get('http://localhost:4000/api/users', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
-                setUsers(response.data.user);
-                if (response.data.user && response.data.user._id) {
-                    fetchImages(response.data.user._id);
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
-
+     
         
 
         fetchUserData();
@@ -86,6 +71,10 @@ const MyProfile = () => {
             document.removeEventListener('mousedown', detectClick);
         };
     }, [modalRef]);
+
+    let bookByName = localStorage.getItem('filteredByName');
+    bookByName = bookByName ? JSON.parse(bookByName) : [];
+
   return (
     <div className='flex p-12 items-center relative justify-between gap-12' >
         <div className='flex flex-col gap-4 items-center shadow-lg p-12 rounded-md'>
@@ -93,10 +82,11 @@ const MyProfile = () => {
 
         <div className='flex flex-cols items-center'>
             
-        {image.length > 0 && (
+       
         <>
          <div className='flex items-center gap-6'>
-            <img src={image[image.length - 1].dataURL}  className='w-56 h-56 rounded-full object-cover '/>
+          <img src={image.length > 0 ? image[image.length - 1].dataURL : profile}  className='w-56 h-56 rounded-full object-cover '/>
+            
             <Tooltip title = "რედაქტირება">
                 <IconButton>
                 <EditIcon onClick = {() => setUploadModal(true)} sx = {{color: isDarkMode && '#fff'}} />
@@ -105,7 +95,7 @@ const MyProfile = () => {
            
             </div>
         </>
-    )}
+   
    
    {uploadModal && (
     <UploadModal closeModal={() => setUploadModal(false)} UploadModalRef={modalRef} />
@@ -146,8 +136,16 @@ const MyProfile = () => {
         </div>}
  </div>
 
-     <div className='w-1/2'>
-       
+     <div className='w-4/5 ' style={{color: isDarkMode && '#fff'}}>
+         <h2 className='text-3xl font-semibold'>ჩემი წიგნები</h2>
+
+ {bookByName.map((value) => (
+ <div className='inline-flex flex-col items-center gap-4 p-4 flex-wrap'>
+    <p className='text-xl font-semibold'>{value.title}</p>
+    <img src = {value.url} className='w-56 h-56 rounded-md shadow object-cover'/>
+    </div>
+ ))}
+        
      </div>
      </div>
   

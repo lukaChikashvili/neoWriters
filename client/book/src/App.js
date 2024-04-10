@@ -11,7 +11,6 @@ import MyBooks from './components/MyBooks';
 import UpdateBook from './components/UpdateBook';
 import Comments from './components/Comments';
 import MyProfile from './components/MyProfile';
-import ResetPass from './components/ResetPass';
 import ErrorPage from './components/ErrorPage';
 import Login from './components/Login';
 import { useContext, useEffect } from 'react';
@@ -39,7 +38,7 @@ function App() {
         <Route path = "/" element = {<Home />} />
    
         
-         <Route path="/profile" element={<Profile />} />
+       <Route path="/profile" element={<Profile />} /> 
          <Route path = "/create" element = {<Create />} />
          <Route path = "/books/:id" element = {<FullPage />} >
              <Route path = "comment" element =  {<Comments />} />
@@ -50,7 +49,6 @@ function App() {
          <Route path = "/myBooks" element = {<MyBooks />} />
          <Route path = "/books/:id/update" element = { <UpdateBook />} />
          <Route path = "/myProfile" element = { <MyProfile />} />
-         <Route path = "/reset" element = { <ResetPass />} />
          <Route path = "*" element = {<ErrorPage />}/>
          <Route path = "/login" element = {<Login />} />
        </Routes>

@@ -307,7 +307,7 @@ const isUserLoggedIn = localStorage.getItem('token');
 
   }
   return (
-    <div className='flex items-center justify-between h-screen pr-4 '>
+    <div className=' items-center justify-between h-screen pr-4 hidden md:flex '>
       
       <div className='bg-gray-300 w-1/4 -mt-14  p-8 flex flex-col gap-4 sidebar shadow rounded'>
         <div className='flex items-center gap-8'>

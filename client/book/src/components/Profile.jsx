@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { BookContext } from "../context/bookContext";
 import axiosInstance from './axios';
 import lari from '../assets/lari.png';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import CategoryIcon from '@mui/icons-material/Category';
 import {motion} from 'framer-motion';
@@ -50,13 +50,13 @@ const Profile = () => {
 
     {
       id: 7,
-      name: 'ბიოგრაფია',
+      name: 'სხვა',
       color: '#39A7FF'
     },
 
     {
       id: 8,
-      name: 'ზღაპარი',
+      name: 'თვით-განვითარება',
       color: '#424769'
     }
   ];
@@ -114,6 +114,7 @@ const handleCategory = (type) => {
 </div>
 
 <div className='flex flex-wrap px-8 gap-12'>
+  
    {showFiltered ? (
       
     categoriesArr.map((value) => (

@@ -11,7 +11,7 @@ const Login = () => {
     const {  err, setErr,   showPassword,
         handleShowPassword, handleMouseDownPassword,  
          nameErr,setNameErr, setPassErr, setIncorrect,  passErr, 
-          incorrect, setResponsiveModal, responsiveModal } = useContext(BookContext);
+          incorrect, isDarkMode } = useContext(BookContext);
           let navigate = useNavigate();
 
           const [name, setName] = useState('');
@@ -51,9 +51,11 @@ const Login = () => {
             }
             
   return (
-    <div className='flex flex-col items-center justify-center h-screen pt-12 gap-6  p-12'>
+    <div className='flex flex-col items-center justify-center h-screen pt-12 gap-6  p-12' style={{color: isDarkMode && '#fff'}}>
         <h1 className='text-3xl font-semibold text-center'>შესვლა</h1>
-       <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required />
+       <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required  InputLabelProps={{
+          style: { color: isDarkMode &&  '#fff' }, 
+   }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
          
          <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"}   InputProps={{ 
     endAdornment: (
@@ -64,11 +66,13 @@ const Login = () => {
           onMouseDown={handleMouseDownPassword}
           edge="end"
         >
-          {showPassword ? <VisibilityOff sx={{fontSize: 20}} /> : <Visibility sx={{fontSize: 20}}/>}
+          {showPassword ? <VisibilityOff sx={{fontSize: 20, color: isDarkMode && "#fff"}} /> : <Visibility sx={{fontSize: 20, color: isDarkMode && "#fff"}}/>}
         </IconButton>
       </InputAdornment>
     )
-  }} className='w-44' onChange={(e) => setPassword(e.target.value)} required />
+  }} className='w-44' onChange={(e) => setPassword(e.target.value)} required InputLabelProps={{
+    style: { color: isDarkMode &&  '#fff' }, 
+}} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} />
 
 <Button variant='contained' color="success" onClick={handleLogin}>შესვლა</Button>
     </div>

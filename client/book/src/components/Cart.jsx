@@ -84,10 +84,11 @@ const deleteItem = (id) => {
 }
   return (
     <div className='p-16 '>
-        <h1 className='text-5xl font-bold pb-8 '  style={{color:isDarkMode && '#fff'}}>ჩემი კალათა</h1>
-        <h2 className='text-5xl absolute top-40 right-36'  style={{color:isDarkMode && '#fff'}}>{totalPrice.toFixed(2)}</h2>
+        <h1 className='text-xl md:text-5xl font-bold pb-8 '  style={{color:isDarkMode && '#fff'}}>ჩემი კალათა</h1>
+        <h2 className='text-2xl md:text-5xl absolute top-40 right-36'  style={{color:isDarkMode && '#fff'}}>{totalPrice.toFixed(2)}</h2>
       {cartItem.map((value) => (
-        <div className='pt-6 px-12 flex items-center gap-12 bg-gray-300 '>
+            
+        <div className='pt-6 px-12 flex flex-col md:flex-row items-center gap-12 bg-gray-300 '>
            <img src = {value.url} className='w-36' />
            <p key={value._id} >{value.title}</p>
            <p className='font-bold text-2xl'>{value.price === 0 ? 'უფასო' : value.price}</p>
@@ -96,7 +97,7 @@ const deleteItem = (id) => {
            <p className='text-xl'>{stock[value._id]}</p>
            <button onClick={() => doubleSum(value._id)} className='text-xl'>+</button>
          
-           <h2 className='text-4xl absolute right-36 cursor-pointer' onClick={() => deleteItem(value._id)}>X</h2>
+           <h2 className='text-4xl absolute  right-12  md:right-36 cursor-pointer' onClick={() => deleteItem(value._id)}>X</h2>
         </div>
       ))}
     </div>
