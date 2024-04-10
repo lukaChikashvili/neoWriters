@@ -20,7 +20,7 @@ const FullPage = () => {
 
     useEffect(() => {
         const getFull = async () => {
-         const response = await axiosInstance.get(`${process.env.BASE_URL}api/books/${id}`);
+         const response = await axiosInstance.get(`https://neowriters.onrender.com/api/books/${id}`);
 
            setFullPage(response.data.oneBook);
 

@@ -84,7 +84,7 @@ const BookProvider = ({children}) => {
 
     const fetchImages = async (userId) => {
        try {
-          const response = await axiosInstance.get(`${process.env.BASE_URL}/api/users/${userId}/profileImage`,  {
+          const response = await axiosInstance.get(`https://neowriters.onrender.com/api/users/${userId}/profileImage`,  {
             headers: {
                Authorization: `Bearer ${localStorage.getItem('token')}`
             }

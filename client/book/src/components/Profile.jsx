@@ -70,7 +70,7 @@ const Profile = () => {
   const { books, setBooks, isDarkMode} = useContext(BookContext);
  
   const getAllBooks = async () =>{
-      const data = await axiosInstance.get(`${process.env.BASE_URL}/api/books`);
+      const data = await axiosInstance.get(`https://neowriters.onrender.com/api/books`);
 
       setBooks(data.data.books);
 
