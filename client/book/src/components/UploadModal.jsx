@@ -23,7 +23,7 @@ const UploadModal = ({closeModal, UploadModalRef}) => {
             const formData = new FormData();
             formData.append('testImage', selectedFile);
 
-            await axiosInstance.post(`${process.env.BASE_URL}/api/users/profileImage`, formData, {
+            await axiosInstance.post(`https://neowriters.onrender.com/api/users/profileImage`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${localStorage.getItem('token')}`
