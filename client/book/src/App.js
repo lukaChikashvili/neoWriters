@@ -48,7 +48,7 @@ function App() {
          <Route path = "/myDesign" element = {<MyDesign />} />
          <Route path = "/myBooks" element = {<MyBooks />} />
          <Route path = "/books/:id/update" element = { <UpdateBook />} />
-         <Route path = "/myProfile" element = { <MyProfile />} />
+         <Route path = "/myProfile" element = { isUserLoggedIn && <MyProfile />} />
          <Route path = "*" element = {<ErrorPage />}/>
          <Route path = "/login" element = {<Login />} />
        </Routes>
