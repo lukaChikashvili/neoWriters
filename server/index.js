@@ -5,9 +5,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+const corsOptions = {
+   origin: 'https://neowriters-front.onrender.com',
+   methods: 'GET,POST,PUT,DELETE',
+   optionsSuccessStatus: 200 
+};
 
-
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const PORT =  4000;
