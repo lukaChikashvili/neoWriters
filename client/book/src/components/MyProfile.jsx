@@ -45,7 +45,7 @@ const MyProfile = () => {
         if(newLocation) updatedObj.location = newLocation;
         if(newProffesion) updatedObj.proffesion = newProffesion;
 
-        await axiosInstance.put(`${process.env.BASE_URL}/api/users/${users._id}`, updatedObj);
+        await axiosInstance.put(`https://neowriters.onrender.com/api/users/${users._id}`, updatedObj);
 
          setUpdateModal(false);
         
