@@ -4,6 +4,7 @@ const routes = require('./routes/route');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const { User } = require('../server/models/userModel')
 
 const corsOptions = {
    origin: 'https://neowriters-front.onrender.com',
@@ -28,7 +29,14 @@ app.use('/api', routes);
  });
 
 
-
+User.deleteMany({name: "john"}).then(() => {
+   console.log('Registered users deleted');
+   mongoose.connection.close();
+})
+.catch(err => {
+   console.error('Error deleting users:', err);
+   mongoose.connection.close();
+});
 
 
 app.listen(PORT, () => {
