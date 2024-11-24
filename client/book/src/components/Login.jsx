@@ -53,11 +53,11 @@ const Login = () => {
   return (
     <div className='flex flex-col items-center justify-center h-screen pt-12 gap-6  p-12' style={{color: isDarkMode && '#fff'}}>
         <h1 className='text-3xl font-semibold text-center'>შესვლა</h1>
-       <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required  InputLabelProps={{
+       <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი: demo" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required  InputLabelProps={{
           style: { color: isDarkMode &&  '#fff' }, 
    }} sx = {{input: {color: isDarkMode && "#fff"}}}  style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}/>
          
-         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი" variant='outlined' size='small' type = {showPassword ? "text" : "password"}   InputProps={{ 
+         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პარ: demo123" variant='outlined' size='small' type = {showPassword ? "text" : "password"}   InputProps={{ 
     endAdornment: (
       <InputAdornment position="end">
         <IconButton
