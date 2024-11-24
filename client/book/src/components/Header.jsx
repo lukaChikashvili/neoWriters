@@ -209,11 +209,11 @@ useEffect(()=> {
         <DragHandleIcon className=' md:hidden cursor-pointer icon' onClick = {showModal}/>
         <form className=' items-center gap-4 hidden md:flex'>
           
-         <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი - demo" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
+         <TextField error = {err && true} helperText = {err ?  'შეიყვანეთ სახელი' : nameErr ? "შეიყვანეთ სახელი" : incorrect ? "სახელი არასწორია" : ''}  label = "სახელი: demo" variant='outlined' size="small" className='w-44' onChange={(e) => setName(e.target.value)} required style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}} sx = {{input: {color: isDarkMode && "#fff"}}}  InputLabelProps={{
           style: { color: isDarkMode &&  '#fff' }, 
    }} />
          
-         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პაროლი - demo123" variant='outlined' size='small' type = {showPassword ? "text" : "password"} style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}  InputProps={{ 
+         <TextField error = {err && true} helperText = {err ? 'შეიყვანეთ პაროლი' : passErr ? "შეიყვანეთ პაროლი" : incorrect ? "პაროლი არასწორია" : ''} label = "პარ: demo123" variant='outlined' size='small' type = {showPassword ? "text" : "password"} style = {{ border: isDarkMode && '1px solid white', borderRadius: isDarkMode && '4px'}}  InputProps={{ 
     endAdornment: (
       <InputAdornment position="end">
         <IconButton
