@@ -29,14 +29,6 @@ app.use('/api', routes);
  });
 
 
-User.deleteMany({name: "john"}).then(() => {
-   console.log('Registered users deleted');
-   mongoose.connection.close();
-})
-.catch(err => {
-   console.error('Error deleting users:', err);
-   mongoose.connection.close();
-});
 
 
 app.listen(PORT, () => {
