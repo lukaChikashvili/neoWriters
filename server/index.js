@@ -7,7 +7,7 @@ require('dotenv').config();
 const { User } = require('../server/models/userModel')
 
 const corsOptions = {
-   origin: 'https://neowriters-front.onrender.com',
+   origin: 'https://neowriters.shop/',
    methods: 'GET,POST,PUT,DELETE',
    optionsSuccessStatus: 200 
 };
